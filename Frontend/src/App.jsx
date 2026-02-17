@@ -1,9 +1,11 @@
-import { Button } from "@/components/ui/button"
 
-export default function App() {
+import { RouterProvider } from 'react-router-dom';
+import { x } from './roles/Users/Pages/mainLayout';
+
+function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <Button>Click me</Button>
-    </div>
-  )
+    <RouterProvider router={x} />
+  );
 }
+
+export default App;
