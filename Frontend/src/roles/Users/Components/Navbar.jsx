@@ -46,10 +46,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'الرئيسية', href: '/', active: true },
-    { name: 'التصنيفات', href: '/services', active: false },
-    { name: 'البائعون', href: '/contact', active: false },
-    { name: 'عن السوق', href: '/about', active: false },
+    { name: 'الرئيسية', href: '/user/', active: true },
+    { name: 'التصنيفات', href: '/user/services', active: false },
+    { name: 'البائعون', href: '/user/contact', active: false },
+    { name: 'عن السوق', href: '/user/about', active: false },
    // { name: 'التعريف', href: '/landing', active: false }
   ];
 
