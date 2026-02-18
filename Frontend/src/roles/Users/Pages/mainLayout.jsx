@@ -5,6 +5,8 @@ import Home from './Home';
 import About from './About';
 import Contact from './Contact';
 import Services from './Services';
+import Landing from '../../../Auth/landingPage';
+
 export const x = createBrowserRouter([
   {
     path: "/",
@@ -14,6 +16,7 @@ export const x = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "services", element: <Services /> },
       { path: "contact", element: <Contact /> },
+      { path: "landing", element: <Landing /> },
     ],
   },
 ]);
