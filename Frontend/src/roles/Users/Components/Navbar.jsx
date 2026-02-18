@@ -50,6 +50,7 @@ const Navbar = () => {
     { name: 'التصنيفات', href: '/services', active: false },
     { name: 'البائعون', href: '/contact', active: false },
     { name: 'عن السوق', href: '/about', active: false },
+   // { name: 'التعريف', href: '/landing', active: false }
   ];
 
   const orangeColor = '#ec5e0c';
