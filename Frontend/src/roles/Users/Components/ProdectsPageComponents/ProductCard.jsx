@@ -1,6 +1,8 @@
 import React from 'react'
 import FavoriteButton from './FavoriteButton';
 import StarRating from './StarRating';
+import { FiShoppingCart } from 'react-icons/fi';
+import { HiOutlineLocationMarker } from 'react-icons/hi';
 const PRODUCTS = [
   {
     id: 1,
@@ -87,7 +89,6 @@ const PRODUCTS = [
 export default function ProductCard({ product, onToggleFavorite }) {
   return (
     <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
-      {/* Image */}
       <div className="relative overflow-hidden" style={{ height: 200 }}>
         <img
           src={product.image}
@@ -112,20 +113,17 @@ export default function ProductCard({ product, onToggleFavorite }) {
         </span>
         <h3 className="text-sm font-bold text-gray-800 leading-snug">{product.title}</h3>
         <p className="text-xs text-gray-400 flex items-center gap-1">
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0L6.343 16.657a8 8 0 1111.314 0z" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          {product.subtitle}
+          <HiOutlineLocationMarker className="w-3.5 h-3.5 text-gray-400" />
+          <span>{product.subtitle}</span>
         </p>
         <StarRating rating={product.rating} />
 
         {/* Price + Cart */}
         <div className="mt-auto flex items-center justify-between pt-2 border-t border-gray-100">
-          <button className="w-8 h-8 rounded-full bg-[#ec4d18] hover:bg-amber-600 flex items-center justify-center text-white transition-colors shadow-md">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-            </svg>
+          <button className="group w-8 h-8 rounded-full bg-[#ec4d18] hover:bg-amber-600 flex items-center justify-center text-white transition-all duration-300 shadow-md">
+            <FiShoppingCart
+              className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
+            />
           </button>
           <div className="text-right">
             <span className="text-lg font-extrabold text-gray-900">{product.price.toLocaleString()}</span>

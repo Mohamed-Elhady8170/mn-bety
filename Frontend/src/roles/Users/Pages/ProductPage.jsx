@@ -2,7 +2,6 @@ import Pagination from '../Components/ProdectsPageComponents/Pagination';
 import ProductGrid from '../Components/ProdectsPageComponents/ProductGrid';
 import Sidebar from '../Components/ProdectsPageComponents/Sidebar';
 import TopBar from '../Components/ProdectsPageComponents/TopBar';
-
 import React from 'react';
 import { useState } from "react";
 
@@ -10,21 +9,21 @@ const PRODUCTS = [
   {
     id: 1,
     title: "مقلادة كنز مطرزة يدوياً",
-    subtitle: "منتج المغرب العربي",
+    subtitle: "منتج  من المنوفية",
     price: 450,
     currency: "ر.م",
     rating: 4.9,
     reviews: 0,
     badge: "شحن مجاني",
     badgeColor: "bg-amber-500",
-    image: "https://images.unsplash.com/photo-1601121141461-9d6647bef0a0?w=400&q=80",
+    image: "https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80",
     isFavorite: false,
     tag: "حقيبة يدوية",
   },
   {
     id: 2,
     title: "إناء فخاري تصميم ريفي",
-    subtitle: "من تونس",
+    subtitle: "من الشرقية",
     price: 280,
     currency: "ر.م",
     rating: 5.0,
@@ -37,8 +36,8 @@ const PRODUCTS = [
   },
   {
     id: 3,
-    title: "قلادة لتناسب مع الجروز",
-    subtitle: "من مصر",
+    title: "قلادة   ",
+    subtitle: "من القاهرة",
     price: 120,
     currency: "ر.م",
     rating: 4.7,
@@ -51,7 +50,7 @@ const PRODUCTS = [
   {
     id: 4,
     title: "طبق نحاسي مطروق يدوياً",
-    subtitle: "من المغرب",
+    subtitle: "من اسكندرية",
     price: 720,
     currency: "ر.م",
     rating: 4.6,
@@ -64,7 +63,7 @@ const PRODUCTS = [
   {
     id: 5,
     title: 'حقيبة "لوك" جلدية فاخرة',
-    subtitle: "من البادية الإبداعية",
+    subtitle: "من  بورسعيد",
     price: 890,
     currency: "ر.م",
     rating: 4.9,
@@ -97,7 +96,7 @@ const CATEGORIES = [
   { label: "هدايا", count: 15 },
 ];
 
-const SELLERS = ["مصر", "المغرب", "تونس", "الكويت", "عُمان الكويت"];
+const SELLERS = ["القاهرة", "المنوفية", "تاسكندرية", "الشرقة", " بورسعيد"];
 
 
 export default function ProductPage() {
@@ -120,22 +119,12 @@ export default function ProductPage() {
       if (sort === "rating") return b.rating - a.rating;
       return 0;
     });
-
   return (
-    <div
-      className="min-h-screen"
-      style={{ background: "linear-gradient(135deg,#fdf8f2 0%,#fef3e2 100%)", fontFamily: "'Cairo', 'Tajawal', sans-serif" }}
-    >
-      {/* Google Fonts */}
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');`}</style>
-
+    <div className="min-h-screen bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="flex gap-8 items-start">
-          {/* Sidebar */}
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
           <Sidebar priceRange={priceRange} setPriceRange={setPriceRange} />
-
-          {/* Main */}
-          <main className="flex-1">
+          <main className="flex-1 w-full">
             <TopBar count={sorted.length} sort={sort} setSort={setSort} />
             <ProductGrid products={sorted} onToggleFavorite={handleToggleFavorite} />
             <Pagination current={page} total={5} onChange={setPage} />
