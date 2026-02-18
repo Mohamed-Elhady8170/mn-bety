@@ -4,20 +4,30 @@ import Home from './Home';
 import About from './About';
 import Contact from './Contact';
 import Services from './Services';
-import LandingPage from '../../../Auth/landingPage'; 
+import LandingPage from '../../../Auth/Pages/landingPage'; 
 import ProfilePage from './ProfilePage';
 import ProductPage from './ProductPage';
+import Login from '../../../Auth/Components/login';
+import SignUp from '../../../Auth/Components/signUp';
+import AuthLayout from '../../../Auth/Pages/AuthLayout';
 
 
 export const x = createBrowserRouter([
   {
-    // 1. المسار الرئيسي للموقع هيفتح صفحة اللاندنج
+
     path: "/",
     element: <LandingPage />, 
   },
+{
+    path: "/auth",
+    element: <AuthLayout />,  
+    children: [
+      { path: "login", element: <Login /> },
+      { path: "signup", element: <SignUp /> },
+      // { path: "reset-password", element: <ResetPassword /> },
+    ],
+  },
   {
-    // 2. مسار المستخدم (بعد تسجيل الدخول)
-    // لما تعمل navigate("/user") هيدخل هنا ويظهر الناف بار بتاعك
     path: "/user", 
     element: <Layout />, 
     children: [
@@ -28,5 +38,9 @@ export const x = createBrowserRouter([
       { path: "profile", element: <ProfilePage /> },
       { path: "products", element: <ProductPage /> },
     ],
+  },
+   {
+    path: "*",
+    element: <div>404 - الصفحة مش موجودة</div>,
   },
 ]);

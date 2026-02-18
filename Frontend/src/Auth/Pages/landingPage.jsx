@@ -1,8 +1,11 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
-import aboutImage from "../assets/aboutlanding.jpg";
+import aboutImage from "../../assets/aboutlanding.jpg";
 import confetti from 'canvas-confetti';
 import { FaAsterisk } from "react-icons/fa";
+import Navbar from "../Components/LandingNavbar";
+import Footer from "../../roles/Users/Components/Footer";
+
 const categories = [
   {
     title: "أكلات بيتية ",
@@ -78,9 +81,11 @@ export default function LandingPage() {
 
   return (
     <>
+      <Navbar />
+    
       {/* Hero Section ============== */}
       <section
-        dir="rtl"
+        dir="rtl"  id="home"
         className="relative w-full min-h-[600px] flex items-center bg-[#f8f9fa] overflow-hidden px-6 md:px-20 text-right"
       >
         <div className="absolute inset-0 opacity-10 pointer-events-none"
@@ -129,7 +134,7 @@ export default function LandingPage() {
       </section>
 
       {/* Services Section=============== */}
-      <section dir="rtl" className="py-20 px-6 md:px-20 bg-white text-right">
+      <section dir="rtl"  id="categories" className="py-20 px-6 md:px-20 bg-white text-right">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <h5 className="text-[#FF5A25] font-medium tracking-widest uppercase text-1xs flex items-center gap-2">
@@ -160,7 +165,7 @@ export default function LandingPage() {
       </section>
 
       {/* Who We Are Section */}
-      <section dir="rtl" className="py-24 px-6 md:px-20 bg-[#f8f9fa] text-right relative overflow-hidden">
+      <section dir="rtl" id="about" className="py-24 px-6 md:px-20 bg-[#f8f9fa] text-right relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28 items-center relative z-10">
           <div className="space-y-8">
             <div>
@@ -214,7 +219,7 @@ export default function LandingPage() {
       </section>
 
       {/* Sell Now Section */}
-      <section dir="rtl" className="py-16 px-6 md:px-20">
+      <section dir="rtl" id="sell"  className="py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto relative h-72 rounded-3xl overflow-hidden flex items-center justify-center text-center">
           <img
             src="https://i.pinimg.com/736x/02/33/ba/0233ba523edd056c8fb8b3340d71de39.jpg"
@@ -231,6 +236,7 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      <Footer />
     </>
   );
 }
