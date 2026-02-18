@@ -5,6 +5,7 @@ import About from './About';
 import Contact from './Contact';
 import Services from './Services';
 import LandingPage from '../../../Auth/landingPage'; 
+import ProfilePage from './ProfilePage';
 
 
 export const x = createBrowserRouter([
@@ -23,6 +24,7 @@ export const x = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "services", element: <Services /> },
       { path: "contact", element: <Contact /> },
+      { path: "profile", element: <ProfilePage /> },
     ],
   },
 ]);
