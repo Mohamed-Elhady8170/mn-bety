@@ -51,8 +51,8 @@ export default function Sidebar({ priceRange, setPriceRange }) {
           className="w-full accent-[#ec4d18]"
         />
         <div className="flex justify-between text-xs text-gray-500 mt-1">
-          <span>100 ر.م</span>
-          <span className="font-bold text-[#ec4d18]">{priceRange} ر.م</span>
+          <span>100 ج.م</span>
+          <span className="font-bold text-[#ec4d18]">{priceRange}ج.م </span>
         </div>
       </div>
 
