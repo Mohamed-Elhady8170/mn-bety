@@ -42,7 +42,6 @@ const AuthNavbar = () => {
                         />
                     </Link>
 
-                    {/* Actions - الأيقونات بنفس تصميم النافبار الأصلي */}
                     <div className="flex items-center gap-2 sm:gap-3 h-full">
                       <Link
                             to="/"

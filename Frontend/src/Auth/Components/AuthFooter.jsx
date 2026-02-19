@@ -9,7 +9,7 @@ const AuthFooter = () => {
       className="bg-white dark:bg-[#211711] mt-auto font-cairo"
       dir="rtl"
     >
-      <div className="pt-12"></div>
+      {/* <div className="pt-12"></div> */}
 
       <div className="border-t border-[#e7d5cf] dark:border-[#3d2a24]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

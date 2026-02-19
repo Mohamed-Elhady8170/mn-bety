@@ -270,6 +270,85 @@
   animation-delay: 2s;
 }
 
+/* ===== Custom Animations ===== */
+
+@keyframes floatBg {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation Classes - بتاعتك */
+.animate-float-bg {
+  animation: floatBg 15s ease-in-out infinite;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Delay Classes */
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+.delay-200 {
+  animation-delay: 0.2s;
+}
+
+.delay-300 {
+  animation-delay: 0.3s;
+}
+
+.delay-500 {
+  animation-delay: 0.5s;
+}
+
+.delay-700 {
+  animation-delay: 0.7s;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
+}
+
+/* Duration Classes */
+.duration-1500 {
+  transition-duration: 1500ms;
+}
+
+.duration-2000 {
+  transition-duration: 2000ms;
+}
+
+.duration-3000 {
+  transition-duration: 3000ms;
+}
+
+/* Custom animations for specific elements */
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-ping-slow {
+  animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/*scrollbar style*/
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -277,8 +356,14 @@
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
+.dark ::-webkit-scrollbar-track {
+  background: #2d2d2d; 
+}
 
 ::-webkit-scrollbar-thumb {
   background-color: #ec5e0c;
   transition: background-color 0.3s ease;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #ec5e0c;
 }

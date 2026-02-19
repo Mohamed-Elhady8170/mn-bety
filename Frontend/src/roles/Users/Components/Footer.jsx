@@ -186,8 +186,8 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-[#e7d5cf] dark:border-[#3d2a24]">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#956b50] dark:text-[#e7d5cf]">
+        <div className="mt-12 pt-8 border-t border-[#e7d5cf] dark:border-[#3d2a24] ">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[#956b50] dark:text-[#e7d5cf] ">
             <p>
               © {currentYear} من بيتي. جميع الحقوق محفوظة. صنع بكل حب في مصر
             </p>

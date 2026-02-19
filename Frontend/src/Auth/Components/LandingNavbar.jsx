@@ -21,7 +21,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // تتبع الأقسام المرئية أثناء التمرير
+
   useEffect(() => {
     const handleScrollSpy = () => {
       const sections = [
@@ -31,18 +31,16 @@ const Navbar = () => {
         { id: 'sell', path: '/#sell' }
       ];
 
-      // لو احنا في أعلى الصفحة (قسم الهوم)
+    
       if (window.scrollY < 100) {
         setActivePath('/');
         return;
       }
 
-      // البحث عن القسم الظاهر
       for (const section of sections) {
         const element = document.getElementById(section.id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // لو القسم ظاهر في الشاشة
           if (rect.top <= 150 && rect.bottom >= 150) {
             setActivePath(section.path);
             break;
@@ -52,7 +50,6 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScrollSpy);
-    // شغلها مرة واحدة عند التحميل
     handleScrollSpy();
 
     return () => window.removeEventListener('scroll', handleScrollSpy);
@@ -78,14 +75,13 @@ const Navbar = () => {
     e.preventDefault();
     
     if (href === '/') {
-      // لو الرئيسية، اتمرر لأعلى الصفحة
       window.scrollTo({ top: 0, behavior: 'smooth' });
       setActivePath('/');
     } else if (href.startsWith('/#')) {
       const targetId = href.replace('/#', '');
       const element = document.getElementById(targetId);
       if (element) {
-        const offset = 80; // مسافة عشان النافبار ما يغطيش العنصر
+        const offset = 80; 
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - offset;
         
@@ -158,7 +154,7 @@ const Navbar = () => {
             </nav>
           </div>
 
-          {/* Icons Section - باقي الكود زي ما هو */}
+          {/* Icons Section  */}
           <div className="flex items-center gap-2 sm:gap-3 h-full">
             {/* Desktop: Language Button */}
             <button
@@ -218,7 +214,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Dropdown - نفس الكود لكن مع تحديث الـ onClick */}
+        {/* Mobile Menu Dropdown  */}
         <div
           className={`md:hidden transition-all duration-500 overflow-hidden ${
             isOpen ? 'max-h-96 mt-4 opacity-100 animate-slide-down' : 'max-h-0 opacity-0'
@@ -249,7 +245,6 @@ const Navbar = () => {
               })}
             </nav>
 
-            {/* باقي محتوى الموبايل زي ما هو */}
             <div className="flex flex-col gap-2 pt-2 border-t border-[#e7d5cf] dark:border-[#3d2a24]">
               <Link
                 to="/auth/login"
