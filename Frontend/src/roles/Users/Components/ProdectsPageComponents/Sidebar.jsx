@@ -1,12 +1,12 @@
 import React from 'react'
 const CATEGORIES = [
-  { label: "طالب بدوي", count: 42, active: true },
+  { label: "الأكل البيتي", count: 42, active: true },
   { label: "المجوهرات", count: 33 },
   { label: "ديكور المنزل", count: 28 },
   { label: "هدايا", count: 15 },
 ];
 
-const SELLERS = ["مصر", "المغرب", "تونس", "الكويت", "عُمان الكويت"];
+const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بورسعيد", "المنيا"];
 
 export default function Sidebar({ priceRange, setPriceRange }) {
   return (

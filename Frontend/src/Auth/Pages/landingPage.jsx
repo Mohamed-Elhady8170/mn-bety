@@ -32,7 +32,7 @@ const categories = [
 export default function LandingPage() {
   const typedRef = useRef(null);
   const runSchoolPride = () => {
-    const end = Date.now() + (15 * 1000);
+    const end = Date.now() + (10 * 1000);
     const colors = ['#ec4d18', '#ffffff'];
 
     (function frame() {
@@ -64,7 +64,7 @@ export default function LandingPage() {
       strings: [
         "دعم المشاريع المنزلية ",
         "منتجات هاند ميد بجودة عالية ",
-        "أكلات بيتية بطعم زمان ",
+        "أكلات بيتي بطعم زمان ",
         "إبداعات بأيدي مصرية ",
         "اشتري بسهولة وادعم حلم حد تاني "
       ],
