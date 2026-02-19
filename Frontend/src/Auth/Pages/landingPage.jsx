@@ -86,7 +86,7 @@ export default function LandingPage() {
       {/* Hero Section ============== */}
       <section
         dir="rtl"  id="home"
-        className="relative w-full min-h-[600px] flex items-center bg-[#f8f9fa] overflow-hidden px-6 md:px-20 text-right"
+        className="relative w-full min-h-150 flex items-center bg-[#f8f9fa] overflow-hidden px-6 md:px-20 text-right"
       >
         <div className="absolute inset-0 opacity-10 pointer-events-none"
           style={{ backgroundImage: "radial-gradient(#000 2px, transparent 2px)", backgroundSize: "30px 30px" }}>
@@ -113,7 +113,7 @@ export default function LandingPage() {
             </button>
           </div>
 
-          <div className="hidden md:flex justify-center md:justify-start gap-6 h-[450px] order-1 md:order-2">
+          <div className="hidden md:flex justify-center md:justify-start gap-6 h-112.5 order-1 md:order-2">
             <div className="animate-float w-48 md:w-64 h-full rounded-full overflow-hidden border-8 border-white shadow-xl">
               <img
                 src="https://i.pinimg.com/736x/51/83/dc/5183dc85829d8dc446a7421afa04f0e3.jpg"
@@ -151,7 +151,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {categories.map((cat, index) => (
-              <div key={index} className="relative h-[380px] rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
+              <div key={index} className="relative h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
                 <img src={cat.image} alt={cat.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
                 <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
@@ -211,7 +211,7 @@ export default function LandingPage() {
           </div>
 
           <div className="relative flex justify-center lg:justify-start">
-            <div className="w-full aspect-[4/3] overflow-hidden rounded-tr-[100px] rounded-br-[20px] rounded-bl-[100px] rounded-tl-[20px] shadow-2xl bg-white border-[10px] border-white">
+            <div className="w-full aspect-4/3 overflow-hidden rounded-tr-[100px] rounded-br-4xl rounded-bl-[100px] rounded-tl-4xl shadow-2xl bg-white border-10 border-white">
               <img src={aboutImage} alt="مشاريع منزلية" className="w-full h-full object-cover" />
             </div>
           </div>

@@ -97,22 +97,22 @@ const ProfilePage = () => {
               /* رجوع كل التفاصيل لتبويب معلوماتي */
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-[#1b130e] block">الاسم الكامل</label>
+                  <label className="text-sm font-bold text-text-main block">الاسم الكامل</label>
                   <input ref={nameInputRef} className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-2 focus:ring-[#d2631e]" defaultValue="محمد الهادي" />
                 </div>
                 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-[#1b130e] block">البريد الإلكتروني</label>
+                  <label className="text-sm font-bold text-text-main block">البريد الإلكتروني</label>
                   <input className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-1 focus:ring-[#d2631e]" type="email" defaultValue="hadyyyy@email.com" />
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-[#1b130e] block">رقم الهاتف</label>
+                  <label className="text-sm font-bold text-text-main block">رقم الهاتف</label>
                   <input className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-1 focus:ring-[#d2631e]" dir="ltr" defaultValue="+20 1245698710" />
                 </div>
 
                 <div className="space-y-2 text-right">
-                  <label className="text-sm font-bold text-[#1b130e] block">المدينة</label>
+                  <label className="text-sm font-bold text-text-main block">المدينة</label>
                   <select className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-1 focus:ring-[#d2631e] appearance-none">
                      <option>المنوفيه</option>
                    <option>القاهره</option>
@@ -132,7 +132,7 @@ const ProfilePage = () => {
                 </div>
 
                 <div className="md:col-span-2 space-y-2 text-right">
-                  <label className="text-sm font-bold text-[#1b130e] block">عنوان التوصيل</label>
+                  <label className="text-sm font-bold text-text-main block">عنوان التوصيل</label>
                   <textarea className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-1 focus:ring-[#d2631e]" rows="3" defaultValue="قويسنا- برج الاطباء-المنوفيه-جمهورية مصر العربية" />
                 </div>
 

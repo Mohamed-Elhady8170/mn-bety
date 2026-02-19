@@ -28,16 +28,16 @@ const Footer = () => {
 
   return (
     <footer
-      className="bg-white dark:bg-[#211711] border-t border-[#e7d5cf] dark:border-[#3d2a24] mt-auto font-cairo"
+      className="bg-white dark:bg-bg-footer border-t border-[#e7d5cf] dark:border-[#3d2a24] mt-auto font-cairo"
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
         {/* Main Footer Content  */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0 relative">
 
-          <div className="absolute top-0 bottom-0 right-1/4 hidden lg:block w-px bg-gradient-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
-          <div className="absolute top-0 bottom-0 right-2/4 hidden lg:block w-px bg-gradient-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
-          <div className="absolute top-0 bottom-0 right-3/4 hidden lg:block w-px bg-gradient-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
+          <div className="absolute top-0 bottom-0 right-1/4 hidden lg:block w-px bg-linear-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
+          <div className="absolute top-0 bottom-0 right-2/4 hidden lg:block w-px bg-linear-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
+          <div className="absolute top-0 bottom-0 right-3/4 hidden lg:block w-px bg-linear-to-b from-transparent via-[#ec4d18]/30 to-transparent"></div>
 
           {/* About Section -   */}
           <div className="space-y-4 pb-6 md:pb-0 border-b md:border-b-0 border-[#ec4d18]/20 last:border-b-0 md:pl-6 lg:pl-8">
@@ -82,7 +82,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="space-y-4 py-6 md:py-0 border-b md:border-b-0 border-[#ec4d18]/20 last:border-b-0 md:px-6 lg:px-8">
-            <h3 className="text-lg font-bold text-[#1b130e] dark:text-white">
+            <h3 className="text-lg font-bold text-text-main dark:text-white">
               روابط سريعة
             </h3>
             <ul className="space-y-3">
@@ -107,7 +107,7 @@ const Footer = () => {
 
           {/* Support Links */}
           <div className="space-y-4 py-6 md:py-0 border-b md:border-b-0 border-[#ec4d18]/20 last:border-b-0 md:px-6 lg:px-8">
-            <h3 className="text-lg font-bold text-[#1b130e] dark:text-white">
+            <h3 className="text-lg font-bold text-text-main dark:text-white">
               خدمة العملاء
             </h3>
             <ul className="space-y-3">
@@ -132,7 +132,7 @@ const Footer = () => {
 
           {/* Contact & Newsletter */}
           <div className="space-y-4 pt-6 md:pt-0 md:pr-6 lg:pr-8">
-            <h3 className="text-lg font-bold text-[#1b130e] dark:text-white">
+            <h3 className="text-lg font-bold text-text-main dark:text-white">
               تواصل معنا
             </h3>
 
@@ -154,7 +154,7 @@ const Footer = () => {
 
             {/* Newsletter */}
             <div className="pt-4">
-              <h4 className="text-sm font-bold text-[#1b130e] dark:text-white mb-3">
+              <h4 className="text-sm font-bold text-text-main dark:text-white mb-3">
                 النشرة البريدية
               </h4>
               <p className="text-xs text-[#956b50] dark:text-[#e7d5cf] mb-3">

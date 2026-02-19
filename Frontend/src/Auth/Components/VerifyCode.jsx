@@ -79,7 +79,7 @@ const VerifyCode = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-[480px] bg-white dark:bg-[#211711] rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm bg-white/95 dark:bg-[#211711]/95 overflow-hidden">
+            <div className="w-full max-w-120 bg-white dark:bg-bg-footer rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm overflow-hidden">
 
                 {/* Decorative elements */}
                 <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse"></div>
@@ -92,7 +92,7 @@ const VerifyCode = () => {
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ec4d18]/10 rounded-full mb-4">
                             <Mail className="text-[#ec4d18] w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-[#1b130e] dark:text-white mb-2">تحقق من الرمز</h2>
+                        <h2 className="text-2xl md:text-3xl font-black text-text-main dark:text-white mb-2">تحقق من الرمز</h2>
                         <p className="text-[#956b50] dark:text-[#e7d5cf] text-sm md:text-base leading-relaxed">
                             أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني
                         </p>
@@ -121,7 +121,7 @@ const VerifyCode = () => {
                         </div>
 
                         {/* Action Button */}
-                        <Link to="/auth/reset-password" className="w-full block mb-4"> {/* أضفنا mb-4 هنا */}
+                        <Link to="/auth/reset-password" className="w-full block mb-4"> 
                             <button className="w-full h-12 bg-[#ec4d18] hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold transition-all shadow-lg shadow-[#ec4d18]/20 hover:shadow-xl hover:shadow-[#ec4d18]/30 active:scale-[0.98] flex items-center justify-center gap-2">
                                 <span>تحقق</span>
                             </button>
@@ -133,7 +133,7 @@ const VerifyCode = () => {
                                 لم يصلك الرمز؟
                                 <a href="#" className="text-[#ec4d18] font-bold hover:underline mr-1 transition-all hover:scale-105 inline-block">إعادة إرسال الرمز</a>
                             </p>
-                            <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-[#1b130e] dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
+                            <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
                                 <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
                                 <ArrowRight className="w-4 h-4" />
                             </Link>

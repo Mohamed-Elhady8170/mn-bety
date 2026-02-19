@@ -6,7 +6,7 @@ const AuthFooter = () => {
 
   return (
     <footer
-      className="bg-white dark:bg-[#211711] mt-auto font-cairo"
+      className="bg-white dark:bg-bg-footer mt-auto font-cairo"
       dir="rtl"
     >
       {/* <div className="pt-12"></div> */}

@@ -62,14 +62,14 @@ const Login = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-[950px] overflow-hidden rounded-3xl bg-white dark:bg-[#211711] shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm bg-white/95 dark:bg-[#211711]/95 flex flex-col md:flex-row-reverse">
+            <div className="w-full max-w-237.5 overflow-hidden rounded-3xl bg-white dark:bg-bg-footer shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm flex flex-col md:flex-row-reverse">
 
                 {/* Left Side: Image/Branding (Hidden on mobile)  */}
-                <div className="hidden md:block w-1/2 relative bg-gradient-to-br from-[#ec4d18]/10 to-[#ec4d18]/5 overflow-hidden group">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#ec4d18]/40 to-transparent z-10"></div>
+                <div className="hidden md:block w-1/2 relative bg-linear-to-br from-[#ec4d18]/10 to-[#ec4d18]/5 overflow-hidden group">
+                    <div className="absolute inset-0 bg-linear-to-t from-[#ec4d18]/40 to-transparent z-10"></div>
 
                     {/* Animated overlay on image */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out z-20"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out z-20"></div>
 
                     <img
                         className="absolute inset-0 w-full h-full object-cover mix-blend-multiply opacity-80 transition-transform duration-700 group-hover:scale-110"
@@ -77,7 +77,7 @@ const Login = () => {
                         src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIp0OemRRelVXHBIsQmtRdOunmsGjt2SzMILa77imPWHWAAlJYkn9tm8_0L2xDwQjmIugSkOMAxw_sxPJ_-DTP7o5u1aWSkOpywUUIwTseVHwWEfXQ_09KhCJPMxH6QgKSsIqOPU32MA9-c8Q-M8kAjXxXl2_9fxKEESEh7cI1PsiioV3LQl-oL5KoAAyXqLM54ywjYsOyw62my6W_I7DkGAhXnRVRGbh4-d5R4G_VBze2byyCMKvMfuYjScul7SECpbI0rry4nDor"
                     />
 
-                    <div className="absolute bottom-8 right-8 left-8 z-30 text-white transform transition-transform duration-500 group-hover:translate-y-[-5px]">
+                    <div className="absolute bottom-8 right-8 left-8 z-30 text-white transform transition-transform duration-500 group-hover:-translate-y-1.25">
                         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-white/20 backdrop-blur shadow-xl">
                             <Sparkles className="text-white w-6 h-6" />
                         </div>
@@ -109,7 +109,7 @@ const Login = () => {
                     <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse delay-700"></div>
 
                     <div className="mb-6 text-right relative">
-                        <h2 className="text-3xl lg:text-4xl font-black text-[#1b130e] dark:text-white mb-2 animate-fadeIn">
+                        <h2 className="text-3xl lg:text-4xl font-black text-text-main dark:text-white mb-2 animate-fadeIn">
                             مرحباً بك مجدداً
                         </h2>
                         <p className="text-base text-[#956b50] dark:text-[#e7d5cf] animate-fadeIn delay-100">
@@ -120,7 +120,7 @@ const Login = () => {
                     <form className="space-y-5 relative">
                         {/* Email/Phone Input with focus animation */}
                         <div className="space-y-1.5 group">
-                            <label className="block text-sm font-semibold text-[#1b130e] dark:text-white mr-1 transition-colors group-focus-within:text-[#ec4d18]">
+                            <label className="block text-sm font-semibold text-text-main dark:text-white mr-1 transition-colors group-focus-within:text-[#ec4d18]">
                                 البريد الإلكتروني أو رقم الهاتف
                             </label>
                             <div className="relative">
@@ -139,7 +139,7 @@ const Login = () => {
                         {/* Password Input with focus animation */}
                         <div className="space-y-1.5 group">
                             <div className="flex justify-between items-center px-1">
-                                <label className="text-sm font-semibold text-[#1b130e] dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
+                                <label className="text-sm font-semibold text-text-main dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
                                     كلمة المرور
                                 </label>
                                 <Link
@@ -184,7 +184,7 @@ const Login = () => {
                             <div className="w-full border-t border-[#e7d5cf] dark:border-[#3d2a24]"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-4 bg-white dark:bg-[#211711] text-[#956b50] dark:text-[#e7d5cf] relative overflow-hidden group">
+                            <span className="px-4 bg-white dark:bg-bg-footer text-[#956b50] dark:text-[#e7d5cf] relative overflow-hidden group">
                                 أو
                                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#ec4d18] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                             </span>

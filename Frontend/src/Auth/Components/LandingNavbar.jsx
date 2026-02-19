@@ -100,8 +100,8 @@ const Navbar = () => {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${
         isScrolled
-          ? 'bg-white/95 dark:bg-[#211711]/95 backdrop-blur-md shadow-lg'
-          : 'bg-white dark:bg-[#211711]'
+          ? 'bg-white/95 dark:bg-bg-footer/95 backdrop-blur-md shadow-lg'
+          : 'bg-white dark:bg-bg-footer'
       } border-b border-[#e7d5cf] dark:border-[#3d2a24] px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
       dir="rtl"
     >

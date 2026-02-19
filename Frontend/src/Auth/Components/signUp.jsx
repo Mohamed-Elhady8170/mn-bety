@@ -64,7 +64,7 @@ const SignUp = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="flex w-full max-w-[1100px] overflow-hidden rounded-3xl bg-white dark:bg-[#211711] shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm bg-white/95 dark:bg-[#211711]/95">
+            <div className="flex w-full max-w-275 overflow-hidden rounded-3xl bg-white dark:bg-bg-footer shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm">
 
                 {/* Registration Form Section */}
                 <div className="flex w-full flex-col p-6 md:p-10 lg:w-1/2 relative">
@@ -74,16 +74,16 @@ const SignUp = () => {
                     <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse delay-700"></div>
 
                     <div className="mb-6 animate-fadeIn">
-                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-[#1b130e] dark:text-white mb-2">إنشاء حساب جديد</h1>
+                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-text-main dark:text-white mb-2">إنشاء حساب جديد</h1>
                         <p className="text-[#956b50] dark:text-[#e7d5cf] text-sm md:text-base">انضم إلى أكبر مجتمع للحرفيين والمبدعين في المنطقة</p>
                     </div>
 
                     <form className="flex flex-col gap-4">
                         {/* Role Selector */}
                         <div className="flex flex-col gap-2 animate-fadeIn delay-100">
-                            <span className="text-[#1b130e] dark:text-white text-sm font-semibold">نوع الحساب</span>
+                            <span className="text-text-main dark:text-white text-sm font-semibold">نوع الحساب</span>
                             <div className="flex h-11 w-full items-center justify-center rounded-xl bg-[#f3ece8] dark:bg-white/5 p-1">
-                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'buyer' ? 'bg-white dark:bg-[#211711] shadow-sm text-[#ec4d18]' : 'text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18]'}`}>
+                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'buyer' ? 'bg-white dark:bg-bg-footer shadow-sm text-[#ec4d18]' : 'text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18]'}`}>
                                     <span className="truncate">مشتري (تسوق)</span>
                                     <input
                                         checked={selectedRole === 'buyer'}
@@ -94,7 +94,7 @@ const SignUp = () => {
                                         value="buyer"
                                     />
                                 </label>
-                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'seller' ? 'bg-white dark:bg-[#211711] shadow-sm text-[#ec4d18]' : 'text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18]'}`}>
+                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'seller' ? 'bg-white dark:bg-bg-footer shadow-sm text-[#ec4d18]' : 'text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18]'}`}>
                                     <span className="truncate">بائع (حرفي)</span>
                                     <input
                                         checked={selectedRole === 'seller'}
@@ -112,7 +112,7 @@ const SignUp = () => {
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                             {/* Full Name */}
                             <div className="flex flex-col gap-1 md:col-span-2 group">
-                                <span className="text-[#1b130e] dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">الاسم الكامل</span>
+                                <span className="text-text-main dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">الاسم الكامل</span>
                                 <div className="relative">
                                     <User className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
                                     <input
@@ -125,7 +125,7 @@ const SignUp = () => {
 
                             {/* Email */}
                             <div className="flex flex-col gap-1 md:col-span-2 lg:col-span-1 group">
-                                <span className="text-[#1b130e] dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">البريد الإلكتروني</span>
+                                <span className="text-text-main dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">البريد الإلكتروني</span>
                                 <div className="relative">
                                     <Mail className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
                                     <input
@@ -138,7 +138,7 @@ const SignUp = () => {
 
                             {/* Phone */}
                             <div className="flex flex-col gap-1 md:col-span-2 lg:col-span-1 group">
-                                <span className="text-[#1b130e] dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">رقم الهاتف</span>
+                                <span className="text-text-main dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">رقم الهاتف</span>
                                 <div className="relative">
                                     <Phone className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
                                     <input
@@ -152,7 +152,7 @@ const SignUp = () => {
 
                             {/* Password */}
                             <div className="flex flex-col gap-1 md:col-span-2 group">
-                                <span className="text-[#1b130e] dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">كلمة المرور</span>
+                                <span className="text-text-main dark:text-white text-sm font-semibold transition-colors group-focus-within:text-[#ec4d18]">كلمة المرور</span>
                                 <div className="relative">
                                     <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
                                     <input
@@ -210,7 +210,7 @@ const SignUp = () => {
                             className="h-full w-full object-cover opacity-20 transition-transform duration-700 group-hover:scale-110"
                             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBrg3vmm_s7yWM-S_43O8Ekj7z58lRjJbDgo7-SL0WJgK_YEok1McylNMrtzxdVo8J1mO1AwkAPJcV2W6FTMZwo2tZKeZZmb_we5_ilHznfP4qYKGFb5HiksyhcbTdiETzdje5VTU7AKcCNYvq2s9tOU63eZMr1GUSoabxZSb3a59Jy_N2oxup43QCTD4PzLqhSztka8Jp3JJNkFjUlTlahUeW0fyG1TPC6VYt8bIB_97eH45c-3K76KSBvGLD4lX85vGTA6WL8LmiG"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#f3ece8] dark:from-[#2d2d2d] via-transparent to-transparent"></div>
+                        <div className="absolute inset-0 bg-linear-to-t from-[#f3ece8] dark:from-[#2d2d2d] via-transparent to-transparent"></div>
                     </div>
 
                     {/* Decorative circles */}
@@ -218,23 +218,23 @@ const SignUp = () => {
                     <div className="absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-[#ec4d18]/5 animate-pulse delay-700"></div>
 
                     <div className="relative z-10 flex flex-col items-center text-center">
-                        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white dark:bg-[#211711] shadow-xl shadow-[#ec4d18]/10 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-white dark:bg-bg-footer shadow-xl shadow-[#ec4d18]/10 transform transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                             <Sparkles className="text-3xl text-[#ec4d18] w-8 h-8" />
                         </div>
 
-                        <h3 className="text-xl font-bold text-[#1b130e] dark:text-white mb-3 transition-transform duration-500 group-hover:translate-y-[-3px]">احترافية، جودة، وأصالة</h3>
+                        <h3 className="text-xl font-bold text-text-main dark:text-white mb-3 transition-transform duration-500 group-hover:-translate-y-0.75">احترافية، جودة، وأصالة</h3>
                         <p className="max-w-md text-[#956b50] dark:text-[#e7d5cf] text-sm leading-relaxed mb-8">
                             انضم إلينا لنحيي التراث العربي من خلال دعم الحرفيين المبدعين وتسهيل وصول منتجاتهم الفريدة لكل بيت.
                         </p>
 
                         <div className="grid grid-cols-2 gap-3">
-                            <div className="rounded-xl bg-white/80 dark:bg-[#211711]/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            <div className="rounded-xl bg-white/80 dark:bg-bg-footer/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <Shield className="text-[#ec4d18] mb-1 w-5 h-5 mx-auto" />
-                                <h4 className="font-bold text-xs text-[#1b130e] dark:text-white">بائعون موثوقون</h4>
+                                <h4 className="font-bold text-xs text-text-main dark:text-white">بائعون موثوقون</h4>
                             </div>
-                            <div className="rounded-xl bg-white/80 dark:bg-[#211711]/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
+                            <div className="rounded-xl bg-white/80 dark:bg-bg-footer/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <Truck className="text-[#ec4d18] mb-1 w-5 h-5 mx-auto" />
-                                <h4 className="font-bold text-xs text-[#1b130e] dark:text-white">شحن لكل المناطق</h4>
+                                <h4 className="font-bold text-xs text-text-main dark:text-white">شحن لكل المناطق</h4>
                             </div>
                         </div>
                     </div>

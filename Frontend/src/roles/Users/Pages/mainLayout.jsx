@@ -13,6 +13,7 @@ import AuthLayout from '../../../Auth/Pages/AuthLayout';
 import ForgotPassword from '../../../Auth/Components/ForgotPassword';
 import VerifyCode from '../../../Auth/Components/VerifyCode';
 import ResetPassword from '../../../Auth/Components/ResetPassword';
+import NotFound from '../../../Auth/Pages/NotFound';
 
 
 export const x = createBrowserRouter([
@@ -46,6 +47,6 @@ export const x = createBrowserRouter([
   },
    {
     path: "*",
-    element: <div>404 - الصفحة مش موجودة</div>,
+    element: <NotFound />,
   },
 ]);

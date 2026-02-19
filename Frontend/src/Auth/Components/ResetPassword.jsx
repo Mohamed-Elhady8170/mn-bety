@@ -62,7 +62,7 @@ const ResetPassword = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-[480px] bg-white dark:bg-[#211711] rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm bg-white/95 dark:bg-[#211711]/95 overflow-hidden">
+            <div className="w-full max-w-120 bg-white dark:bg-bg-footer rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm overflow-hidden">
 
                 {/* Decorative elements */}
                 <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse"></div>
@@ -75,14 +75,14 @@ const ResetPassword = () => {
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-[#ec4d18]/10 rounded-full mb-4">
                             <Lock className="text-[#ec4d18] w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-[#1b130e] dark:text-white mb-2">تعيين كلمة مرور جديدة</h2>
+                        <h2 className="text-2xl md:text-3xl font-black text-text-main dark:text-white mb-2">تعيين كلمة مرور جديدة</h2>
                         <p className="text-[#956b50] dark:text-[#e7d5cf] text-sm md:text-base">يرجى إدخال كلمة المرور الجديدة أدناه لتأمين حسابك في سوق الحرف.</p>
                     </div>
 
                     <form className="space-y-4">
                         {/* New Password Field */}
                         <div className="space-y-2 group">
-                            <label className="block text-sm font-semibold text-[#1b130e] dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
+                            <label className="block text-sm font-semibold text-text-main dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
                                 كلمة المرور الجديدة
                             </label>
                             <div className="relative">
@@ -110,7 +110,7 @@ const ResetPassword = () => {
 
                         {/* Confirm Password Field */}
                         <div className="space-y-2 group">
-                            <label className="block text-sm font-semibold text-[#1b130e] dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
+                            <label className="block text-sm font-semibold text-text-main dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
                                 تأكيد كلمة المرور
                             </label>
                             <div className="relative">
@@ -144,7 +144,7 @@ const ResetPassword = () => {
 
                         {/* Secondary Link */}
                         <div className="text-center pt-2 animate-fadeIn delay-200">
-                            <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-[#1b130e] dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
+                            <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
                                 <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
                                 <ArrowRight className="w-4 h-4" />
                             </Link>

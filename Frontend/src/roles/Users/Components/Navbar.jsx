@@ -58,9 +58,9 @@ const Navbar = () => {
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
-          ? 'bg-white/95 dark:bg-[#211711]/95 backdrop-blur-md shadow-lg'
-          : 'bg-white dark:bg-[#211711]'
-        } border-b border-[#e7d5cf] dark:border-[#3d2a24] px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
+          ? 'bg-white/95 dark:bg-bg-footer/95 backdrop-blur-md shadow-lg'
+          : 'bg-white dark:bg-bg-footer'
+        } border-b border-border-warm dark:border-border-dark px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto h-full">
@@ -197,7 +197,7 @@ const Navbar = () => {
               />
 
               {/* Profile Dropdown Menu */}
-              <div className="absolute left-0 top-full mt-2 w-48 bg-white  dark:bg-[#2d2d2d] rounded-xl shadow-lg border border-[#e7d5cf] dark:border-[#3d2a24] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 ">
+              <div className="absolute left-0 top-full mt-2 w-48 bg-white  dark:bg-bg-dark rounded-xl shadow-lg border border-border-warm dark:border-border-dark opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 ">
                 <div className="p-2">
                   <Link
                     to="/user/profile"
@@ -211,7 +211,7 @@ const Navbar = () => {
                   <a href="#" className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-[#f3ece8] dark:hover:bg-white/10 rounded-lg transition-colors">
                     الإعدادات
                   </a>
-                  <div className="border-t border-[#e7d5cf] dark:border-[#3d2a24] my-1"></div>
+                  <div className="border-t border-border-warm dark:border-border-dark my-1"></div>
                   <button
                     onClick={handleLogout}
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors"
@@ -244,13 +244,13 @@ const Navbar = () => {
           className={`md:hidden transition-all duration-500 overflow-hidden ${isOpen ? 'max-h-96 mt-4 opacity-100 animate-slide-down' : 'max-h-0 opacity-0'
             }`}
         >
-          <div className="bg-[#f3ece8] dark:bg-[#2d2d2d] rounded-2xl p-4 space-y-3 border border-[#e7d5cf] dark:border-[#3d2a24]">
+          <div className="bg-[#f3ece8] dark:bg-bg-dark rounded-2xl p-4 space-y-3 border border-border-warm dark:border-border-dark">
             {/* Mobile Search */}
             <div className="relative w-full mb-4">
               <input
                 type="text"
                 placeholder="ابحث عن قطعة فريدة..."
-                className="w-full pr-10 pl-4 py-2.5 bg-white dark:bg-[#3d3d3d] border-2 border-transparent rounded-xl focus:ring-2 text-sm transition-all duration-300 dark:text-white dark:placeholder:text-white/50"
+                className="w-full pr-10 pl-4 py-2.5 bg-white dark:bg-bg-darker border-2 border-transparent rounded-xl focus:ring-2 text-sm transition-all duration-300 dark:text-white dark:placeholder:text-white/50"
                 style={{
                   '--tw-ring-color': `${orangeColor}20`,
                   '--tw-ring-offset-shadow': `var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color)`,
@@ -298,16 +298,16 @@ const Navbar = () => {
             </nav>
 
             {/* Mobile Actions - Grid of icons with animations */}
-            <div className="grid grid-cols-4 gap-2 pt-2 border-t border-[#e7d5cf] dark:border-[#3d2a24]">
+            <div className="grid grid-cols-4 gap-2 pt-2 border-t border-border-warm dark:border-border-dark">
               {/* Favorite Icon - Mobile */}
-              <button className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-[#3d3d3d] border border-[#e7d5cf] dark:border-[#3d2a24] transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group">
+              <button className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-bg-darker border border-border-warm dark:border-border-dark transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group">
                 <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-[#ec4d18]" />
               </button>
 
               {/* Dark Mode Icon - Mobile   */}
               <button
                 onClick={toggleDarkMode}
-                className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-[#3d3d3d] border border-[#e7d5cf] dark:border-[#3d2a24] transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group"
+                className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-bg-darker border border-border-warm dark:border-border-dark transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group"
               >
                 <div className="relative">
                   {isDark ? (
@@ -319,7 +319,7 @@ const Navbar = () => {
               </button>
 
               {/* Language Icon - Mobile */}
-              <button className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-[#3d3d3d] border border-[#e7d5cf] dark:border-[#3d2a24] transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group">
+              <button className="flex items-center justify-center p-2 rounded-xl bg-white dark:bg-bg-darker border border-border-warm dark:border-border-dark transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group">
                 <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-[#ec4d18]" />
               </button>
 

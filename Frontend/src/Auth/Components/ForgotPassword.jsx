@@ -59,7 +59,7 @@ const ForgotPassword = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-[480px] bg-white dark:bg-[#211711] rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm bg-white/95 dark:bg-[#211711]/95 overflow-hidden">
+            <div className="w-full max-w-120 bg-white dark:bg-bg-footer rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm overflow-hidden">
 
                 {/* Decorative elements */}
                 <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse"></div>
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
 
                     {/* Text Section */}
                     <div className="flex flex-col gap-3 text-right animate-fadeIn">
-                        <h1 className="text-[#1b130e] dark:text-white text-2xl md:text-3xl font-black leading-tight">
+                        <h1 className="text-text-main dark:text-white text-2xl md:text-3xl font-black leading-tight">
                             نسيت كلمة المرور؟
                         </h1>
                         <p className="text-[#956b50] dark:text-[#e7d5cf] text-sm md:text-base font-normal leading-relaxed">
@@ -80,7 +80,7 @@ const ForgotPassword = () => {
                     {/* Input Section */}
                     <div className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2 group">
-                            <label className="text-[#1b130e] dark:text-white text-sm font-semibold px-1 transition-colors group-focus-within:text-[#ec4d18]">
+                            <label className="text-text-main dark:text-white text-sm font-semibold px-1 transition-colors group-focus-within:text-[#ec4d18]">
                                 البريد الإلكتروني أو رقم الهاتف
                             </label>
                             <div className="relative">
@@ -120,7 +120,7 @@ const ForgotPassword = () => {
 
                     {/* Back to Login */}
                     <div className="text-center">
-                        <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-[#1b130e] dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
+                        <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main dark:text-white font-medium hover:text-[#ec4d18] transition-colors group">
                             <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
                             <ArrowRight className="w-4 h-4" />
                         </Link>
