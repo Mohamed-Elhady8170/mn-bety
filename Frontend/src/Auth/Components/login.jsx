@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Eye, EyeOff, LogIn, Sparkles, Heart, Star, ShoppingBag, Shield, Truck, Award } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Floating icons data  
 const floatingIcons = [
@@ -14,6 +14,73 @@ const floatingIcons = [
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const navigate = useNavigate();
+
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(email);
+    };
+
+    // const validatePassword = (password) => {
+    //     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    //     return re.test(password);
+    // };
+
+    const getPasswordErrorMessage = (password) => {
+        if (!password) return 'كلمة المرور مطلوبة';
+        if (password.length < 8) return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+        if (!/[a-z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل';
+        if (!/[A-Z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل';
+        if (!/\d/.test(password)) return 'كلمة المرور يجب أن تحتوي على رقم واحد على الأقل';
+        return '';
+    };
+
+    const validateForm = () => {
+        let isValid = true;
+
+        if (!email) {
+            setEmailError('البريد الإلكتروني مطلوب');
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            setEmailError('البريد الإلكتروني غير صالح (مثال: name@domain.com)');
+            isValid = false;
+        } else {
+            setEmailError('');
+        }
+
+        const passwordErrorMessage = getPasswordErrorMessage(password);
+        if (passwordErrorMessage) {
+            setPasswordError(passwordErrorMessage);
+            isValid = false;
+        } else {
+            setPasswordError('');
+        }
+
+        return isValid;
+    };
+
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+        if (emailError) setEmailError('');
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (passwordError) setPasswordError('');
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        if (validateForm()) {
+            console.log('Login successful', { email, password });
+            navigate('/user');
+        }
+    };
 
     return (
         <main className="flex-1 flex items-center justify-center p-5 bg-gray-50 dark:bg-[#1a1a1a] font-cairo min-h-[calc(100vh-80px)] relative overflow-hidden">
@@ -62,7 +129,7 @@ const Login = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-237.5 overflow-hidden rounded-3xl bg-white dark:bg-bg-footer shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm flex flex-col md:flex-row-reverse">
+            <div className="w-full max-w-237.5 overflow-hidden rounded-3xl bg-white dark:bg-bg-footer shadow-xl shadow-[#ec4d18]/5 border border-border-warm dark:border-border-dark relative z-10 backdrop-blur-sm flex flex-col md:flex-row-reverse">
 
                 {/* Left Side: Image/Branding (Hidden on mobile)  */}
                 <div className="hidden md:block w-1/2 relative bg-linear-to-br from-[#ec4d18]/10 to-[#ec4d18]/5 overflow-hidden group">
@@ -112,28 +179,35 @@ const Login = () => {
                         <h2 className="text-3xl lg:text-4xl font-black text-text-main dark:text-white mb-2 animate-fadeIn">
                             مرحباً بك مجدداً
                         </h2>
-                        <p className="text-base text-[#956b50] dark:text-[#e7d5cf] animate-fadeIn delay-100">
+                        <p className="text-base text-[#956b50] dark:text-border-warm animate-fadeIn delay-100">
                             سجل دخولك للوصول إلى عالم الحرف اليدوية
                         </p>
                     </div>
 
-                    <form className="space-y-5 relative">
+                    <form onSubmit={handleSubmit} className="space-y-5 relative">
                         {/* Email/Phone Input with focus animation */}
                         <div className="space-y-1.5 group">
                             <label className="block text-sm font-semibold text-text-main dark:text-white mr-1 transition-colors group-focus-within:text-[#ec4d18]">
-                                البريد الإلكتروني أو رقم الهاتف
+                                البريد الإلكتروني   
                             </label>
                             <div className="relative">
                                 <input
-                                    className="w-full px-4 py-3 rounded-xl border border-[#e7d5cf] dark:border-[#3d2a24] bg-[#f3ece8] dark:bg-white/5 focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none text-right text-base dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                    className={`w-full px-4 py-3 rounded-xl border ${emailError ? 'border-red-500' : 'border-border-warm dark:border-border-dark'} bg-[#f3ece8] dark:bg-white/5 focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none text-right text-base dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10`}
                                     placeholder="example@mail.com"
                                     style={{ direction: 'ltr' }}
                                     type="text"
                                 />
                                 <Mail
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110"
+                                    className={`absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${emailError ? 'text-red-500' : 'text-[#956b50] dark:text-border-warm opacity-50 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18]'}`}
                                 />
                             </div>
+                            {emailError && (
+                                <p className="text-red-500 text-xs pr-1 mt-1 bg-red-50 dark:bg-red-500/10 p-2 rounded-lg border border-red-200 dark:border-red-500/20">
+                                    {emailError}
+                                </p>
+                            )}
                         </div>
 
                         {/* Password Input with focus animation */}
@@ -151,7 +225,9 @@ const Login = () => {
                             </div>
                             <div className="relative">
                                 <input
-                                    className="w-full px-4 py-3 rounded-xl border border-[#e7d5cf] dark:border-[#3d2a24] bg-[#f3ece8] dark:bg-white/5 focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none text-right text-base dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10"
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                    className={`w-full px-4 py-3 rounded-xl border ${passwordError ? 'border-red-500' : 'border-border-warm dark:border-border-dark'} bg-[#f3ece8] dark:bg-white/5 focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none text-right text-base dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10`}
                                     placeholder="********"
                                     style={{ direction: 'ltr' }}
                                     type={showPassword ? "text" : "password"}
@@ -159,32 +235,37 @@ const Login = () => {
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
+                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-border-warm hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
+                            {passwordError && (
+                                <p className="text-red-500 text-xs pr-1 mt-1 bg-red-50 dark:bg-red-500/10 p-2 rounded-lg border border-red-200 dark:border-red-500/20">
+                                    {passwordError}
+                                </p>
+                            )}
                         </div>
 
+         
+
                         {/* Login Button with hover animation */}
-                        <Link to="/user" className="w-full block">
-                            <button
-                                className="w-full py-3.5 bg-[#ec4d18] text-white font-bold text-base rounded-xl hover:bg-[#d43d0a] shadow-lg shadow-[#ec4d18]/20 transition-all duration-300 flex items-center justify-center gap-2 hover:gap-3 hover:shadow-xl hover:shadow-[#ec4d18]/30 active:scale-95 group"
-                                type="submit"
-                            >
-                                <span>تسجيل الدخول</span>
-                                <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
-                            </button>
-                        </Link>
+                        <button
+                            type="submit"
+                            className="w-full py-3.5 bg-[#ec4d18] text-white font-bold text-base rounded-xl hover:bg-[#d43d0a] shadow-lg shadow-[#ec4d18]/20 transition-all duration-300 flex items-center justify-center gap-2 hover:gap-3 hover:shadow-xl hover:shadow-[#ec4d18]/30 active:scale-95 group"
+                        >
+                            <span>تسجيل الدخول</span>
+                            <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                        </button>
                     </form>
 
                     {/* Divider with animation */}
                     <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-[#e7d5cf] dark:border-[#3d2a24]"></div>
+                            <div className="w-full border-t border-border-warm dark:border-border-dark"></div>
                         </div>
                         <div className="relative flex justify-center text-sm">
-                            <span className="px-4 bg-white dark:bg-bg-footer text-[#956b50] dark:text-[#e7d5cf] relative overflow-hidden group">
+                            <span className="px-4 bg-white dark:bg-bg-footer text-[#956b50] dark:text-border-warm relative overflow-hidden group">
                                 أو
                                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#ec4d18] transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                             </span>
@@ -193,7 +274,7 @@ const Login = () => {
 
                     {/* Footer Links with animation */}
                     <div className="text-center animate-fadeIn delay-200 ">
-                        <p className="text-base text-[#956b50] dark:text-[#e7d5cf]">
+                        <p className="text-base text-[#956b50] dark:text-border-warm">
                             ليس لديك حساب؟
                             <Link
                                 to="/auth/signup"

@@ -1,7 +1,7 @@
 // ResetPassword.jsx
 import React, { useState } from 'react';
 import { Lock, Eye, EyeOff, Check, ArrowRight, Sparkles, Award, Shield, Truck } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Floating icons data
 const floatingIcons = [
@@ -18,6 +18,99 @@ const ResetPassword = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
+    const navigate = useNavigate();
+
+    // const validatePassword = (password) => {
+    //     const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    //     return re.test(password);
+    // };
+
+    const getPasswordErrorMessage = (password) => {
+        if (!password) return 'كلمة المرور مطلوبة';
+        if (password.length < 8) return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+        if (!/[a-z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل';
+        if (!/[A-Z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل';
+        if (!/\d/.test(password)) return 'كلمة المرور يجب أن تحتوي على رقم واحد على الأقل';
+        return '';
+    };
+
+    const validateForm = () => {
+        const newErrors = {};
+        let isValid = true;
+
+        // Password validation
+        const passwordError = getPasswordErrorMessage(password);
+        if (passwordError) {
+            newErrors.password = passwordError;
+            isValid = false;
+        }
+
+        // Confirm password validation
+        if (!confirmPassword) {
+            newErrors.confirmPassword = 'تأكيد كلمة المرور مطلوب';
+            isValid = false;
+        } else if (confirmPassword !== password) {
+            newErrors.confirmPassword = 'كلمة المرور غير متطابقة';
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        return isValid;
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+        if (errors.password) {
+            setErrors(prev => ({ ...prev, password: '' }));
+        }
+        // Clear confirm password error if passwords match
+        if (confirmPassword && e.target.value === confirmPassword) {
+            setErrors(prev => ({ ...prev, confirmPassword: '' }));
+        }
+    };
+
+    const handleConfirmPasswordChange = (e) => {
+        setConfirmPassword(e.target.value);
+        if (errors.confirmPassword) {
+            setErrors(prev => ({ ...prev, confirmPassword: '' }));
+        }
+    };
+
+    const handleBlur = (field) => {
+        setTouched(prev => ({ ...prev, [field]: true }));
+        
+        // Validate on blur
+        if (field === 'password') {
+            const passwordError = getPasswordErrorMessage(password);
+            if (passwordError) {
+                setErrors(prev => ({ ...prev, password: passwordError }));
+            }
+        } else if (field === 'confirmPassword') {
+            if (!confirmPassword) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'تأكيد كلمة المرور مطلوب' }));
+            } else if (confirmPassword !== password) {
+                setErrors(prev => ({ ...prev, confirmPassword: 'كلمة المرور غير متطابقة' }));
+            }
+        }
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        
+        // Mark all fields as touched
+        setTouched({
+            password: true,
+            confirmPassword: true
+        });
+
+        if (validateForm()) {
+            // هنا هتضيفي logic تغيير كلمة المرور الفعلية
+            console.log('Password reset successful', { password });
+            navigate('/auth/login');
+        }
+    };
 
     return (
         <main className="flex-1 flex items-center justify-center p-4 md:p-6 bg-gray-50 dark:bg-[#1a1a1a] font-cairo min-h-[calc(100vh-80px)] relative overflow-hidden">
@@ -62,7 +155,7 @@ const ResetPassword = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-[#ec4d18]/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="w-full max-w-120 bg-white dark:bg-bg-footer rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-[#e7d5cf] dark:border-[#3d2a24] relative z-10 backdrop-blur-sm overflow-hidden">
+            <div className="w-full max-w-120 bg-white dark:bg-bg-footer rounded-2xl shadow-xl shadow-[#ec4d18]/5 border border-border-warm dark:border-border-dark relative z-10 backdrop-blur-sm overflow-hidden">
 
                 {/* Decorative elements */}
                 <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#ec4d18]/10 rounded-full blur-xl animate-pulse"></div>
@@ -76,36 +169,38 @@ const ResetPassword = () => {
                             <Lock className="text-[#ec4d18] w-8 h-8" />
                         </div>
                         <h2 className="text-2xl md:text-3xl font-black text-text-main dark:text-white mb-2">تعيين كلمة مرور جديدة</h2>
-                        <p className="text-[#956b50] dark:text-[#e7d5cf] text-sm md:text-base">يرجى إدخال كلمة المرور الجديدة أدناه لتأمين حسابك في سوق الحرف.</p>
+                        <p className="text-[#956b50] dark:text-border-warm text-sm md:text-base">يرجى إدخال كلمة المرور الجديدة أدناه لتأمين حسابك في سوق الحرف.</p>
                     </div>
 
-                    <form className="space-y-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         {/* New Password Field */}
                         <div className="space-y-2 group">
                             <label className="block text-sm font-semibold text-text-main dark:text-white transition-colors group-focus-within:text-[#ec4d18]">
                                 كلمة المرور الجديدة
                             </label>
                             <div className="relative">
-                                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
+                                <Lock className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${touched.password && errors.password ? 'text-red-500' : 'text-[#956b50] dark:text-border-warm opacity-50 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110'}`} />
                                 <input
-                                    className="w-full rounded-xl border border-[#e7d5cf] dark:border-[#3d2a24] bg-[#f3ece8] dark:bg-white/5 py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10"
+                                    className={`w-full rounded-xl border ${touched.password && errors.password ? 'border-red-500' : 'border-border-warm dark:border-border-dark'} bg-[#f3ece8] dark:bg-white/5 py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10`}
                                     placeholder="أدخل كلمة المرور الجديدة"
                                     type={showPassword ? "text" : "password"}
                                     value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    onChange={handlePasswordChange}
+                                    onBlur={() => handleBlur('password')}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-border-warm hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
-                            <p className="text-xs text-[#956b50] dark:text-[#e7d5cf] pr-1 flex items-center gap-1">
-                                <span className="text-sm">ℹ️</span>
-                                يجب أن تتكون من 8 أحرف على الأقل
-                            </p>
+                            {touched.password && errors.password && (
+                                <p className="text-red-500 text-xs pr-1 mt-1 bg-red-50 dark:bg-red-500/10 p-2 rounded-lg border border-red-200 dark:border-red-500/20">
+                                    {errors.password}
+                                </p>
+                            )}
                         </div>
 
                         {/* Confirm Password Field */}
@@ -114,32 +209,60 @@ const ResetPassword = () => {
                                 تأكيد كلمة المرور
                             </label>
                             <div className="relative">
-                                <Lock className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#956b50] dark:text-[#e7d5cf] opacity-50 transition-all duration-300 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110" />
+                                <Lock className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${touched.confirmPassword && errors.confirmPassword ? 'text-red-500' : 'text-[#956b50] dark:text-border-warm opacity-50 group-focus-within:opacity-100 group-focus-within:text-[#ec4d18] group-focus-within:scale-110'}`} />
                                 <input
-                                    className="w-full rounded-xl border border-[#e7d5cf] dark:border-[#3d2a24] bg-[#f3ece8] dark:bg-white/5 py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10"
+                                    className={`w-full rounded-xl border ${touched.confirmPassword && errors.confirmPassword ? 'border-red-500' : 'border-border-warm dark:border-border-dark'} bg-[#f3ece8] dark:bg-white/5 py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-[#ec4d18]/20 focus:border-[#ec4d18] transition-all duration-300 outline-none dark:text-white dark:placeholder:text-white/50 group-focus-within:shadow-lg group-focus-within:shadow-[#ec4d18]/10`}
                                     placeholder="أعد إدخال كلمة المرور"
                                     type={showConfirmPassword ? "text" : "password"}
                                     value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    onChange={handleConfirmPasswordChange}
+                                    onBlur={() => handleBlur('confirmPassword')}
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-[#e7d5cf] hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
+                                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#956b50] dark:text-border-warm hover:text-[#ec4d18] transition-all duration-300 hover:scale-110"
                                 >
                                     {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
                             </div>
+                            {touched.confirmPassword && errors.confirmPassword && (
+                                <p className="text-red-500 text-xs pr-1 mt-1 bg-red-50 dark:bg-red-500/10 p-2 rounded-lg border border-red-200 dark:border-red-500/20">
+                                    {errors.confirmPassword}
+                                </p>
+                            )}
                         </div>
+
+                        {/* Password requirements hint */}
+                        {touched.password && (
+                            <div className="text-xs text-[#956b50] dark:text-border-warm pr-1 space-y-1 bg-beige-soft/50 dark:bg-white/5 p-3 rounded-lg border border-border-warm dark:border-border-dark">
+                                <p className="font-semibold mb-1">متطلبات كلمة المرور:</p>
+                                <ul className="list-disc list-inside mr-2 space-y-1">
+                                    <li className={password.length >= 8 ? 'text-green-600 dark:text-green-400' : ''}>
+                                        • 8 أحرف على الأقل
+                                    </li>
+                                    <li className={/[a-z]/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
+                                        • حرف صغير واحد على الأقل (a-z)
+                                    </li>
+                                    <li className={/[A-Z]/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
+                                        • حرف كبير واحد على الأقل (A-Z)
+                                    </li>
+                                    <li className={/\d/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
+                                        • رقم واحد على الأقل (0-9)
+                                    </li>
+                                </ul>
+                            </div>
+                        )}
 
                         {/* Action Button */}
                         <div className="pt-2">
-                            <Link to="/auth/login" className="w-full block">
-                                <button className="w-full h-12 bg-[#ec4d18] hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold shadow-lg shadow-[#ec4d18]/20 hover:shadow-xl hover:shadow-[#ec4d18]/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group">
-                                    <span>حفظ وتغيير كلمة المرور</span>
-                                    <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
-                                </button>
-                            </Link>
+                            <button
+                                type="submit"
+                                className="w-full h-12 bg-[#ec4d18] hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold shadow-lg shadow-[#ec4d18]/20 hover:shadow-xl hover:shadow-[#ec4d18]/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
+                            >
+                                <span>حفظ وتغيير كلمة المرور</span>
+                                <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            </button>
                         </div>
 
                         {/* Secondary Link */}

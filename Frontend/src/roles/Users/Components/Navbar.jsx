@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingCart, User, Search, Leaf, Moon, Sun, Heart, LogOut, Globe } from 'lucide-react';
 import logo from '../../../assets/Logos/logo02.png';
 import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
