@@ -22,7 +22,7 @@ function OrderSummary() {
           <span>Total</span>
           <span className="text-primary">{totalPrice}</span>
         </div>
-        <Link to="" relative="path" replace>
+        <Link to="./order-success" replace>
           <button className="btn btn-primary w-full h-12">Checkout</button>
         </Link>
       </div>

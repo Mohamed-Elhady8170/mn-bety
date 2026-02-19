@@ -7,6 +7,8 @@ import Services from "./Services";
 import LandingPage from "../../../Auth/Pages/landingPage";
 import ProfilePage from "./ProfilePage";
 import ProductPage from "./ProductPage";
+import Cart from "../Pages/Cart";
+import OrderSuccess from "./OrderSuccess";
 import Login from "../../../Auth/Components/login";
 import SignUp from "../../../Auth/Components/signUp";
 import AuthLayout from "../../../Auth/Pages/AuthLayout";
@@ -14,7 +16,6 @@ import ForgotPassword from "../../../Auth/Components/ForgotPassword";
 import VerifyCode from "../../../Auth/Components/VerifyCode";
 import ResetPassword from "../../../Auth/Components/ResetPassword";
 import NotFound from "../../../Auth/Pages/NotFound";
-import Cart from "../Pages/Cart";
 
 export const x = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ export const x = createBrowserRouter([
       { path: "profile", element: <ProfilePage /> },
       { path: "products", element: <ProductPage /> },
       { path: "cart", element: <Cart /> },
+      { path: "cart/order-success", element: <OrderSuccess /> },
     ],
   },
   {

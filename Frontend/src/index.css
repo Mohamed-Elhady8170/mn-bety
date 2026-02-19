@@ -14,11 +14,11 @@
   /* Light mode text */
   --color-text-main: #1b130e;
   --color-text-subtle: #956b50;
-  --color-bg-footer: #211711;
-
+  --color-text-muted: #4a5565;
+  
   /* Borders */
   --color-border-main: #f3ece8;
-
+  
   /* Scroll-bar */
   --color-scrollbar-track: #f1f1f1;
 
@@ -49,7 +49,7 @@
 
   --color-text-main: #ffffff;
   --color-text-subtle: rgba(255, 255, 255, 0.6);
-  --color-text-muted: #99a1af;
+  --color-text-muted: #6a7282;
 
   --color-border-main: rgba(255, 255, 255, 0.1);
   --color-scrollbar-track: rgba(255, 255, 255, 0.1);
