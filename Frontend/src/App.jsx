@@ -1,10 +1,12 @@
-
-import { RouterProvider } from 'react-router-dom';
-import { x } from './roles/Users/Pages/mainLayout';
-
+import { RouterProvider } from "react-router-dom";
+import { x } from "./roles/Users/Pages/mainLayout";
+import { Provider } from "react-redux";
+import store from "./app/store";
 function App() {
   return (
-    <RouterProvider router={x} />
+    <Provider store={store}>
+      <RouterProvider router={x} />
+    </Provider>
   );
 }
 
