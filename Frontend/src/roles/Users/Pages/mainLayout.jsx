@@ -10,6 +10,9 @@ import ProductPage from './ProductPage';
 import Login from '../../../Auth/Components/login';
 import SignUp from '../../../Auth/Components/signUp';
 import AuthLayout from '../../../Auth/Pages/AuthLayout';
+import ForgotPassword from '../../../Auth/Components/ForgotPassword';
+import VerifyCode from '../../../Auth/Components/VerifyCode';
+import ResetPassword from '../../../Auth/Components/ResetPassword';
 
 
 export const x = createBrowserRouter([
@@ -24,7 +27,9 @@ export const x = createBrowserRouter([
     children: [
       { path: "login", element: <Login /> },
       { path: "signup", element: <SignUp /> },
-      // { path: "reset-password", element: <ResetPassword /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "verify-code", element: <VerifyCode /> },
+      { path: "reset-password", element: <ResetPassword /> },
     ],
   },
   {
