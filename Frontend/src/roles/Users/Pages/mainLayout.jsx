@@ -16,6 +16,7 @@ import ForgotPassword from "../../../Auth/Components/ForgotPassword";
 import VerifyCode from "../../../Auth/Components/VerifyCode";
 import ResetPassword from "../../../Auth/Components/ResetPassword";
 import NotFound from "../../../Auth/Pages/NotFound";
+import ProductDetails from "./ProductDetails";
 
 export const x = createBrowserRouter([
   {
@@ -43,6 +44,7 @@ export const x = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "products", element: <ProductPage /> },
+      { path: "products/details", element: <ProductDetails /> },
       { path: "cart", element: <Cart /> },
       { path: "cart/order-success", element: <OrderSuccess /> },
     ],

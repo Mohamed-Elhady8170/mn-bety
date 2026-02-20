@@ -3,6 +3,7 @@ import FavoriteButton from './FavoriteButton';
 import StarRating from './StarRating';
 import { FiShoppingCart } from 'react-icons/fi';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
+import { NavLink } from 'react-router-dom';
 const PRODUCTS = [
   {
     id: 1,
@@ -88,7 +89,7 @@ const PRODUCTS = [
 ];
 export default function ProductCard({ product, onToggleFavorite }) {
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
+    <NavLink to={`/user/products/details`} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
       <div className="relative overflow-hidden" style={{ height: 200 }}>
         <img
           src={product.image}
@@ -131,6 +132,6 @@ export default function ProductCard({ product, onToggleFavorite }) {
           </div>
         </div>
       </div>
-    </div>
+    </NavLink>
   );
 }
