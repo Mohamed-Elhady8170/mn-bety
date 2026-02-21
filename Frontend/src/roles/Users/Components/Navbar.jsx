@@ -140,6 +140,7 @@ const Navbar = () => {
               className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#f3ece8] dark:bg-white/10 transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white"
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = `${orangeColor}10`}
               onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
+              onClick={()=> navigate('/user/wishlist')}
             >
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 hover:scale-110" />
             </button>

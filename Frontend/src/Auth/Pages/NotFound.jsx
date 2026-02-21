@@ -80,7 +80,7 @@ const NotFound = () => {
             الصفحة غير موجودة
           </h2>
           
-          <p className="text-[#956b50] dark:text-[#e7d5cf] text-base md:text-lg mb-8 max-w-md animate-fadeIn delay-100">
+          <p className="text-[#956b50] dark:text-[e7d5cf] text-base md:text-lg mb-8 max-w-md animate-fadeIn delay-100">
             عذراً، الصفحة التي تبحث عنها غير موجودة أو قد تم نقلها. تحقق من الرابط أو عد إلى الصفحة الرئيسية.
           </p>
 
