@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand */
+
+  /* Brand Colors  */
   --color-primary: #ec5e0c;
+  --color-primary-10: rgba(236, 94, 12, 0.1);
+  --color-primary-20: rgba(236, 94, 12, 0.2);
+  --color-primary-30: rgba(236, 94, 12, 0.3);
+
   --color-clay: #956b50;
   --color-beige-soft: #f3ece8;
 
@@ -10,49 +15,79 @@
   --color-bg-main: #ffffff;
   --color-bg-subtle: #f3ece8;
   --color-bg-footer: #211711;
+  --color-bg-dark: #2d2d2d;
+  --color-bg-light: #f9fafb;
+  --color-dot: #000000;
 
   /* Light mode text */
   --color-text-main: #1b130e;
   --color-text-subtle: #956b50;
   --color-text-muted: #4a5565;
+   --color-text-navbar: #4b5563;
+
   
   /* Borders */
   --color-border-main: #f3ece8;
+  --color-border-warm: #e7d5cf;
+  --color-image-border: #ffffff;
   
   /* Scroll-bar */
   --color-scrollbar-track: #f1f1f1;
 
-  /* new colors */
-  --color-border-warm: #e7d5cf;
-  --color-border-dark: #3d2a24;
-  --color-bg-dark: #2d2d2d;
-  --color-bg-darker: #3d3d3d;
-  --color-red-soft: #fee2e2;
-  --color-red-soft-dark: rgba(239, 68, 68, 0.1);
-  --color-red-text: #ef4444;
-  --color-red-text-dark: #f87171;
-  --color-white-10: rgba(255, 255, 255, 0.1);
-  --color-white-50: rgba(255, 255, 255, 0.5);
-  --color-white-70: rgba(255, 255, 255, 0.7);
+   /* System Colors */
   --color-success-green: #2d6a4f;
   --color-danger: #fb2c36;
 
+ /* Red Family  */
+  --color-red-soft: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-text: #ef4444; 
+
+   /* Other Colors */
+  --color-white: #ffffff;
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-70: rgba(255, 255, 255, 0.7);
+
+  --color-yellow-500: #eab308;
+  
+  
   /* Fonts */
   --font-display: "Cairo", "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
   --font-body: "Cairo", "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
 }
 
 /* Dark mode overrides */
+
 .dark {
+    /* Surfaces */
   --color-bg-main: #211711;
   --color-bg-subtle: rgba(255, 255, 255, 0.05);
+  --color-bg-dark: #3d3d3d;
+  --color-bg-light: #1a1a1a;
+   --color-dot: #ec5e0c;
+   
 
+   /* Text Colors */
   --color-text-main: #ffffff;
   --color-text-subtle: rgba(255, 255, 255, 0.6);
   --color-text-muted: #6a7282;
+  --color-text-navbar: #ffffff;
 
+   /* Borders */
   --color-border-main: rgba(255, 255, 255, 0.1);
+   --color-border-warm: #3d2a24;
+   --color-image-border: #3d2a24;
   --color-scrollbar-track: rgba(255, 255, 255, 0.1);
+
+    /* Scroll-bar */
+  --color-scrollbar-track: rgba(255, 255, 255, 0.1);
+
+  /* Red Family */
+  --color-red-soft: rgba(239, 68, 68, 0.1);
+  --color-red-text: #f87171;
 }
 
 @layer base {
@@ -181,7 +216,7 @@
 
 @plugin "tailwindcss-animate";
 
-@custom-variant dark (&:is(.dark *));
+/* @custom-variant dark (&:is(.dark *)); */
 
 /* @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

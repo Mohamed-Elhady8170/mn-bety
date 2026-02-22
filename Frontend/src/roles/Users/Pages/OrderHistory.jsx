@@ -12,7 +12,8 @@ const OrderHistory = () => {
     { id: '64890', date: '45 oct 2023', items: 5, price: '890.00', status: 'Shipped', img: '' },
     
   ];
-
+     
+ {/* //////////الحاله اللي هعتمد عليها في المنتج بتاعي////////////*/}
   const getStatusBadge = (status) => {
     switch (status) {
       case 'Delivered': return 'bg-success-green/10 text-success-green';
@@ -26,7 +27,7 @@ const OrderHistory = () => {
     <div className="min-h-screen bg-bg-main text-text-main py-12 px-4 transition-colors duration-300">
       <div className="max-w-5xl mx-auto">
         
-        {/* Header */}
+        {/*/////////////// Header/////////////// */}
         <div className="flex flex-col md:flex-between mb-10 gap-4 animate-fadeIn">
           <div>
             <h1 className="text-3xl text-text-main">طلباتي</h1>
@@ -37,7 +38,7 @@ const OrderHistory = () => {
           </Link>
         </div>
 
-        {/* Orders List */}
+        {/*//////// Orders List ///////////*/}
         <div className="grid grid-cols-1 gap-6">
           {orders.map((order, index) => (
             <div 
@@ -56,7 +57,7 @@ const OrderHistory = () => {
                   />
                 </div>
 
-                {/* Details */}
+                {/* ///////////Details ////////////*/}
                 <div className="flex-1 w-full space-y-3">
                   <div className="flex-between">
                     <h3 className="text-lg text-text-main">طلب #{order.id}</h3>

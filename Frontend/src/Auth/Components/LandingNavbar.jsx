@@ -10,7 +10,7 @@ const Navbar = () => {
   const [activePath, setActivePath] = useState("/");
 
   // use dark mode state and toggle function
-  const [ isDark, toggleDarkMode ] = useDarkMode();
+  const [isDark, toggleDarkMode] = useDarkMode();
   
   // Toggle mobile menu
   const toggleMenu = () => setIsOpen(!isOpen);
@@ -57,13 +57,11 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: "الرئيسية", href: "/", active: true },
-    { name: "التصنيفات", href: "/#categories", active: false },
-    { name: "من نحن", href: "/#about", active: false },
-    { name: "ابدأ البيع", href: "/#sell", active: false },
+    { name: "الرئيسية", href: "/" },
+    { name: "التصنيفات", href: "/#categories" },
+    { name: "من نحن", href: "/#about" },
+    { name: "ابدأ البيع", href: "/#sell" },
   ];
-
-  const orangeColor = "#ec5e0c";
 
   // Handle smooth scroll for anchor links
   const handleAnchorClick = (e, href) => {
@@ -95,9 +93,9 @@ const Navbar = () => {
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${
         isScrolled
-          ? "bg-white/95 dark:bg-bg-footer/95 backdrop-blur-md shadow-lg"
-          : "bg-white dark:bg-bg-footer"
-      } border-b border-[#e7d5cf] dark:border-[#3d2a24] px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
+          ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
+          : "bg-bg-main"
+      } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto h-full">
@@ -129,19 +127,16 @@ const Navbar = () => {
                     href={link.href}
                     className={`text-sm font-bold transition-all duration-300 relative group cursor-pointer ${
                       isActive
-                        ? "text-[#ec4d18]"
-                        : "text-gray-600 dark:text-white hover:text-[#ec4d18]"
+                        ? "text-primary"
+                        : "text-text-navbar hover:text-primary"
                     }`}
                     onClick={(e) => handleAnchorClick(e, link.href)}
                   >
                     {link.name}
                     <span
-                      className={`absolute -bottom-2 left-0 w-full h-0.5 rounded-full transition-all duration-300 ${
-                        isActive
-                          ? "bg-[#ec4d18] scale-x-100"
-                          : "bg-[#ec4d18] scale-x-0 group-hover:scale-x-100"
+                      className={`absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                       }`}
-                      style={{ backgroundColor: orangeColor }}
                     />
                   </a>
                 );
@@ -153,9 +148,9 @@ const Navbar = () => {
           <div className="flex items-center gap-2 sm:gap-3 h-full">
             {/* Desktop: Language Button */}
             <button
-              className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-[#f3ece8] dark:bg-white/10 transition-all duration-300 hover:scale-105 hover:shadow-lg dark:text-white text-sm font-bold"
+              className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-105 hover:shadow-lg text-text-main text-sm font-bold"
               onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = `${orangeColor}10`)
+                (e.currentTarget.style.backgroundColor = "#ec5e0c10")
               }
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
             >
@@ -166,9 +161,9 @@ const Navbar = () => {
             {/* Desktop: Dark Mode Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#f3ece8] dark:bg-white/10 transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white"
+              className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main"
               onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = `${orangeColor}10`)
+                (e.currentTarget.style.backgroundColor = "#ec5e0c10")
               }
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
             >
@@ -185,13 +180,13 @@ const Navbar = () => {
             <div className="flex items-center gap-2">
               <Link
                 to="/auth/login"
-                className="hidden sm:block px-4 py-2 text-sm font-bold text-[#ec4d18] border-2 border-[#ec4d18] rounded-xl hover:bg-[#ec4d18] hover:text-white transition-all duration-300"
+                className="hidden sm:block px-4 py-2 text-sm font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
               >
                 تسجيل الدخول
               </Link>
               <Link
                 to="/auth/signup"
-                className="hidden sm:block px-4 py-2 text-sm font-bold text-white bg-[#ec4d18] rounded-xl hover:bg-[#d35400] transition-all duration-300"
+                className="hidden sm:block px-4 py-2 text-sm font-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
               >
                 إنشاء حساب
               </Link>
@@ -200,9 +195,9 @@ const Navbar = () => {
             {/* Mobile Menu Button */}
             <button
               onClick={toggleMenu}
-              className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-[#f3ece8] dark:bg-white/10 transition-all duration-300 hover:scale-110 dark:text-white"
+              className="md:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 text-text-main"
               onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = `${orangeColor}10`)
+                (e.currentTarget.style.backgroundColor = "#ec5e0c10")
               }
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
             >
@@ -219,11 +214,11 @@ const Navbar = () => {
         <div
           className={`md:hidden transition-all duration-500 overflow-hidden ${
             isOpen
-              ? "max-h-96 mt-4 opacity-100 animate-slide-down"
+              ? "max-h-96 mt-4 opacity-100"
               : "max-h-0 opacity-0"
           }`}
         >
-          <div className="bg-[#f3ece8] dark:bg-[#2d2d2d] rounded-2xl p-4 space-y-3 border border-[#e7d5cf] dark:border-[#3d2a24]">
+          <div className="bg-bg-subtle rounded-2xl p-4 space-y-3 border border-border-warm">
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => {
@@ -234,12 +229,9 @@ const Navbar = () => {
                     href={link.href}
                     className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 cursor-pointer ${
                       isActive
-                        ? "text-white shadow-lg"
-                        : "text-gray-600 dark:text-white hover:bg-[#ec4d18]/10"
+                        ? "bg-primary text-white shadow-lg"
+                        : "text-text-main hover:bg-primary/10"
                     }`}
-                    style={{
-                      backgroundColor: isActive ? orangeColor : "",
-                    }}
                     onClick={(e) => handleAnchorClick(e, link.href)}
                   >
                     {link.name}
@@ -248,40 +240,40 @@ const Navbar = () => {
               })}
             </nav>
 
-            <div className="flex flex-col gap-2 pt-2 border-t border-[#e7d5cf] dark:border-[#3d2a24]">
+            <div className="flex flex-col gap-2 pt-2 border-t border-border-warm">
               <Link
                 to="/auth/login"
-                className="w-full text-center px-4 py-2.5 text-sm font-bold text-[#ec4d18] border-2 border-[#ec4d18] rounded-xl hover:bg-[#ec4d18] hover:text-white transition-all duration-300"
+                className="w-full text-center px-4 py-2.5 text-sm font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 تسجيل الدخول
               </Link>
               <Link
                 to="/auth/signup"
-                className="w-full text-center px-4 py-2.5 text-sm font-bold text-white bg-[#ec4d18] rounded-xl hover:bg-[#d35400] transition-all duration-300"
+                className="w-full text-center px-4 py-2.5 text-sm font-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 إنشاء حساب
               </Link>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#e7d5cf] dark:border-[#3d2a24]">
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border-warm">
               <button
                 onClick={toggleDarkMode}
-                className="flex items-center justify-center gap-2 p-2 rounded-xl bg-white dark:bg-[#3d3d3d] border border-[#e7d5cf] dark:border-[#3d2a24] transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group"
+                className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
               >
                 <div className="relative">
                   {isDark ? (
                     <Sun className="w-5 h-5 transition-all duration-500 group-hover:rotate-90 group-hover:scale-110 group-hover:text-yellow-500" />
                   ) : (
-                    <Moon className="w-5 h-5 transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 group-hover:text-[#ec4d18]" />
+                    <Moon className="w-5 h-5 transition-all duration-500 group-hover:-rotate-12 group-hover:scale-110 group-hover:text-primary" />
                   )}
                 </div>
                 <span className="text-sm">{isDark ? "فاتح" : "داكن"}</span>
               </button>
 
-              <button className="flex items-center justify-center gap-2 p-2 rounded-xl bg-white dark:bg-[#3d3d3d] border border-[#e7d5cf] dark:border-[#3d2a24] transition-all duration-300 hover:scale-110 hover:shadow-lg dark:text-white group">
-                <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-[#ec4d18]" />
+              <button className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
+                <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 <span className="text-sm">EN</span>
               </button>
             </div>
