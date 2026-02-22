@@ -18,6 +18,8 @@ import NotFound from "../../../Auth/Pages/NotFound";
 import ProductDetails from "./ProductDetails";
 import WishList from "./WishList";
 import SellersPage from "./SellerPage";
+import OrderHistory from "./Orderhistory";
+
 
 export const x = createBrowserRouter([
   {
@@ -49,6 +51,8 @@ export const x = createBrowserRouter([
       { path: "wishlist", element: <WishList /> },
       { path: "cart", element: <Cart /> },
       { path: "cart/order-success", element: <OrderSuccess /> },
+       { path: "my-orders", element: <OrderHistory/> },
+
     ],
   },
   {
