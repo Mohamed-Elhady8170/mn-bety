@@ -1,0 +1,37 @@
+import React from 'react'
+import rotateImg from '../../../../assets/rotate-img.png';
+import { Quote } from 'lucide-react';
+
+export default function AboutSection() {
+  return (
+    <>
+    <section className="relative z-20 py-32 bg-amber-50 shadow-[0_-50px_100px_rgba(0,0,0,0.1)] rounded-t-[3rem] md:rounded-t-[5rem] -mt-20 overflow-hidden">
+        <div className="absolute left-[-60px] top-[40px] w-[250px] h-[250px] opacity-40 pointer-events-none z-0">
+          <img
+            src={rotateImg}
+            alt="شكل زخرفي"
+            className="w-full h-full object-contain animate-[spin_15s_linear_infinite]"
+          />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <div className="inline-block p-4 bg-orange-100/50 rounded-3xl text-[#ec4d18] mb-10">
+            <Quote size={48} fill="currentColor" className="opacity-20" />
+          </div>
+
+          <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-10">حكايتنا بدأت بشغف</h2>
+
+          <p className="text-xl md:text-3xl text-gray-700 leading-[1.8] font-medium italic">
+            "بدأنا <span className="text-[#ec4d18] font-bold">من بيتي</span> بحلم بسيط: إيجاد مساحة آمنة وموثوقة تجمع أصحاب المواهب اليدوية والأكلات المنزلية مع عشاق الجودة والأصالة. نحن نؤمن بأن كل قطعة تحمل قصة حب وشغف."
+          </p>
+
+          <div className="mt-16 flex justify-center gap-6">
+            <div className="h-1.5 w-16 bg-[#ec4d18] rounded-full"></div>
+            <div className="h-1.5 w-4 bg-gray-200 rounded-full"></div>
+            <div className="h-1.5 w-4 bg-gray-200 rounded-full"></div>
+          </div>
+        </div>
+      </section>
+    </>
+  )
+}
