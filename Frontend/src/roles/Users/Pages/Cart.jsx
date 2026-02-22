@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import { selectAllCartItems } from "../Features/cartSlice";
-import EmptyCart from "../Components/cart/EmptyCart";
+import EmptyCart from "../Components/Cart/EmptyCart";
 import ItemRow from "../Components/Cart/ItemRow";
-import OrderSummary from "../Components/cart/OrderSummary";
+import OrderSummary from "../Components/Cart/OrderSummary";
 
 function Cart() {
   const cartItems = useSelector(selectAllCartItems);
