@@ -2,7 +2,6 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from "./Layout";
 import Home from "./Home";
 import About from "./About";
-import Contact from "./Contact";
 import Services from "./Services";
 import LandingPage from "../../../Auth/Pages/landingPage";
 import ProfilePage from "./ProfilePage";
@@ -18,6 +17,7 @@ import ResetPassword from "../../../Auth/Components/ResetPassword";
 import NotFound from "../../../Auth/Pages/NotFound";
 import ProductDetails from "./ProductDetails";
 import WishList from "./WishList";
+import SellersPage from "./SellerPage";
 
 export const x = createBrowserRouter([
   {
@@ -42,7 +42,7 @@ export const x = createBrowserRouter([
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
       { path: "services", element: <Services /> },
-      { path: "contact", element: <Contact /> },
+      { path: "contact", element: <SellersPage /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "products", element: <ProductPage /> },
       { path: "products/details", element: <ProductDetails /> },
