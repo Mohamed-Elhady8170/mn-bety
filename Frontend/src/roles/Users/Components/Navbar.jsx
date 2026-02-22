@@ -53,11 +53,10 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${
-        isScrolled
+      className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
           ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
           : "bg-bg-main"
-      } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
+        } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
       dir="rtl"
     >
       <div className="max-w-7xl mx-auto h-full">
@@ -80,18 +79,16 @@ const Navbar = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-sm font-bold transition-all duration-300 relative group ${
-                      isActive
+                    className={`text-sm font-bold transition-all duration-300 relative group ${isActive
                         ? "text-primary"
                         : "text-text-navbar hover:text-primary"
-                    }`}
+                      }`}
                     onClick={() => setActivePath(link.href)}
                   >
                     {link.name}
                     <span
-                      className={`absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300 ${
-                        isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                      }`}
+                      className={`absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300 ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                        }`}
                     />
                   </Link>
                 );
@@ -180,21 +177,13 @@ const Navbar = () => {
                   >
                     ملفي الشخصي
                   </Link>
-<<<<<<< HEAD
-               <Link
-               to="/user/my-orders" 
-               className="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-[#f3ece8] dark:hover:bg-white/10 rounded-lg transition-colors"
-                >
-                 طلباتي
-                </Link>
-=======
-                  <a
-                    href="#"
+                  <Link
+                    to="/user/my-orders"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                   >
                     طلباتي
-                  </a>
->>>>>>> 1aa3c45472d5b05788f9829732b85dad5ea20d09
+                  </Link>
+
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
@@ -250,11 +239,10 @@ const Navbar = () => {
                     <Link
                       key={link.name}
                       to={link.href}
-                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
-                        isActive
+                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${isActive
                           ? "bg-primary text-white shadow-lg"
                           : "text-text-main hover:bg-primary/10"
-                      }`}
+                        }`}
                       onClick={() => {
                         setActivePath(link.href);
                         setIsOpen(false);
