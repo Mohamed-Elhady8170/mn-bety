@@ -27,7 +27,6 @@ import ManageOrders from "../roles/Sellers/Pages/ManageOrders";
 import StoreProfile from "../roles/Sellers/Pages/StoreProfile";
 import SellerProductsPage from "../roles/Users/Pages/SellerProductsPage";
 
-
 export const x = createBrowserRouter([
   {
     path: "/",
@@ -62,7 +61,7 @@ export const x = createBrowserRouter([
       { path: "cart/order-success", element: <OrderSuccess /> },
        { path: "my-orders", element: <OrderHistory/> },
     
-       
+       { path: "seller-products/:id", element: <SellerProductsPage /> },
 
     ],
   },
