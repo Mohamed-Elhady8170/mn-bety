@@ -25,12 +25,14 @@ import ManageProducts from "../roles/Sellers/Pages/ManageProducts";
 import AddProduct from "../roles/Sellers/Pages/AddProduct";
 import ManageOrders from "../roles/Sellers/Pages/ManageOrders";
 import StoreProfile from "../roles/Sellers/Pages/StoreProfile";
+import SellerProductsPage from "../roles/Users/Pages/SellerProductsPage";
 
 
 export const x = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
+    
   },
   {
     path: "/auth",
@@ -41,6 +43,7 @@ export const x = createBrowserRouter([
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "verify-code", element: <VerifyCode /> },
       { path: "reset-password", element: <ResetPassword /> },
+      
     ],
   },
   {
@@ -58,6 +61,8 @@ export const x = createBrowserRouter([
       { path: "cart", element: <Cart /> },
       { path: "cart/order-success", element: <OrderSuccess /> },
        { path: "my-orders", element: <OrderHistory/> },
+    
+       
 
     ],
   },
