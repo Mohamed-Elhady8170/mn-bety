@@ -19,6 +19,12 @@ import ProductDetails from "./ProductDetails";
 import WishList from "./WishList";
 import SellersPage from "./SellerPage";
 import OrderHistory from "./Orderhistory";
+import SellerLayout from "../../Sellers/Pages/SellerLayout";
+import SellerPage from "../../Sellers/Pages/SellerPage";
+import ManageProducts from "../../Sellers/Pages/ManageProducts";
+import AddProduct from "../../Sellers/Pages/AddProduct";
+import ManageOrders from "../../Sellers/Pages/ManageOrders";
+import StoreProfile from "../../Sellers/Pages/StoreProfile";
 
 
 export const x = createBrowserRouter([
@@ -53,6 +59,17 @@ export const x = createBrowserRouter([
       { path: "cart/order-success", element: <OrderSuccess /> },
        { path: "my-orders", element: <OrderHistory/> },
 
+    ],
+  },
+  {
+    path: "/seller",
+    element: <SellerLayout />,
+    children: [
+      { index: true, element: <SellerPage /> },
+      { path: "products", element: <ManageProducts /> },
+      { path: "addProduct", element: <AddProduct /> },
+      { path: "orders", element: <ManageOrders /> },
+      { path: "profile", element: <StoreProfile /> },
     ],
   },
   {
