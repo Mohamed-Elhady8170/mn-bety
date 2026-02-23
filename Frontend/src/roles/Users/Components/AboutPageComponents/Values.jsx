@@ -13,7 +13,9 @@ export default function Values() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="group relative p-10 rounded-[3rem] transition-all duration-500 bg-bg-main border border-primary/20 hover:border-primary hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)] flex flex-col items-center text-center space-y-8">
+            <div className="group relative p-10 rounded-[3rem] 
+             bg-bg-main border border-primary/20 hover:border-primary 
+            flex flex-col items-center text-center space-y-8 transition-all duration-500 ease-in-out hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)] hover:-translate-y-2">
               <div className="relative">
                 <div className="text-primary w-24 h-24 flex items-center justify-center">
                   <ShieldCheck size={48} className='transition-all duration-700 ease-in-out group-hover:rotate-359' />
@@ -27,7 +29,8 @@ export default function Values() {
               <div className="absolute bottom-8 w-12 h-1 bg-primary/20 rounded-full group-hover:w-24 group-hover:bg-primary transition-all duration-500"></div>
             </div>
 
-            <div className="group relative p-10 rounded-[3rem] transition-all duration-500 bg-bg-main border border-primary/20 hover:border-primary hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)] flex flex-col items-center text-center space-y-8">
+            <div className="group relative p-10 rounded-[3rem] bg-bg-main border border-primary/20 hover:border-primary ] 
+            flex flex-col items-center text-center space-y-8 transition-all duration-500 ease-in-out hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)] hover:-translate-y-2">
               <div className="relative">
                 <div className="text-primary w-24 h-24 flex items-center justify-center">
                   <Users size={48} className='transition-all duration-700 ease-in-out group-hover:rotate-359' />
@@ -41,7 +44,8 @@ export default function Values() {
               <div className="absolute bottom-8 w-12 h-1 bg-primary/20 rounded-full group-hover:w-24 group-hover:bg-primary transition-all duration-500"></div>
             </div>
 
-            <div className="group relative p-10 rounded-[3rem] transition-all duration-500 bg-bg-main border border-primary/20 hover:border-primary hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)] flex flex-col items-center text-center space-y-8">
+            <div className="group relative p-10 rounded-[3rem] bg-bg-main border border-primary/20 hover:border-primary hover:shadow-[0_30px_60px_-15px_rgba(236,77,24,0.1)]
+             flex flex-col items-center text-center space-y-8 transition-all duration-500 ease-in-out hover:-translate-y-2">
               <div className="relative">
                 <div className="text-primary w-24 h-24 flex items-center justify-center">
                   <Sparkles size={48} className='transition-all duration-700 ease-in-out group-hover:rotate-359' />

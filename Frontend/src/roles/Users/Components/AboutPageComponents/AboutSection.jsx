@@ -5,8 +5,15 @@ import { Quote } from 'lucide-react';
 export default function AboutSection() {
   return (
     <>
-    <section className="relative z-20 py-32 bg-bg-amber-light shadow-[0_-50px_100px_rgba(0,0,0,0.1)] rounded-t-[3rem] md:rounded-t-[5rem] -mt-20 overflow-hidden">
-        <div className="absolute -left-15 top-10 w-62.5 h-62.5 opacity-40 pointer-events-none z-0">
+      <section className="relative z-20 py-32 bg-bg-amber-light shadow-[0_-50px_100px_rgba(0,0,0,0.1)] rounded-t-[3rem] md:rounded-t-[5rem] -mt-20 overflow-hidden">
+        <div className="absolute -left-5 md:-left-10 top-10 w-32 h-32 md:w-48 md:h-44 lg:w-50.5 lg:h-60.5 opacity-40 pointer-events-none z-0">
+          <img
+            src={rotateImg}
+            alt="شكل زخرفي"
+            className="w-full h-full object-contain animate-[spin_15s_linear_infinite]"
+          />
+        </div>
+        <div className="absolute -right-5 md:-right-10 top-10 w-32 h-32 md:w-48 md:h-44 lg:w-50.5 lg:h-60.5 opacity-40 pointer-events-none z-0">
           <img
             src={rotateImg}
             alt="شكل زخرفي"
@@ -19,7 +26,7 @@ export default function AboutSection() {
             <Quote size={48} fill="currentColor" className="opacity-20" />
           </div>
 
-          <h2 className="text-3xl md:text-5xl font-black text-text-main mb-10">حكايتنا بدأت بشغف</h2>
+          <h2 className="text-3xl md:text-4xl font-black text-text-main mb-10">حكايتنا بدأت بشغف</h2>
 
           <p className="text-xl md:text-3xl text-text-subtle leading-[1.8] font-medium italic">
             "بدأنا <span className="text-primary font-bold">من بيتي</span> بحلم بسيط: إيجاد مساحة آمنة وموثوقة تجمع أصحاب المواهب اليدوية والأكلات المنزلية مع عشاق الجودة والأصالة. نحن نؤمن بأن كل قطعة تحمل قصة حب وشغف."

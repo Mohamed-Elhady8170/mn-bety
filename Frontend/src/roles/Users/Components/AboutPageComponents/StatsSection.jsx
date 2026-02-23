@@ -29,7 +29,7 @@ export default function StatsSection() {
     <>
     <section className="py-10 bg-primary/5 relative overflow-hidden border-y border-primary/10">
         <div className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(var(--color-primary) 2px, transparent 2px)', backgroundSize: '40px 40px' }}>
+          style={{ backgroundImage: 'radial-gradient(var(--color-primary) 4px, transparent 2px)', backgroundSize: '40px 40px' }}>
         </div>
 
         <div className="max-w-6xl mx-auto px-6 relative z-10">
@@ -39,16 +39,16 @@ export default function StatsSection() {
               { label: 'منتج يدوي', value: '500+' },
               { label: 'عميل سعيد', value: '12k+' },
             ].map((stat, i) => (
-              <div key={i} className="relative group text-center px-6 py-10">
+              <div key={i} className="relative group text-center px-4 py-8">
                 <div className="absolute inset-0 scale-75 opacity-0 bg-primary/5 rounded-[3rem] transition-all duration-700 -z-10 group-hover:scale-100 group-hover:opacity-100"></div>
                 
-                <div className="mb-4 inline-block relative">
+                <div className="mb-3 inline-block relative">
                   <div className="w-12 h-1 bg-primary/20 mx-auto rounded-full overflow-hidden">
                     <div className="w-0 h-full bg-primary group-hover:w-full transition-all duration-700"></div>
                   </div>
                 </div>
 
-                <h3 className="text-5xl md:text-7xl font-black text-text-main mb-4 group-hover:text-primary transition-colors tabular-nums tracking-tighter">
+                <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-text-main mb-4 group-hover:text-primary transition-colors tabular-nums tracking-tighter">
                   <Counter end={stat.value} />
                 </h3>
 
