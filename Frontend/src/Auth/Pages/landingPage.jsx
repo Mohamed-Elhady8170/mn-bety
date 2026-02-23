@@ -4,7 +4,7 @@ import aboutImage from "../../assets/aboutlanding.jpg";
 import confetti from 'canvas-confetti';
 import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
-import Footer from "../../Roles/Users/Components/Footer";
+import Footer from "../../roles/Users/Components/Footer";
 
 const categories = [
   {

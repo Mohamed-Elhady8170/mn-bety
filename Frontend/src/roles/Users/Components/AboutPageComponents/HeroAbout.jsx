@@ -13,14 +13,14 @@ export default function HeroAbout() {
       >
         <div className="max-w-7xl mx-auto w-full relative z-10 text-center">
           <div className="space-y-6">
-            <h5 className="text-[#ec4d18] font-bold tracking-[0.3em] text-sm md:text-base flex justify-center items-center gap-2 drop-shadow-lg">
+            <h5 className="text-primary font-bold tracking-[0.3em] text-sm md:text-base flex justify-center items-center gap-2 drop-shadow-lg">
               <Sparkles size={20} />
               <span>من قلب بيوتنا لقلبك</span>
             </h5>
 
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight drop-shadow-2xl">
               أكثر من مجرد متجر.. <br />
-              نحن <span className="text-[#ec4d18]">عائلة حرفية</span>
+              نحن <span className="text-primary">عائلة حرفية</span>
             </h1>
           </div>
         </div>

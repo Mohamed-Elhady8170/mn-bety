@@ -1,4 +1,4 @@
-// import React, { useState } from 'react';
+import React from 'react';
 import { Star, MapPin, BadgeCheck, ArrowRight, Store, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -71,19 +71,19 @@ export default function SellersPage() {
   const sortedSellers = [...MOCK_SELLERS].sort((a, b) => b.rating - a.rating);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] py-12 px-4 md:px-20 font-cairo" dir="rtl">
+    <div className="min-h-screen bg-bg-light py-12 px-4 md:px-20 font-cairo" dir="rtl">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center justify-center gap-2 bg-[#FFF7ED] text-[#ec4d18] px-4 py-2 rounded-full text-sm font-bold mb-4 border border-[#FFEDD5]">
+          <div className="inline-flex items-center justify-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4 border border-primary/20">
             <Sparkles size={16} />
             <span>نخبة الحرفيين</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-black text-gray-900 mb-4 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-black text-text-main mb-4 leading-tight">
             تعرف على المبدعين خلف المنتجات
           </h1>
-          <p className="text-[#956b50] text-lg leading-relaxed">
+          <p className="text-text-subtle text-lg leading-relaxed">
             مجموعة من أمهر الحرفيين والمبدعين الموثوقين. تم ترتيبهم بناءً على تقييمات العملاء لضمان أفضل تجربة تسوق لك.
           </p>
         </div>
@@ -91,14 +91,14 @@ export default function SellersPage() {
         {/* Sellers Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {sortedSellers.map((seller, index) => (
-            <div key={seller.id} className="bg-white rounded-3xl p-6 border border-[#e7d5cf] hover:shadow-xl hover:border-[#ec4d18]/30 transition-all duration-300 relative overflow-hidden group">
+            <div key={seller.id} className="bg-bg-main rounded-3xl p-6 border border-border-warm hover:shadow-xl hover:border-primary/30 transition-all duration-300 relative overflow-hidden group">
               
               {/* Ranking Badge (1st, 2nd, 3rd get special colors) */}
               <div className={`absolute top-0 right-0 w-12 h-12 flex items-center justify-center font-black text-lg rounded-bl-3xl z-10 ${
-                index === 0 ? 'bg-yellow-400 text-yellow-900' : 
-                index === 1 ? 'bg-gray-200 text-gray-700' : 
-                index === 2 ? 'bg-orange-300 text-orange-900' : 
-                'bg-gray-50 text-gray-400'
+                index === 0 ? 'bg-yellow-500 text-white' : 
+                index === 1 ? 'bg-gray-300 text-gray-700' : 
+                index === 2 ? 'bg-primary/30 text-primary' : 
+                'bg-bg-subtle text-text-subtle'
               }`}>
                 #{index + 1}
               </div>
@@ -108,46 +108,46 @@ export default function SellersPage() {
                 {/* Avatar & Basic Info */}
                 <div className="flex flex-col items-center sm:items-start sm:w-1/3">
                   <div className="relative w-24 h-24 mb-4">
-                    <img src={seller.avatar} alt={seller.name} className="w-full h-full rounded-full object-cover border-4 border-[#f3ece8] shadow-sm" />
+                    <img src={seller.avatar} alt={seller.name} className="w-full h-full rounded-full object-cover border-4 border-bg-subtle shadow-sm" />
                     {seller.verified && (
-                      <div className="absolute bottom-0 left-0 bg-white rounded-full p-0.5 shadow-sm">
+                      <div className="absolute bottom-0 left-0 bg-bg-main rounded-full p-0.5 shadow-sm">
                         <BadgeCheck className="text-blue-500 w-6 h-6 fill-current" />
                       </div>
                     )}
                   </div>
                   
-                  <h3 className="font-bold text-gray-900 text-lg text-center sm:text-right mb-1">{seller.name}</h3>
-                  <div className="flex items-center gap-1 text-sm text-gray-500 mb-2">
-                    <MapPin size={14} className="text-[#ec4d18]" />
+                  <h3 className="font-bold text-text-main text-lg text-center sm:text-right mb-1">{seller.name}</h3>
+                  <div className="flex items-center gap-1 text-sm text-text-subtle mb-2">
+                    <MapPin size={14} className="text-primary" />
                     <span>{seller.location}</span>
                   </div>
 
                   {/* Rating Badge */}
-                  <div className="flex items-center gap-1.5 bg-[#FFF7ED] px-3 py-1.5 rounded-lg border border-[#FFEDD5]">
-                    <span className="font-black text-[#ec4d18]">{seller.rating}</span>
-                    <Star size={14} className="text-[#F59E0B] fill-current" />
-                    <span className="text-xs text-[#956b50]">({seller.reviews})</span>
+                  <div className="flex items-center gap-1.5 bg-primary/10 px-3 py-1.5 rounded-lg border border-primary/20">
+                    <span className="font-black text-primary">{seller.rating}</span>
+                    <Star size={14} className="text-yellow-500 fill-current" />
+                    <span className="text-xs text-text-subtle">({seller.reviews})</span>
                   </div>
                 </div>
 
                 {/* Bio & Products */}
                 <div className="sm:w-2/3 flex flex-col justify-between">
                   <div>
-                    <p className="text-[#956b50] text-sm leading-relaxed mb-4 text-center sm:text-right">
+                    <p className="text-text-subtle text-sm leading-relaxed mb-4 text-center sm:text-right">
                       "{seller.bio}"
                     </p>
                     
                     {/* Mini Gallery */}
                     <div className="flex gap-2 mb-6 justify-center sm:justify-start">
                       {seller.topProducts.map((img, i) => (
-                        <div key={i} className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 border border-gray-100">
+                        <div key={i} className="w-16 h-16 rounded-xl overflow-hidden bg-bg-subtle border border-border-main">
                           <img src={img} alt="Product preview" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
                         </div>
                       ))}
                     </div>
                   </div>
 
-                  <button className="w-full sm:w-auto bg-white border-2 border-[#ec4d18] text-[#ec4d18] hover:bg-[#ec4d18] hover:text-white px-6 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group/btn">
+                  <button className="w-full sm:w-auto bg-bg-main border-2 border-primary text-primary hover:bg-primary hover:text-white px-6 py-2.5 rounded-xl font-bold transition-all flex items-center justify-center gap-2 group/btn">
                     <Store size={18} />
                     <span>زيارة المتجر</span>
                     <ArrowRight size={18} className="rotate-180 transition-transform group-hover/btn:-translate-x-1" />

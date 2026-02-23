@@ -4,6 +4,7 @@ import StarRating from './StarRating';
 import { FiShoppingCart } from 'react-icons/fi';
 import { HiOutlineLocationMarker } from 'react-icons/hi';
 import { NavLink } from 'react-router-dom';
+
 const PRODUCTS = [
   {
     id: 1,
@@ -87,9 +88,13 @@ const PRODUCTS = [
     tag: "سلال",
   },
 ];
+
 export default function ProductCard({ product, onToggleFavorite }) {
   return (
-    <NavLink to={`/user/products/details`} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
+    <NavLink 
+      to={`/user/products/details`} 
+      className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col"
+    >
       <div className="relative overflow-hidden" style={{ height: 200 }}>
         <img
           src={product.image}
@@ -109,26 +114,26 @@ export default function ProductCard({ product, onToggleFavorite }) {
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-1 gap-2" dir="rtl">
-        <span className="text-xs text-[#ec4d18] font-semibold bg-amber-50 px-2 py-0.5 rounded-full w-fit">
+        <span className="text-xs text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full w-fit">
           {product.tag}
         </span>
-        <h3 className="text-sm font-bold text-gray-800 leading-snug">{product.title}</h3>
-        <p className="text-xs text-gray-400 flex items-center gap-1">
-          <HiOutlineLocationMarker className="w-3.5 h-3.5 text-gray-400" />
+        <h3 className="text-sm font-bold text-text-main leading-snug">{product.title}</h3>
+        <p className="text-xs text-text-subtle flex items-center gap-1">
+          <HiOutlineLocationMarker className="w-3.5 h-3.5 text-text-subtle" />
           <span>{product.subtitle}</span>
         </p>
         <StarRating rating={product.rating} />
 
         {/* Price + Cart */}
-        <div className="mt-auto flex items-center justify-between pt-2 border-t border-gray-100">
-          <button className="group w-8 h-8 rounded-full bg-[#ec4d18] hover:bg-amber-600 flex items-center justify-center text-white transition-all duration-300 shadow-md">
+        <div className="mt-auto flex items-center justify-between pt-2 border-t border-border-main">
+          <button className="group w-8 h-8 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center text-white transition-all duration-300 shadow-md">
             <FiShoppingCart
               className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
             />
           </button>
           <div className="text-right">
-            <span className="text-lg font-extrabold text-gray-900">{product.price.toLocaleString()}</span>
-            <span className="text-xs text-gray-500 mr-1">{product.currency}</span>
+            <span className="text-lg font-extrabold text-text-main">{product.price.toLocaleString()}</span>
+            <span className="text-xs text-text-subtle mr-1">{product.currency}</span>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, AlertTriangle, Sparkles, Award, Shield, Truck } from 'lucide-react';
-import useDarkMode from '../../hooks/useDarkMode'; // استيراد الـ hook
+import useDarkMode from '../../hooks/useDarkMode';  
 
 // Floating icons data  
 const floatingIcons = [
@@ -14,7 +14,7 @@ const floatingIcons = [
 ];
 
 const NotFound = () => {
-  
+
   useDarkMode();
 
   return (

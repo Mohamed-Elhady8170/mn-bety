@@ -4,10 +4,14 @@ export default function FavoriteButton({ active, onToggle }) {
   return (
     <button
       onClick={onToggle}
-      className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white shadow-md flex items-center justify-center transition-transform hover:scale-110"
+      className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-bg-main shadow-md flex items-center justify-center transition-transform hover:scale-110"
     >
       <svg
-        className={`w-4 h-4 transition-colors ${active ? "text-rose-500 fill-rose-500" : "text-gray-300 fill-transparent"}`}
+        className={`w-4 h-4 transition-colors ${
+          active 
+            ? "text-red-text fill-red-text" 
+            : "text-text-subtle fill-transparent"
+        }`}
         stroke="currentColor"
         strokeWidth="2"
         viewBox="0 0 24 24"

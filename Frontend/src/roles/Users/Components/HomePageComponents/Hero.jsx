@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const HeroSection = () => {
     const slides = [
@@ -12,17 +12,19 @@ const HeroSection = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isTransitioning, setIsTransitioning] = useState(true);
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            handleNext();
-        }, 3000);
-        return () => clearInterval(timer);
-    }, [currentSlide]);
+  
 
     const handleNext = () => {
         setIsTransitioning(true);
         setCurrentSlide((prev) => prev + 1);
     };
+
+      useEffect(() => {
+        const timer = setInterval(() => {
+            handleNext();
+        }, 3000);
+        return () => clearInterval(timer);
+    }, [currentSlide]);
 
     const handleTransitionEnd = () => {
         if (currentSlide === infiniteSlides.length - 1) {
@@ -33,9 +35,9 @@ const HeroSection = () => {
 
     return (
         <div className="container mx-auto px-4 lg:px-10 py-8" dir="ltr">
-            <div className="flex flex-col lg:flex-row gap-4 lg:h-[500px] items-stretch">
+            <div className="flex flex-col lg:flex-row gap-4 lg:h-125 items-stretch">
                 
-                <div className="w-full lg:w-1/3 h-[300px] lg:h-full">
+                <div className="w-full lg:w-1/3 h-75 lg:h-full">
                     <img
                         src="https://i.pinimg.com/736x/6a/f1/45/6af14548276ab98b27064f65b087925b.jpg"
                         alt="side banner"
@@ -43,7 +45,7 @@ const HeroSection = () => {
                     />
                 </div>
 
-                <div className="w-full lg:w-2/3 h-[300px] lg:h-full relative overflow-hidden rounded-2xl shadow-md group">
+                <div className="w-full lg:w-2/3 h-75 lg:h-full relative overflow-hidden rounded-2xl shadow-md group">
                     <div
                         className={`flex h-full ${isTransitioning ? 'transition-transform duration-700 ease-in-out' : ''}`}
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -60,7 +62,7 @@ const HeroSection = () => {
                         ))}
                     </div>
 
-                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+                    <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 rtl:space-x-reverse z-10">
                         {slides.map((_, index) => (
                             <button
                                 key={index}
@@ -69,7 +71,9 @@ const HeroSection = () => {
                                     setCurrentSlide(index);
                                 }}
                                 className={`h-2.5 transition-all duration-300 rounded-full ${
-                                    (currentSlide % slides.length) === index ? "w-8 bg-white" : "w-2.5 bg-white/40"
+                                    (currentSlide % slides.length) === index 
+                                        ? "w-8 bg-primary" 
+                                        : "w-2.5 bg-white/40 hover:bg-primary/60"
                                 }`}
                             />
                         ))}

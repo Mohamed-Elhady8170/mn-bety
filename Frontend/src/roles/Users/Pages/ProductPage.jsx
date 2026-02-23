@@ -119,8 +119,9 @@ export default function ProductPage() {
       if (sort === "rating") return b.rating - a.rating;
       return 0;
     });
+    
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-start">
           <Sidebar priceRange={priceRange} setPriceRange={setPriceRange} />

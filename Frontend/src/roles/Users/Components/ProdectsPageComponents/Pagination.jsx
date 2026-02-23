@@ -6,7 +6,7 @@ export default function Pagination({ current, total, onChange }) {
       <button
         onClick={() => onChange(Math.max(1, current - 1))}
         disabled={current === 1}
-        className="w-9 h-9 rounded-xl border border-gray-200 text-gray-500 flex items-center justify-center hover:bg-amber-50 disabled:opacity-40 transition-colors"
+        className="w-9 h-9 rounded-xl border border-border-main text-text-subtle flex items-center justify-center hover:bg-primary/10 disabled:opacity-40 transition-colors"
       >
         ‹
       </button>
@@ -16,8 +16,8 @@ export default function Pagination({ current, total, onChange }) {
           onClick={() => onChange(p)}
           className={`w-9 h-9 rounded-xl text-sm font-semibold transition-all ${
             p === current
-              ? "bg-[#ec4d18] text-white shadow-md"
-              : "border border-gray-200 text-gray-600 hover:bg-amber-50"
+              ? "bg-primary text-white shadow-md"
+              : "border border-border-main text-text-main hover:bg-primary/10"
           }`}
         >
           {p}
@@ -26,7 +26,7 @@ export default function Pagination({ current, total, onChange }) {
       <button
         onClick={() => onChange(Math.min(total, current + 1))}
         disabled={current === total}
-        className="w-9 h-9 rounded-xl border border-gray-200 text-gray-500 flex items-center justify-center hover:bg-amber-50 disabled:opacity-40 transition-colors"
+        className="w-9 h-9 rounded-xl border border-border-main text-text-subtle flex items-center justify-center hover:bg-primary/10 disabled:opacity-40 transition-colors"
       >
         ›
       </button>
