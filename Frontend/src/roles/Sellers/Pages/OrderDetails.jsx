@@ -5,11 +5,10 @@ import OrdersProducts from '../Components/OrderDetailsComponents/OrdersProducts'
 
 const OrderDetails = () => {
     return (
-        <div className="p-6 bg-[#f8f9fa] min-h-screen dir-rtl" dir="rtl">
+        <div className="p-6 bg-bg-main min-h-screen dir-rtl" dir="rtl">
             <Header />
             <InfoCardsGrid />
             <OrdersProducts />
-            
         </div>
     );
 };

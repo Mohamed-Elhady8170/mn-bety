@@ -21,6 +21,7 @@
   --color-bg-amber-light: #fffbeb;
    --color-bg-mobile-menu: #f3ece8;
     --color-bg-mobile-actions: #ffffff;
+    --color-bg-body: #f8f9fa;
 
   /* Light mode text */
   --color-text-main: #1b130e;
@@ -54,9 +55,28 @@
   --color-white-50: rgba(255, 255, 255, 0.5);
   --color-white-70: rgba(255, 255, 255, 0.7);
 
+
   --color-yellow-500: #eab308;
-  
-  
+
+   /* Icon Backgrounds */
+  --color-icon-bg-blue: #e6f0fa;
+  --color-icon-bg-orange: #fff1e6;
+  --color-icon-bg-green: #e6f5e6;
+
+  /* Icon Colors */
+  --color-icon-blue: #2563eb;
+  --color-icon-orange: #ec5e0c;
+  --color-icon-green: #16a34a;
+
+  /* Hover States */
+  --color-hover-blue: #2563eb;
+  --color-hover-orange: #ec5e0c;
+  --color-hover-green: #16a34a;
+
+  /* Status Badge */
+  --color-badge-bg: #fff1e6;
+  --color-badge-text: #ec5e0c;
+
   /* Fonts */
   --font-display: "Cairo", "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
   --font-body: "Cairo", "Plus Jakarta Sans", "Noto Sans Arabic", sans-serif;
@@ -74,6 +94,7 @@
    --color-bg-amber-light: #211711;
    --color-bg-mobile-menu: #211711; 
     --color-bg-mobile-actions: rgba(255, 255, 255, 0.05);
+    --color-bg-body: #211711;
    
    
 
@@ -95,7 +116,32 @@
   /* Red Family */
   --color-red-soft: rgba(239, 68, 68, 0.1);
   --color-red-text: #f87171;
+  
+
+  
+  /* Icon Backgrounds */
+  --color-icon-bg-blue: rgba(37, 99, 235, 0.15);
+  --color-icon-bg-orange: rgba(236, 94, 12, 0.15);
+  --color-icon-bg-green: rgba(22, 163, 74, 0.15);
+
+  /* Icon Colors - */
+  --color-icon-blue: #60a5fa;
+  --color-icon-orange: #ec5e0c;
+  --color-icon-green: #4ade80;
+
+  /* Hover States */
+  --color-hover-blue: #2563eb;
+  --color-hover-orange: #ec5e0c;
+  --color-hover-green: #16a34a;
+
+  /* Status Badge */
+  --color-badge-bg: rgba(236, 94, 12, 0.2);
+  --color-badge-text: #ec5e0c;
+
+  
 }
+
+
 
 @layer base {
   * {
