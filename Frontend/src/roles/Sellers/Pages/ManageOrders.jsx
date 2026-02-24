@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Eye } from 'lucide-react';
-
+import { Link } from 'react-router-dom';
 export default function ManageOrders() {
   const [orders, setOrders] = useState([
     { id: "ORD-1042", customer: "أحمد علي", items: 2, total: 570, date: "2023-10-24", status: "pending" },
@@ -52,7 +52,7 @@ export default function ManageOrders() {
                   <td className="px-6 py-4 font-bold text-[#ec4d18]">{order.total} ج.م</td>
                   <td className="px-6 py-4 text-gray-500 text-sm">{order.date}</td>
                   <td className="px-6 py-4">
-                    <select 
+                    <select
                       value={order.status}
                       onChange={(e) => updateStatus(order.id, e.target.value)}
                       className={`text-sm font-bold px-3 py-1.5 rounded-xl border-0 outline-none cursor-pointer ${statusStyles[order.status]}`}
@@ -64,9 +64,13 @@ export default function ManageOrders() {
                     </select>
                   </td>
                   <td className="px-6 py-4 text-center">
-                    <button className="text-gray-400 hover:text-[#ec4d18] transition-colors p-2 bg-gray-50 rounded-lg" title="عرض التفاصيل">
+                    <Link
+                      to="/seller/seeorderdetails"
+                      className="text-gray-400 hover:text-[#ec4d18] transition-colors p-2 bg-gray-50 rounded-lg inline-flex items-center"
+                      title="عرض التفاصيل"
+                    >
                       <Eye size={20} />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))}
