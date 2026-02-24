@@ -1,8 +1,9 @@
+
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, ArrowRight, ShoppingBag, Star } from 'lucide-react';
+import { ShoppingCart, ArrowRight, ShoppingBag } from 'lucide-react';
 
-// بيانات تجريبية (سيتم استبدالها لاحقاً ببيانات من API)
+//   بيانات تجريبية لحد منجيب api
 const MOCK_PRODUCTS = [
   { id: 101, sellerId: 1, name: "ثوب مطرز أصيل", price: 850, image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?q=80&w=400" },
   { id: 102, sellerId: 1, name: "طرحة شغل يد", price: 200, image: "https://images.unsplash.com/photo-1610030469668-93514276477d?q=80&w=400" },
@@ -13,37 +14,61 @@ const MOCK_PRODUCTS = [
 export default function SellerProductsPage() {
   const { id } = useParams();
   
-  // فلترة المنتجات حسب الـ sellerId المستلم من الرابط
+  // فلترة المنتجات حسب الـ sellerId
   const products = MOCK_PRODUCTS.filter(p => p.sellerId === parseInt(id));
 
   return (
-    <div className="min-h-screen bg-bg-main text-text-main p-6 md:p-12 font-body" dir="rtl">
-      {/* Back Link */}
+    <div className="min-h-screen bg-bg-main text-text-main p-6 md:p-12 font-body transition-colors duration-300" dir="rtl">
+      
+      {/* رابط العودة - Back Link */}
       <div className="max-w-7xl mx-auto mb-8">
-        <Link to="/user/contact" className="flex items-center gap-2 text-primary hover:gap-4 transition-all w-fit font-bold">
+        <Link 
+          to="/user/contact" // 
+          className="flex items-center gap-2 text-primary hover:gap-4 transition-all w-fit font-bold"
+        >
           <ArrowRight size={20} />
           <span>العودة لجميع الحرفيين</span>
         </Link>
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-black mb-10 border-r-4 border-primary pr-4 leading-none">معرض المنتجات</h1>
+        <header className="mb-10">
+          <h1 className="text-3xl font-black border-r-4 border-primary pr-4 leading-none">
+            معرض المنتجات
+          </h1>
+        </header>
 
         {products.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {products.map((product) => (
-              <div key={product.id} className="card group bg-white dark:bg-bg-dark border border-border-main rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
-                <div className="aspect-square overflow-hidden bg-bg-subtle relative">
+              <div 
+                key={product.id} 
+                className="card group bg-bg-main dark:bg-bg-dark border border-border-main rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+              >
+                {/* حاوية الصورة */}
+                <div className="aspect-square overflow-hidden bg-bg-subtle relative border-b border-border-main">
                   <img 
                     src={product.image} 
                     alt={product.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
                   />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 dark:group-hover:bg-white/5 transition-colors" />
                 </div>
+
+                {/* تفاصيل المنتج */}
                 <div className="p-6">
-                  <h3 className="font-bold text-lg mb-2 line-clamp-1">{product.name}</h3>
+                  <h3 className="font-bold text-lg mb-2 line-clamp-1 group-hover:text-primary transition-colors">
+                    {product.name}
+                  </h3>
+                  
                   <div className="flex justify-between items-center mt-6">
-                    <span className="text-2xl font-black text-primary">{product.price} <small className="text-xs">ر.س</small></span>
+                    <div className="flex flex-col">
+                      <span className="text-2xl font-black text-primary">
+                        {product.price} 
+                        <span className="text-xs mr-1 font-medium">ر.س</span>
+                      </span>
+                    </div>
+                    
                     <button className="btn btn-primary p-3 rounded-2xl shadow-lg shadow-primary/20 active:scale-90 transition-transform">
                       <ShoppingCart size={20} />
                     </button>
@@ -53,9 +78,11 @@ export default function SellerProductsPage() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-32 bg-bg-subtle/10 rounded-[3rem] border-2 border-dashed border-border-main">
-            <ShoppingBag size={48} className="mx-auto text-text-muted mb-4 opacity-20" />
-            <p className="text-text-muted text-xl">هذا الحرفي لم يضف منتجات بعد.</p>
+          /* حالة عدم وجود منتجات */
+          <div className="text-center py-32 bg-bg-subtle/30 dark:bg-white/5 rounded-[3rem] border-2 border-dashed border-border-main">
+            <ShoppingBag size={48} className="mx-auto text-text-muted mb-4 opacity-30" />
+            <p className="text-text-muted text-xl font-bold">هذا الحرفي لم يضف منتجات بعد.</p>
+            <Link to="/user/contact" className="mt-4 inline-block text-primary hover:text-amber-700">اكتشف مبدعين آخرين</Link>
           </div>
         )}
       </div>
