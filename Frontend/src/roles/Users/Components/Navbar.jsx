@@ -18,6 +18,8 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activePath, setActivePath] = useState("/");
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+
   const navigate = useNavigate();
   const [isDark, toggleDarkMode] = useDarkMode();
 
@@ -40,8 +42,23 @@ const Navbar = () => {
     return () => clearTimeout(timer);
   }, [activePath]);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.profile-menu-container')) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
   const handleLogout = () => {
     console.log("Logging out...");
+  };
+
+  const toggleProfileMenu = () => {
+    setIsProfileMenuOpen(!isProfileMenuOpen);
   };
 
   const navLinks = [
@@ -54,8 +71,8 @@ const Navbar = () => {
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
-          ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
-          : "bg-bg-main"
+        ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
+        : "bg-bg-main"
         } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
       dir="rtl"
     >
@@ -79,9 +96,9 @@ const Navbar = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-sm font-bold transition-all duration-300 relative group ${isActive
-                        ? "text-primary"
-                        : "text-text-navbar hover:text-primary"
+                    className={`text-sm whitespace-nowrap font-bold transition-all duration-300 relative group ${isActive
+                      ? "text-primary"
+                      : "text-text-navbar hover:text-primary"
                       }`}
                     onClick={() => setActivePath(link.href)}
                   >
@@ -159,27 +176,31 @@ const Navbar = () => {
             </button>
 
             {/* Profile */}
-            <div className="relative group h-full flex items-center">
+            <div className="relative profile-menu-container  group h-full flex items-center">
               <div
                 className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cover bg-center border-2 border-primary/30 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary"
                 style={{
                   backgroundImage:
                     "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAI-YHQqJvazrcBvQB3QCcBiJnaU4gAkErk5nBSJ3S1j8pGv_Jej0WpJdoOzY3hbewvNWrYJHQiSHKypQup4DO6A9mBVKjScf0Tqvd09eHL8Z77BzRVN855np1BuVKNV3tgF2XIAPwBuGTIILg81vchAXMT3XZFGMznqkOMAmCa8K7xNdrYMgUvb_KkoPrd6y1Z8cPtScb2KZfWRGxGlMCGGy-aSSpPf0vuWFDOkdDgu5qbltW3t7gGSuNUTK22bf3L0mSghO9p-rgi')",
                 }}
+                onClick={toggleProfileMenu}
               />
 
               {/* Dropdown Menu */}
-              <div className="absolute left-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+              <div className={`absolute left-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+                }`}>
                 <div className="p-2">
                   <Link
                     to="/user/profile"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
+                    onClick={() => setIsProfileMenuOpen(false)}
                   >
                     ملفي الشخصي
                   </Link>
                   <Link
                     to="/user/my-orders"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
+                    onClick={() => setIsProfileMenuOpen(false)}
                   >
                     طلباتي
                   </Link>
@@ -187,12 +208,16 @@ const Navbar = () => {
                   <a
                     href="#"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
+                    onClick={() => setIsProfileMenuOpen(false)}
                   >
                     الإعدادات
                   </a>
                   <div className="border-t border-border-warm my-1"></div>
                   <button
-                    onClick={handleLogout}
+                    onClick={() => {
+                      handleLogout();
+                      setIsProfileMenuOpen(false);
+                    }}
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-text hover:bg-red-soft rounded-lg transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
@@ -219,13 +244,13 @@ const Navbar = () => {
         {/* Mobile Menu */}
         {isOpen && (
           <div className="md:hidden mt-4">
-            <div className="bg-bg-subtle rounded-2xl p-4 space-y-3 border border-border-warm">
+            <div className="bg-bg-mobile-menu rounded-2xl p-4 space-y-3 border border-border-warm">
               {/* Mobile Search */}
               <div className="relative w-full">
                 <input
                   type="text"
                   placeholder="ابحث عن قطعة فريدة..."
-                  className="w-full pr-10 pl-4 py-2.5 bg-bg-main border-2 border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 text-sm text-text-main placeholder:text-text-subtle"
+                  className="w-full pr-10 pl-4 py-2.5 bg-bg-mobile-actions border-2 border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 text-sm text-text-main placeholder:text-text-subtle"
                   dir="rtl"
                 />
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-subtle" />
@@ -240,8 +265,8 @@ const Navbar = () => {
                       key={link.name}
                       to={link.href}
                       className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${isActive
-                          ? "bg-primary text-white shadow-lg"
-                          : "text-text-main hover:bg-primary/10"
+                        ? "bg-primary text-white shadow-lg"
+                        : "text-text-main hover:bg-primary/10"
                         }`}
                       onClick={() => {
                         setActivePath(link.href);
@@ -256,13 +281,17 @@ const Navbar = () => {
 
               {/* Mobile Actions */}
               <div className="grid grid-cols-4 gap-2 pt-2 border-t border-border-warm">
-                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
+                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
+                  onClick={() => {
+                    navigate("/user/wishlist");
+                    setIsOpen(false);
+                  }}>
                   <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 </button>
 
                 <button
                   onClick={toggleDarkMode}
-                  className="flex items-center justify-center p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
+                  className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
                 >
                   {isDark ? (
                     <Sun className="w-5 h-5 transition-all duration-500 group-hover:rotate-90 group-hover:scale-110 group-hover:text-yellow-500" />
@@ -271,7 +300,7 @@ const Navbar = () => {
                   )}
                 </button>
 
-                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
+                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
                   <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 </button>
 

@@ -375,10 +375,7 @@ const SignUp = () => {
                         <div className="mt-2 text-center animate-fadeIn delay-300">
                             <p className="text-text-subtle text-sm">
                                 لديك حساب بالفعل؟
-                                {/* <Link to="/auth/login" className="text-primary font-bold hover:underline mr-1 transition-all hover:mr-2">
-                                    تسجيل الدخول
-                                </Link> */}
-                                  <Link to="/seller" className="text-primary font-bold hover:underline mr-1 transition-all hover:mr-2">
+                                <Link to="/auth/login" className="text-primary font-bold hover:underline mr-1 transition-all hover:mr-2">
                                     تسجيل الدخول
                                 </Link>
                             </p>

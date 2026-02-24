@@ -101,7 +101,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto h-full">
         <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
           {/* Logo Section */}
-          <div className="flex items-center gap-2 sm:gap-4 h-full">
+          <div className="flex items-center gap-2 sm:gap-4 h-full shrink-0">
             <Link
               to="/"
               className="flex items-center h-full"
@@ -125,7 +125,7 @@ const Navbar = () => {
                   <a
                     key={link.name}
                     href={link.href}
-                    className={`text-sm font-bold transition-all duration-300 relative group cursor-pointer ${
+                    className={`text-xs lg:text-sm font-bold transition-all duration-300 relative group cursor-pointer ${
                       isActive
                         ? "text-primary"
                         : "text-text-navbar hover:text-primary"
@@ -145,7 +145,7 @@ const Navbar = () => {
           </div>
 
           {/* Icons Section  */}
-          <div className="flex items-center gap-2 sm:gap-3 h-full">
+          <div className="flex items-center gap-2 sm:gap-3 h-full ">
             {/* Desktop: Language Button */}
             <button
               className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-105 hover:shadow-lg text-text-main text-sm font-bold"
@@ -177,16 +177,16 @@ const Navbar = () => {
             </button>
 
             {/* Auth Buttons */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <Link
                 to="/auth/login"
-                className="hidden sm:block px-4 py-2 text-sm font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
+                className="hidden sm:block px-2 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm whitespace-nowrap font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
               >
                 تسجيل الدخول
               </Link>
               <Link
                 to="/auth/signup"
-                className="hidden sm:block px-4 py-2 text-sm font-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
+                className="hidden sm:block px-2 lg:px-4 py-1.5 lg:py-2 text-xs lg:text-sm whitespace-nowrap font-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
               >
                 إنشاء حساب
               </Link>
@@ -218,7 +218,7 @@ const Navbar = () => {
               : "max-h-0 opacity-0"
           }`}
         >
-          <div className="bg-bg-subtle rounded-2xl p-4 space-y-3 border border-border-warm">
+          <div className="bg-bg-mobile-menu rounded-2xl p-4 space-y-3 border border-border-warm">
             {/* Mobile Navigation Links */}
             <nav className="flex flex-col gap-2">
               {navLinks.map((link) => {
@@ -243,14 +243,14 @@ const Navbar = () => {
             <div className="flex flex-col gap-2 pt-2 border-t border-border-warm">
               <Link
                 to="/auth/login"
-                className="w-full text-center px-4 py-2.5 text-sm font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
+                className="w-full text-center px-4 py-2.5 text-xs lg:text-sm whitespace-nowrap font-bold text-primary border-2 border-primary rounded-xl hover:bg-primary hover:text-white transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 تسجيل الدخول
               </Link>
               <Link
                 to="/auth/signup"
-                className="w-full text-center px-4 py-2.5 text-sm font-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
+                className="w-full text-center px-4 py-2.5 text-xs lg:text-sm whitespace-nowrapfont-bold text-white bg-primary rounded-xl hover:bg-[#d35400] transition-all duration-300"
                 onClick={() => setIsOpen(false)}
               >
                 إنشاء حساب
@@ -260,7 +260,7 @@ const Navbar = () => {
             <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border-warm">
               <button
                 onClick={toggleDarkMode}
-                className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
+                className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
               >
                 <div className="relative">
                   {isDark ? (
@@ -272,7 +272,7 @@ const Navbar = () => {
                 <span className="text-sm">{isDark ? "فاتح" : "داكن"}</span>
               </button>
 
-              <button className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-main border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
+              <button className="flex items-center justify-center gap-2 p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
                 <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 <span className="text-sm">EN</span>
               </button>

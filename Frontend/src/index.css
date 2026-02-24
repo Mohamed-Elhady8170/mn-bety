@@ -19,6 +19,8 @@
   --color-bg-light: #f9fafb;
   --color-dot: #000000;
   --color-bg-amber-light: #fffbeb;
+   --color-bg-mobile-menu: #f3ece8;
+    --color-bg-mobile-actions: #ffffff;
 
   /* Light mode text */
   --color-text-main: #1b130e;
@@ -69,7 +71,9 @@
   --color-bg-dark: #3d3d3d;
   --color-bg-light: #1a1a1a;
    --color-dot: #ec5e0c;
-   --color-bg-amber-light: #211711; 
+   --color-bg-amber-light: #211711;
+   --color-bg-mobile-menu: #211711; 
+    --color-bg-mobile-actions: rgba(255, 255, 255, 0.05);
    
    
 
