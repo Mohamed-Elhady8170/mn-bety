@@ -45,7 +45,6 @@ export default function Header() {
 
                 <div className="flex items-center sm:justify-end">
                     <button
-                        onClick={onPrint}
                         className="w-full sm:w-auto flex items-center justify-center gap-2 bg-[#ec4d18] text-white px-5 py-2.5 rounded-xl hover:bg-[#d44516] active:scale-95 transition-all shadow-md hover:shadow-lg text-sm md:text-base font-medium"
                     >
                         <Printer size={18} />
