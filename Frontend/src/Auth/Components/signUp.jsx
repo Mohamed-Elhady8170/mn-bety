@@ -105,7 +105,7 @@ const SignUp = () => {
                 <div className="absolute top-2/3 left-1/2 w-1 h-1 bg-primary/50 rounded-full animate-ping delay-700"></div>
             </div>
 
-            <div className="flex w-full max-w-275 max-h-[96vh] overflow-hidden rounded-3xl bg-bg-main shadow-xl shadow-primary/5 border border-border-warm relative z-10 backdrop-blur-sm">
+            <div className="flex w-full max-w-275 overflow-hidden rounded-3xl bg-bg-main shadow-xl shadow-primary/5 border border-border-warm relative z-10 backdrop-blur-sm">
 
                 {/* Registration Form Section */}
                 <div className="flex w-full flex-col p-6 md:p-10 lg:w-1/2 relative">
