@@ -26,6 +26,7 @@ import AddProduct from "../roles/Sellers/Pages/AddProduct";
 import ManageOrders from "../roles/Sellers/Pages/ManageOrders";
 import StoreProfile from "../roles/Sellers/Pages/StoreProfile";
 import SellerProductsPage from "../roles/Users/Pages/SellerProductsPage";
+import OrderDetails from "../roles/Sellers/Pages/OrderDetails";
 
 export const x = createBrowserRouter([
   {
@@ -74,6 +75,7 @@ export const x = createBrowserRouter([
       { path: "addProduct", element: <AddProduct /> },
       { path: "orders", element: <ManageOrders /> },
       { path: "profile", element: <StoreProfile /> },
+      { path: "seeorderdetails", element: <OrderDetails /> },
     ],
   },
   {
