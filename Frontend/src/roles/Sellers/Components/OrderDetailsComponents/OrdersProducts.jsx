@@ -50,25 +50,46 @@ export default function OrdersProducts() {
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <div className="bg-gray-50/50 p-4 md:p-6 flex flex-col items-start md:items-start border border-gray-200">
-                    <div className="w-full md:w-80 lg:w-96 space-y-3">
-                        <div className="flex justify-between text-xs md:text-sm text-gray-500">
-                            <span>المجموع الفرعي:</span>
-                            <span className="font-medium text-gray-700">450.00 ج.م</span>
+            <div className="flex justify-start mt-6">
+                <div className="bg-white p-5 md:p-6 rounded-3xl border border-gray-100 shadow-sm w-full md:max-w-md">
+                    <div className="space-y-4">
+
+                        <div className="flex justify-between items-center text-gray-600">
+                            <span className=" text-sm md:text-base order-2 md:order-1">:المجموع الفرعي</span>
+                            <div className="flex items-center gap-1  text-gray-800 order-1 md:order-2">
+                                <span className="text-sm md:text-base">700.00</span>
+                                <span className="text-[10px] md:text-xs">ج.م</span>
+                            </div>
                         </div>
-                        <div className="flex justify-between text-xs md:text-sm text-gray-500">
-                            <span>رسوم الشحن:</span>
-                            <span className="text-green-600 font-medium">مجاني</span>
+
+                        <div className="flex justify-between items-center text-gray-600">
+                            <span className=" text-sm md:text-base order-2 md:order-1">:رسوم الشحن</span>
+                            <div className="flex items-center gap-1  text-gray-800 order-1 md:order-2">
+                                <span className="text-sm md:text-base">35.00</span>
+                                <span className="text-[10px] md:text-xs">ج.م</span>
+                            </div>
                         </div>
-                        <div className="flex justify-between text-xs md:text-sm text-gray-500 border-b border-gray-200 pb-3">
-                            <span>الضريبة (15%):</span>
-                            <span className="font-medium text-gray-700">67.50 ج.م</span>
+
+                        <div className="flex justify-between items-center text-gray-600 pb-4 border-b border-gray-50 md:border-none md:pb-0">
+                            <span className=" text-sm md:text-base order-2 md:order-1">:(%15) ضريبة القيمة المضافة</span>
+                            <div className="flex items-center gap-1  text-gray-800 order-1 md:order-2">
+                                <span className="text-sm md:text-base">110.25</span>
+                                <span className="text-[10px] md:text-xs">ج.م</span>
+                            </div>
                         </div>
-                        <div className="flex justify-between text-lg md:text-xl font-bold text-gray-900 pt-1">
-                            <span>الإجمالي الكلي:</span>
-                            <span className="text-[#ec4d18]">517.50 ج.م</span>
+
+                        <div className="border-t border-gray-100 pt-4">
+                            <div className="flex justify-between items-center">
+                                <span className="font-medium text-gray-900 text-sm md:text-lg order-2 md:order-1">:الإجمالي النهائي</span>
+                                <div className="flex items-center gap-1 font-medium text-[#ec4d18] text-lg md:text-xl order-1 md:order-2">
+                                    <span>845.25</span>
+                                    <span className="text-sm">ج.م</span>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

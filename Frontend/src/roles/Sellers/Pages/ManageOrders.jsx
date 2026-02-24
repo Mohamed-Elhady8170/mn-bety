@@ -22,62 +22,70 @@ export default function ManageOrders() {
 
   return (
     <div className="p-4 md:p-8 bg-[#f8f9fa] min-h-screen font-cairo text-right" dir="rtl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-black text-gray-900 flex items-center gap-2">
-          <ShoppingBag className="text-[#ec4d18]" /> إدارة الطلبات
-        </h1>
-        <p className="text-gray-500 text-sm mt-1">تابع طلبات عملائك وقم بتحديث حالتها باستمرار</p>
-      </div>
+  {/* Header Section */}
+  <div className="mb-8">
+    <h1 className="text-xl md:text-2xl font-black text-gray-900 flex items-center gap-2">
+      <ShoppingBag className="text-[#ec4d18] shrink-0" size={28} /> 
+      إدارة الطلبات
+    </h1>
+    <p className="text-gray-500 text-xs md:text-sm mt-1">تابع طلبات عملائك وقم بتحديث حالتها باستمرار</p>
+  </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-right">
-            <thead className="bg-gray-50 text-gray-600 text-sm border-b border-gray-100">
-              <tr>
-                <th className="px-6 py-4 font-bold">رقم الطلب</th>
-                <th className="px-6 py-4 font-bold">اسم العميل</th>
-                <th className="px-6 py-4 font-bold">عدد القطع</th>
-                <th className="px-6 py-4 font-bold">الإجمالي</th>
-                <th className="px-6 py-4 font-bold">التاريخ</th>
-                <th className="px-6 py-4 font-bold">الحالة</th>
-                <th className="px-6 py-4 font-bold text-center">التفاصيل</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100">
-              {orders.map((order) => (
-                <tr key={order.id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4 font-bold text-gray-900">{order.id}</td>
-                  <td className="px-6 py-4 text-gray-600">{order.customer}</td>
-                  <td className="px-6 py-4 text-gray-600">{order.items}</td>
-                  <td className="px-6 py-4 font-bold text-[#ec4d18]">{order.total} ج.م</td>
-                  <td className="px-6 py-4 text-gray-500 text-sm">{order.date}</td>
-                  <td className="px-6 py-4">
-                    <select
-                      value={order.status}
-                      onChange={(e) => updateStatus(order.id, e.target.value)}
-                      className={`text-sm font-bold px-3 py-1.5 rounded-xl border-0 outline-none cursor-pointer ${statusStyles[order.status]}`}
-                    >
-                      <option value="pending">قيد المراجعة</option>
-                      <option value="processing">قيد التجهيز</option>
-                      <option value="shipped">تم الشحن</option>
-                      <option value="delivered">تم التوصيل</option>
-                    </select>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <Link
-                      to="/seller/seeorderdetails"
-                      className="text-gray-400 hover:text-[#ec4d18] transition-colors p-2 bg-gray-50 rounded-lg inline-flex items-center"
-                      title="عرض التفاصيل"
-                    >
-                      <Eye size={20} />
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+  {/* Main Container */}
+  <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    
+    <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-200">
+      <table className="w-full text-right border-collapse min-w-200 lg:min-w-full">
+        <thead className="bg-gray-50 text-gray-600 text-sm border-b border-gray-100">
+          <tr>
+            <th className="px-4 py-4 font-bold">رقم الطلب</th>
+            <th className="px-4 py-4 font-bold">اسم العميل</th>
+            <th className="px-4 py-4 font-bold text-center">القطع</th>
+            <th className="px-4 py-4 font-bold">الإجمالي</th>
+            <th className="px-4 py-4 font-bold">التاريخ</th>
+            <th className="px-4 py-4 font-bold">الحالة</th>
+            <th className="px-4 py-4 font-bold text-center">الإجراء</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-gray-100">
+          {orders.map((order) => (
+            <tr key={order.id} className="hover:bg-gray-50/50 transition-colors">
+              <td className="px-4 py-4 font-bold text-gray-900 whitespace-nowrap">{order.id}</td>
+              <td className="px-4 py-4 text-gray-600 font-medium whitespace-nowrap">{order.customer}</td>
+              <td className="px-4 py-4 text-gray-600 text-center">{order.items}</td>
+              <td className="px-4 py-4 font-bold text-[#ec4d18] whitespace-nowrap">{order.total} ج.م</td>
+              <td className="px-4 py-4 text-gray-500 text-xs md:text-sm whitespace-nowrap">{order.date}</td>
+              <td className="px-4 py-4">
+                <select
+                  value={order.status}
+                  onChange={(e) => updateStatus(order.id, e.target.value)}
+                  className={`text-xs font-bold px-2 py-1.5 rounded-xl border-0 outline-none cursor-pointer w-32 ${statusStyles[order.status]}`}
+                >
+                  <option value="pending">قيد المراجعة</option>
+                  <option value="processing">قيد التجهيز</option>
+                  <option value="shipped">تم الشحن</option>
+                  <option value="delivered">تم التوصيل</option>
+                </select>
+              </td>
+              <td className="px-4 py-4 text-center">
+                <Link
+                  to="/seller/seeorderdetails"
+                  className="text-gray-400 hover:text-[#ec4d18] transition-colors p-2 bg-gray-50 hover:bg-orange-50 rounded-lg inline-flex items-center"
+                >
+                  <Eye size={18} />
+                </Link>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+  </div>
+  
+  {/* Mobile Note */}
+  <div className="mt-4 md:hidden text-center">
+    <p className="text-[10px] text-gray-400 italic">اسحب الجدول يميناً ويساراً لعرض كافة التفاصيل</p>
+  </div>
+</div>
   );
 }
