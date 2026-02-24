@@ -1,8 +1,8 @@
 import WelcomeMsg from "../Components/Dashboard/WelcomeMsg";
 import RecentOrders from "../Components/Dashboard/RecentOrders";
 import OrderRow from "../Components/Dashboard/OrderRow";
-import { DollarSign, Package, ShoppingBag, TrendingUp } from "lucide-react";
 import StatCard from "../Components/Dashboard/StatCard";
+import { DollarSign, Package, ShoppingBag, TrendingUp } from "lucide-react";
 
 // static data for test
 const dashboardStats = [
@@ -57,14 +57,14 @@ const recentOrders = [
 
 export default function Dashboard() {
   return (
-    <div className="p-4 md:p-8 font-cairo text-right" dir="rtl">
+    <div className="p-2 text-right" dir="rtl">
       <WelcomeMsg />
-      <section className="stats-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <section className="stats-cards grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-8">
         {dashboardStats.map((ele, idx) => {
           const { icon: Icon, ...stat } = ele;
           return (
             <StatCard key={idx} stat={stat}>
-              <Icon size={24} />
+              <Icon size={18} />
             </StatCard>
           );
         })}
