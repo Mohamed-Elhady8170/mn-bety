@@ -1,0 +1,12 @@
+{
+  "common": {
+    "home": "الرئيسية",
+    "categories": "التصنيفات",
+    "about": "من نحن",
+    "start_selling": "ابدأ البيع",
+    "login": "تسجيل الدخول",
+    "signup": "إنشاء حساب",
+    "dark_mode": "داكن",
+    "light_mode": "فاتح"
+  }
+}

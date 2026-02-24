@@ -10,6 +10,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import logo from '../../../assets/Logos/logo02.png';
 
 export default function SellerSidebar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,11 +50,17 @@ export default function SellerSidebar() {
         ${isOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
       `}>
         {/* Brand */}
-        <div className="h-20 flex items-center justify-between px-4 border-b border-border-warm">
-          <h2 className="text-2xl font-black text-primary">لوحة التاجر</h2>
+      <div className="h-20 flex items-center justify-center px-4 border-b border-border-warm">
+          <Link to="/seller" className="flex items-center justify-center">
+            <img
+              src={logo}
+              alt="من بيتي"
+              className="h-24 w-auto object-contain -my-6" 
+            />
+          </Link>
           <button 
             onClick={() => setIsOpen(false)}
-            className="md:hidden p-2 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main"
+            className="md:hidden absolute left-4 p-2 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main"
           >
             <X size={18} />
           </button>

@@ -1,0 +1,12 @@
+{
+  "common": {
+    "home": "Home",
+    "categories": "Categories",
+    "about": "About Us",
+    "start_selling": "Start Selling",
+    "login": "Login",
+    "signup": "Sign Up",
+    "dark_mode": "Dark",
+    "light_mode": "Light"
+  }
+}
