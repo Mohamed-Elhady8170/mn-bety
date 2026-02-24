@@ -205,13 +205,13 @@ const Navbar = () => {
                     طلباتي
                   </Link>
 
-                  <a
+                  {/* <a
                     href="#"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
                     الإعدادات
-                  </a>
+                  </a> */}
                   <div className="border-t border-border-warm my-1"></div>
                   <button
                     onClick={() => {

@@ -33,7 +33,7 @@ export default function LandingPage() {
   const typedRef = useRef(null);
 
   const runSchoolPride = () => {
-    const end = Date.now() + (10 * 1000);
+    const end = Date.now() + (1 * 1000);
     const colors = ['#ec4d18', '#ffffff'];
 
     (function frame() {
@@ -83,21 +83,22 @@ export default function LandingPage() {
   return (
     <>
       <Navbar />
-    
+
       {/* Hero Section ============== */}
       <section
         dir="rtl" id="home"
         className="relative w-full min-h-150 flex items-center bg-bg-light overflow-hidden px-6 md:px-20 text-right"
       >
-        <div 
+        <div
           className="absolute inset-0 pointer-events-none opacity-10"
-          style={{ 
-            backgroundImage: `radial-gradient(circle, var(--color-dot) 2px, transparent 2px)`, 
-            backgroundSize: "30px 30px" 
+          style={{
+            backgroundImage: `radial-gradient(circle, var(--color-dot) 2px, transparent 2px)`,
+            backgroundSize: "30px 30px"
           }}
         />
 
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10">
+          {/* Text Section */}
           <div className="space-y-6 order-2 md:order-1">
             <h5 className="text-text-subtle font-medium tracking-widest uppercase text-1xl flex items-center gap-2">
               <FaAsterisk className="text-primary animate-spin-slow text-[15px]" />
@@ -118,9 +119,11 @@ export default function LandingPage() {
             </button>
           </div>
 
-          <div className="hidden md:flex justify-center md:justify-start gap-6 h-112.5 order-1 md:order-2">
-            <div className="animate-float w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl" 
-                 style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
+          {/* Images Section */}
+          <div className="hidden md:flex justify-center md:justify-end gap-6 h-112.5 order-1 md:order-2">
+            {/* First image - visible on medium and large */}
+            <div className="animate-float w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl"
+              style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
               <img
                 src="https://i.pinimg.com/736x/51/83/dc/5183dc85829d8dc446a7421afa04f0e3.jpg"
                 alt="منتج هاند ميد"
@@ -128,8 +131,9 @@ export default function LandingPage() {
               />
             </div>
 
-            <div className="animate-float-delayed mt-12 w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl" 
-                 style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
+            {/* Second image - visible only on large screens */}
+            <div className="hidden xl:block animate-float-delayed mt-12 w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl"
+              style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
               <img
                 src="https://i.pinimg.com/1200x/e9/bb/5d/e9bb5da6c8b0b37db56773600e899f97.jpg"
                 alt="أكلات بيتية"
@@ -180,7 +184,7 @@ export default function LandingPage() {
               <h5 className="text-text-subtle font-medium tracking-widest uppercase text-1xl flex items-center gap-2">
                 <FaAsterisk className="text-primary animate-spin-slow text-[15px]" />
                 <span>من نحن</span>
-              </h5> 
+              </h5>
               <h2 className="text-2xl md:text-3xl font-black text-text-main leading-tight mb-6">
                 معًا لدعم كل مشروع منزلي <br /> وتحويل الشغف لنجاح حقيقي
               </h2>
@@ -219,8 +223,8 @@ export default function LandingPage() {
           </div>
 
           <div className="relative flex justify-center lg:justify-start">
-            <div className="w-full aspect-4/3 overflow-hidden rounded-tr-[100px] rounded-br-4xl rounded-bl-[100px] rounded-tl-4xl shadow-2xl bg-white" 
-                 style={{ border: '10px solid var(--color-image-border, #ffffff)' }}>
+            <div className="w-full aspect-4/3 overflow-hidden rounded-tr-[100px] rounded-br-4xl rounded-bl-[100px] rounded-tl-4xl shadow-2xl bg-white"
+              style={{ border: '10px solid var(--color-image-border, #ffffff)' }}>
               <img src={aboutImage} alt="مشاريع منزلية" className="w-full h-full object-cover" />
             </div>
           </div>

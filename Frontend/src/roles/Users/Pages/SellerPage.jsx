@@ -164,44 +164,25 @@
 //   );
 // }
 
-import React, { useState, useEffect } from 'react';
-import { Star, MapPin, BadgeCheck, ChevronLeft, Sparkles, Search, ShoppingBag, Moon, Sun } from 'lucide-react';
+import React, { useState } from 'react';
+import { Star, MapPin, BadgeCheck, ChevronLeft, Sparkles, Search, ShoppingBag } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import useDarkMode from '../../../hooks/useDarkMode'; 
 
 const MOCK_SELLERS = [
    { id: 1, name: "مشغل نورة", location: "القاهرة", rating: 4.9, reviews: 128, verified: true, specialty: "تطريز يدوي وتراث", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200" },
-{ id: 2, name: "مجوهرات ياقوت", location: "المنوفية", rating: 5.0, reviews: 210, verified: true, specialty: "فضيات وأحجار كريمة", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200" },
+   { id: 2, name: "مجوهرات ياقوت", location: "المنوفية", rating: 5.0, reviews: 210, verified: true, specialty: "فضيات وأحجار كريمة", image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=200" },
    { id: 3, name: "فخاريات الأمل", location: "الدقهلية", rating: 4.8, reviews: 95, verified: false, specialty: "خزف وفخار يدوي", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200" },
-  { id: 4, name: "خشب عتيق", location: "دمياط", rating: 4.7, reviews: 64, verified: true, specialty: "نحت وتجارة أخشاب", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200" },
-  { id: 5, name: "نسيج الجنوب", location: "أسوان", rating: 4.6, reviews: 88, verified: true, specialty: "سدو وحياكة", image: null },
- { id: 6, name: "عطور اللافندر", location: "إسكندرية", rating: 4.5, reviews: 120, verified: false, specialty: "زيوت عطرية طبيعية", image: null },
- { id: 7, name: "فن الزجاج", location: "بورسعيد", rating: 4.4, reviews: 42, verified: true, specialty: "زجاج معشق ومزخرف", image: null },
- { id: 8, name: "جلود الأصالة", location: "المنيا", rating: 4.3, reviews: 55, verified: true, specialty: "مصنوعات جلدية", image: null },
+   { id: 4, name: "خشب عتيق", location: "دمياط", rating: 4.7, reviews: 64, verified: true, specialty: "نحت وتجارة أخشاب", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200" },
+   { id: 5, name: "نسيج الجنوب", location: "أسوان", rating: 4.6, reviews: 88, verified: true, specialty: "سدو وحياكة", image: null },
+   { id: 6, name: "عطور اللافندر", location: "إسكندرية", rating: 4.5, reviews: 120, verified: false, specialty: "زيوت عطرية طبيعية", image: null },
+   { id: 7, name: "فن الزجاج", location: "بورسعيد", rating: 4.4, reviews: 42, verified: true, specialty: "زجاج معشق ومزخرف", image: null },
+   { id: 8, name: "جلود الأصالة", location: "المنيا", rating: 4.3, reviews: 55, verified: true, specialty: "مصنوعات جلدية", image: null },
 ];
 
 export default function SellersPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [isDark, setIsDark] = useState(false);
-
-  // Initialize theme based on user preference or system settings
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      (true);
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
-    setIsDark(!isDark);
-  };
+  useDarkMode(); 
 
   const filteredSellers = MOCK_SELLERS
     .sort((a, b) => b.rating - a.rating)
@@ -211,22 +192,13 @@ export default function SellersPage() {
     <div className="min-h-screen bg-bg-main text-text-main py-12 px-4 md:px-20 font-body transition-colors duration-300" dir="rtl">
       <div className="max-w-4xl mx-auto">
         
-        {/* Header with Theme Toggle */}
-        <div className="flex justify-between items-start mb-12">
-          <div className="text-right">
-            <div className="flex items-center gap-2 text-primary mb-2">
-              <Sparkles size={18} />
-              <span className="text-sm font-bold uppercase tracking-widest text-primary">قائمة المبدعين</span>
-            </div>
-            <h1 className="text-4xl font-black mb-4">اكتشف الحرفيين</h1>
+        {/* Header من غير Theme Toggle */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 text-primary mb-2">
+            <Sparkles size={18} />
+            <span className="text-sm font-bold uppercase tracking-widest text-primary">قائمة المبدعين</span>
           </div>
-          
-          <button 
-            onClick={toggleTheme}
-            className="p-3 rounded-full bg-bg-subtle hover:bg-primary/20 transition-colors text-primary"
-          >
-            {isDark ? <Sun size={24} /> : <Moon size={24} />}
-          </button>
+          <h1 className="text-4xl font-black mb-4">اكتشف الحرفيين</h1>
         </div>
 
         {/* Search Bar */}
@@ -235,7 +207,7 @@ export default function SellersPage() {
           <input 
             type="text" 
             placeholder="ابحث عن بائع أو تخصص..." 
-            className="input-text w-full py-5 pr-14 text-lg border border-border-main shadow-sm focus:ring-2 focus:ring-primary/20 dark:bg-bg-dark"
+            className="w-full py-5 pr-14 text-lg rounded-xl border border-border-main bg-bg-subtle text-text-main placeholder:text-text-subtle focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 outline-none"
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
@@ -246,7 +218,7 @@ export default function SellersPage() {
             <Link 
               key={seller.id}
               to={`/user/seller-products/${seller.id}`} 
-              className="card card-hover flex flex-col md:flex-row items-center justify-between p-6 group transition-all duration-300 dark:bg-bg-dark"
+              className="bg-bg-main p-6 border border-border-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col md:flex-row items-center justify-between"
             >
               <div className="flex items-center gap-6 w-full md:w-auto"> 
                 <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-border-main group-hover:border-primary/50 transition-colors shrink-0">
@@ -259,15 +231,15 @@ export default function SellersPage() {
 
                 <div className="text-right">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <h3 className="font-bold text-xl group-hover:text-primary transition-colors">{seller.name}</h3>
-                    {seller.verified && <BadgeCheck size={20} className="text-primary" />}
+                    <h3 className="font-bold text-xl text-text-main group-hover:text-primary transition-colors">{seller.name}</h3>
+                    {seller.verified && <BadgeCheck size={20} className="text-primary fill-current" />}
                   </div>
                   <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm">
                     <span className="flex items-center gap-1 text-text-subtle">
                       <MapPin size={14} className="text-primary" /> {seller.location}
                     </span>
-                    <span className="badge bg-primary-10 text-primary px-3 py-1">
-                      <ShoppingBag size={12} className="inline ml-1" />
+                    <span className="px-3 py-1 rounded-lg text-xs font-bold bg-primary-10 text-primary flex items-center gap-1">
+                      <ShoppingBag size={12} />
                       {seller.specialty}
                     </span>
                   </div>
@@ -283,10 +255,10 @@ export default function SellersPage() {
                   <span className="text-xs text-text-muted">{seller.reviews} تقييم</span>
                 </div>
                 
-                <div className="btn btn-outline py-2 px-5 text-sm flex items-center gap-2 group-hover:bg-primary group-hover:text-white border-primary transition-all">
-                  <span className="font-bold">معرفة المزيد</span>
+                <button className="px-5 py-2 rounded-xl border-2 border-primary text-primary hover:bg-primary hover:text-white transition-colors text-sm font-bold flex items-center gap-2">
+                  <span>معرفة المزيد</span>
                   <ChevronLeft size={18} />
-                </div>
+                </button>
               </div>
             </Link>
           ))}
