@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @theme {
-
   /* Brand Colors  */
   --color-primary: #ec5e0c;
   --color-primary-10: rgba(236, 94, 12, 0.1);
@@ -19,46 +18,44 @@
   --color-bg-light: #f9fafb;
   --color-dot: #000000;
   --color-bg-amber-light: #fffbeb;
-   --color-bg-mobile-menu: #f3ece8;
-    --color-bg-mobile-actions: #ffffff;
-    --color-bg-body: #f8f9fa;
+  --color-bg-mobile-menu: #f3ece8;
+  --color-bg-mobile-actions: #ffffff;
+  --color-bg-body: #f8f9fa;
 
   /* Light mode text */
   --color-text-main: #1b130e;
   --color-text-subtle: #956b50;
   --color-text-muted: #4a5565;
-   --color-text-navbar: #4b5563;
+  --color-text-navbar: #4b5563;
 
-  
   /* Borders */
   --color-border-main: #f3ece8;
   --color-border-warm: #e7d5cf;
   --color-image-border: #ffffff;
-  
+
   /* Scroll-bar */
   --color-scrollbar-track: #f1f1f1;
 
-   /* System Colors */
+  /* System Colors */
   --color-success-green: #2d6a4f;
   --color-danger: #fb2c36;
 
- /* Red Family  */
+  /* Red Family  */
   --color-red-soft: #fee2e2;
   --color-red-200: #fecaca;
   --color-red-500: #ef4444;
   --color-red-600: #dc2626;
-  --color-red-text: #ef4444; 
+  --color-red-text: #ef4444;
 
-   /* Other Colors */
+  /* Other Colors */
   --color-white: #ffffff;
   --color-white-10: rgba(255, 255, 255, 0.1);
   --color-white-50: rgba(255, 255, 255, 0.5);
   --color-white-70: rgba(255, 255, 255, 0.7);
 
-
   --color-yellow-500: #eab308;
 
-   /* Icon Backgrounds */
+  /* Icon Backgrounds */
   --color-icon-bg-blue: #e6f0fa;
   --color-icon-bg-orange: #fff1e6;
   --color-icon-bg-green: #e6f5e6;
@@ -85,40 +82,36 @@
 /* Dark mode overrides */
 
 .dark {
-    /* Surfaces */
+  /* Surfaces */
   --color-bg-main: #211711;
   --color-bg-subtle: rgba(255, 255, 255, 0.05);
   --color-bg-dark: #3d3d3d;
   --color-bg-light: #1a1a1a;
-   --color-dot: #ec5e0c;
-   --color-bg-amber-light: #211711;
-   --color-bg-mobile-menu: #211711; 
-    --color-bg-mobile-actions: rgba(255, 255, 255, 0.05);
-    --color-bg-body: #211711;
-   
-   
+  --color-dot: #ec5e0c;
+  --color-bg-amber-light: #211711;
+  --color-bg-mobile-menu: #211711;
+  --color-bg-mobile-actions: rgba(255, 255, 255, 0.05);
+  --color-bg-body: #211711;
 
-   /* Text Colors */
+  /* Text Colors */
   --color-text-main: #ffffff;
   --color-text-subtle: rgba(255, 255, 255, 0.6);
   --color-text-muted: #6a7282;
   --color-text-navbar: #ffffff;
 
-   /* Borders */
+  /* Borders */
   --color-border-main: rgba(255, 255, 255, 0.1);
-   --color-border-warm: #3d2a24;
-   --color-image-border: #3d2a24;
+  --color-border-warm: #3d2a24;
+  --color-image-border: #3d2a24;
   --color-scrollbar-track: rgba(255, 255, 255, 0.1);
 
-    /* Scroll-bar */
+  /* Scroll-bar */
   --color-scrollbar-track: rgba(255, 255, 255, 0.1);
 
   /* Red Family */
   --color-red-soft: rgba(239, 68, 68, 0.1);
   --color-red-text: #f87171;
-  
 
-  
   /* Icon Backgrounds */
   --color-icon-bg-blue: rgba(37, 99, 235, 0.15);
   --color-icon-bg-orange: rgba(236, 94, 12, 0.15);
@@ -137,11 +130,7 @@
   /* Status Badge */
   --color-badge-bg: rgba(236, 94, 12, 0.2);
   --color-badge-text: #ec5e0c;
-
-  
 }
-
-
 
 @layer base {
   * {

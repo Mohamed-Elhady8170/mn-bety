@@ -20,7 +20,7 @@ import WishList from "../roles/Users/Pages/WishList";
 import SellersPage from "../roles/Users/Pages/SellerPage";
 import OrderHistory from "../roles/Users/Pages/Orderhistory";
 import SellerLayout from "../roles/Sellers/Pages/SellerLayout";
-import SellerPage from "../roles/Sellers/Pages/SellerPage";
+import Dashboard from "../roles/Sellers/Pages/Dashboard";
 import ManageProducts from "../roles/Sellers/Pages/ManageProducts";
 import AddProduct from "../roles/Sellers/Pages/AddProduct";
 import ManageOrders from "../roles/Sellers/Pages/ManageOrders";
@@ -32,7 +32,6 @@ export const x = createBrowserRouter([
   {
     path: "/",
     element: <LandingPage />,
-    
   },
   {
     path: "/auth",
@@ -43,7 +42,6 @@ export const x = createBrowserRouter([
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "verify-code", element: <VerifyCode /> },
       { path: "reset-password", element: <ResetPassword /> },
-      
     ],
   },
   {
@@ -60,17 +58,15 @@ export const x = createBrowserRouter([
       { path: "wishlist", element: <WishList /> },
       { path: "cart", element: <Cart /> },
       { path: "cart/order-success", element: <OrderSuccess /> },
-       { path: "my-orders", element: <OrderHistory/> },
-    
-       { path: "seller-products/:id", element: <SellerProductsPage /> },
-
+      { path: "my-orders", element: <OrderHistory /> },
+      { path: "seller-products/:id", element: <SellerProductsPage /> },
     ],
   },
   {
     path: "/seller",
     element: <SellerLayout />,
     children: [
-      { index: true, element: <SellerPage /> },
+      { index: true, element: <Dashboard /> },
       { path: "products", element: <ManageProducts /> },
       { path: "addProduct", element: <AddProduct /> },
       { path: "orders", element: <ManageOrders /> },
