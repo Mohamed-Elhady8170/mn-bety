@@ -9,7 +9,7 @@ function Cart() {
   if (cartItems?.length <= 0) return <EmptyCart />;
 
   return (
-    <div className="container px-6 lg:px-20 py-12">
+    <div className="layout-container py-12">
       <h1 className="text-3xl font-bold mb-8">
         السلة {`(${cartItems.length})`}
       </h1>

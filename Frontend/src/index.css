@@ -200,8 +200,8 @@
 
 @layer components {
   /* container */
-  .container {
-    @apply py-0 px-3.75 mx-auto my-0;
+  .layout-container {
+    @apply container py-0 px-3.75 mx-auto my-0;
   }
 
   .img-container {

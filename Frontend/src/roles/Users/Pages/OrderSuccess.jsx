@@ -9,8 +9,8 @@ function OrderSuccess() {
   const cartItems = JSON.parse(localStorage.getItem("mn-bety-cart")) || [];
 
   return (
-    <div className="order-success-page container py-5">
-      <section>
+    <div className="order-success-page layout-container py-5">
+      <section className="max-w-180 mx-auto">
         <SuccessMsg />
         <OrderInfo />
         <SuccessSummary>
