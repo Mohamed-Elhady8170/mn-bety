@@ -55,7 +55,7 @@ export default function SellerProductsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto">
-        <header className="mb-10">
+        <header className="mb-10 relative z-0">
           <h1 className="text-3xl font-black border-r-4 border-primary pr-4 leading-none">
             معرض المنتجات
           </h1>
