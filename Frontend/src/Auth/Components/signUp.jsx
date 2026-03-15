@@ -1,10 +1,11 @@
-
 import React, { useState } from 'react';
 import { User, Mail, Phone, Lock, Eye, EyeOff, Sparkles, Truck, Shield, Award, Check } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerThunk } from '../Features/authThunks';
 
 // 1. Validation Schema using Zod
 const signUpSchema = z.object({
@@ -33,8 +34,11 @@ const floatingIcons = [
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [selectedRole, setSelectedRole] = useState('buyer');
+    const [selectedRole, setSelectedRole] = useState('user');
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const { isLoading, error } = useSelector((state) => state.auth);
 
     // 2. React Hook Form Setup
     const {
@@ -56,16 +60,26 @@ const SignUp = () => {
     // Watch password for real-time requirement list coloring
     const passwordValue = watch("password", "");
 
-    const onSubmit = (data) => {
-        // Here we combine the form data with the manually selected role
-        console.log('SignUp successful', { ...data, role: selectedRole });
-        navigate('/auth/login');
+    const onSubmit = async (data) => {
+        const { terms: _terms, ...rest } = data;
+        const userData = { ...rest, role: selectedRole };
+
+        const result = await dispatch(registerThunk(userData));
+
+        if (registerThunk.fulfilled.match(result)) {
+            const roles = result.payload.user.roles;
+            if (roles.includes('seller') && !roles.includes('user')) {
+                navigate('/seller');
+            } else {
+                navigate('/user');
+            }
+        }
     };
 
     return (
         <main className="flex-1 flex items-center justify-center p-4 md:p-6 bg-bg-light font-cairo min-h-[calc(100vh-80px)] relative overflow-hidden">
 
-            {/* Animated Background Elements - EXACTLY AS PROVIDED */}
+            {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 w-32 h-32 bg-primary/10 rounded-full animate-pulse"></div>
                 <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary/10 rounded-full animate-pulse delay-1000"></div>
@@ -118,14 +132,21 @@ const SignUp = () => {
                         <p className="text-text-subtle text-sm md:text-base">انضم إلى أكبر مجتمع للحرفيين والمبدعين في المنطقة</p>
                     </div>
 
+                    {/* Server Error */}
+                    {error && (
+                        <div className="mb-4 p-3 rounded-xl bg-red-soft border border-red-200 text-red-text text-sm text-right animate-fadeIn">
+                            {error}
+                        </div>
+                    )}
+
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                         {/* Role Selector */}
                         <div className="flex flex-col gap-2 animate-fadeIn delay-100">
                             <span className="text-text-main text-sm font-semibold">نوع الحساب</span>
                             <div className="flex h-11 w-full items-center justify-center rounded-xl bg-bg-subtle p-1">
-                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'buyer' ? 'bg-bg-main shadow-sm text-primary' : 'text-text-subtle hover:text-primary'}`}>
+                                <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'user' ? 'bg-bg-main shadow-sm text-primary' : 'text-text-subtle hover:text-primary'}`}>
                                     <span className="truncate">مشتري (تسوق)</span>
-                                    <input checked={selectedRole === 'buyer'} onChange={() => setSelectedRole('buyer')} className="invisible w-0" name="role" type="radio" value="buyer" />
+                                    <input checked={selectedRole === 'user'} onChange={() => setSelectedRole('user')} className="invisible w-0" name="role" type="radio" value="user" />
                                 </label>
                                 <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'seller' ? 'bg-bg-main shadow-sm text-primary' : 'text-text-subtle hover:text-primary'}`}>
                                     <span className="truncate">بائع (حرفي)</span>
@@ -255,10 +276,17 @@ const SignUp = () => {
                         {/* CTA */}
                         <button
                             type="submit"
-                            className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-primary py-3 text-base font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-[#d43d0a] hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] gap-2 group"
+                            disabled={isLoading}
+                            className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-primary py-3 text-base font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-[#d43d0a] hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            <span>إنشاء الحساب</span>
-                            <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                            {isLoading ? (
+                                <span>جاري إنشاء الحساب...</span>
+                            ) : (
+                                <>
+                                    <span>إنشاء الحساب</span>
+                                    <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
+                                </>
+                            )}
                         </button>
 
                         <div className="mt-2 text-center animate-fadeIn delay-300">
@@ -272,7 +300,7 @@ const SignUp = () => {
                     </form>
                 </div>
 
-                {/* Visual Brand Section - EXACTLY AS PROVIDED */}
+                {/* Visual Brand Section */}
                 <div className="hidden lg:relative lg:flex lg:w-1/2 items-center justify-center bg-bg-subtle p-8 overflow-hidden group">
                     <div className="absolute inset-0 z-0">
                         <img

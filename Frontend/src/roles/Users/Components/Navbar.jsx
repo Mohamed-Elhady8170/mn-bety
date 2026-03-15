@@ -13,6 +13,8 @@ import {
 import logo from "../../../assets/Logos/logo02.png";
 import { Link, useNavigate } from "react-router-dom";
 import useDarkMode from "../../../hooks/useDarkMode";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutThunk } from "../../../Auth/Features/authThunks";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +23,10 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isDark, toggleDarkMode] = useDarkMode();
+
+  const { user, isLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,8 +58,10 @@ const Navbar = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  const handleLogout = () => {
-    console.log("Logging out...");
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
+    // replace: true> back button
+    navigate('/auth/login', { replace: true });
   };
 
   const toggleProfileMenu = () => {
@@ -190,6 +197,12 @@ const Navbar = () => {
               <div className={`absolute left-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}>
                 <div className="p-2">
+                  {/* اسم اليوزر */}
+                  {user && (
+                    <div className="px-4 py-2 text-sm font-bold text-text-main border-b border-border-warm mb-1">
+                      👋 {user.fullName}
+                    </div>
+                  )}
                   <Link
                     to="/user/profile"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
@@ -204,24 +217,17 @@ const Navbar = () => {
                   >
                     طلباتي
                   </Link>
-
-                  {/* <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
-                    onClick={() => setIsProfileMenuOpen(false)}
-                  >
-                    الإعدادات
-                  </a> */}
                   <div className="border-t border-border-warm my-1"></div>
                   <button
                     onClick={() => {
                       handleLogout();
                       setIsProfileMenuOpen(false);
                     }}
-                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-text hover:bg-red-soft rounded-lg transition-colors"
+                    disabled={isLoading}
+                    className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-text hover:bg-red-soft rounded-lg transition-colors disabled:opacity-50"
                   >
                     <LogOut className="w-4 h-4" />
-                    <span>تسجيل الخروج</span>
+                    <span>{isLoading ? 'جاري الخروج...' : 'تسجيل الخروج'}</span>
                   </button>
                 </div>
               </div>
@@ -305,8 +311,12 @@ const Navbar = () => {
                 </button>
 
                 <button
-                  onClick={handleLogout}
-                  className="flex items-center justify-center p-2 rounded-xl bg-red-soft text-red-text border border-red-200 transition-all duration-300 hover:scale-110 hover:shadow-lg group"
+                  onClick={() => {
+                    handleLogout();
+                    setIsOpen(false);
+                  }}
+                  disabled={isLoading}
+                  className="flex items-center justify-center p-2 rounded-xl bg-red-soft text-red-text border border-red-200 transition-all duration-300 hover:scale-110 hover:shadow-lg group disabled:opacity-50"
                 >
                   <LogOut className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" />
                 </button>

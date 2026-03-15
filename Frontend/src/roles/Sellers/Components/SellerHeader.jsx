@@ -1,10 +1,20 @@
 import React from 'react';
-import { Bell, Search, Menu, Home, Moon, Sun, Globe } from 'lucide-react';
+import { Bell, Search, Menu, Home, Moon, Sun, Globe,LogOut  } from 'lucide-react';
 import useDarkMode from '../../../hooks/useDarkMode';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutThunk } from '../../../Auth/Features/authThunks';
 
 export default function SellerHeader({ onMenuClick }) {
   const [isDark, toggleDarkMode] = useDarkMode();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
+    navigate('/auth/login', { replace: true });
+  };
 
   return (
     <header className="sticky top-0 z-10 w-full bg-bg-main/95 backdrop-blur-md border-b border-border-warm h-20">
@@ -32,7 +42,7 @@ export default function SellerHeader({ onMenuClick }) {
             </div>
           </div>
 
-          {/* Right side - Icons - زودت المسافة هنا بين القسمين */}
+          {/* Right side - Icons */}
           <div className="flex items-center gap-2 sm:gap-3 mr-4 md:mr-8">
             {/* Home Button */}
             <Link
@@ -75,10 +85,22 @@ export default function SellerHeader({ onMenuClick }) {
                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover border-2 border-primary" 
               />
               <div className="hidden lg:block text-right">
-                <p className="text-sm font-bold text-text-main leading-tight">مشغل نورة</p>
+                {/* اسم اليوزر من الـ store */}
+                <p className="text-sm font-bold text-text-main leading-tight">
+                  {user?.fullName || 'مشغل نورة'}
+                </p>
                 <p className="text-xs text-text-soft">حرفي معتمد</p>
               </div>
             </div>
+
+            {/* Logout Button */}
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-red-soft hover:bg-red-100 transition-all text-red-text"
+              title="تسجيل الخروج"
+            >
+              <LogOut size={16} />
+            </button>
           </div>
         </div>
       </div>

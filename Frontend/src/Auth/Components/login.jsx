@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginThunk } from '../Features/authThunks';
 
 // 2. Define the Validation Schema
 const loginSchema = z.object({
@@ -31,6 +33,10 @@ const floatingIcons = [
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    // جيب الـ loading والـ error من الـ store
+    const { isLoading, error } = useSelector((state) => state.auth);
 
     // 3. Initialize useForm
     const {
@@ -46,15 +52,23 @@ const Login = () => {
     });
 
     // 4. Submit Handler
-    const onSubmit = (data) => {
-        console.log('Login successful', data);
-        navigate('/user');
+    const onSubmit = async (data) => {
+        const result = await dispatch(loginThunk(data));
+
+        if (loginThunk.fulfilled.match(result)) {
+            const roles = result.payload.user.roles;
+               if (roles.includes('seller') && !roles.includes('user')) {
+                navigate('/seller');
+            } else {
+                navigate('/user');
+            }
+        }
     };
 
     return (
         <main className="flex-1 flex items-center justify-center p-5 bg-bg-light font-cairo min-h-[calc(100vh-80px)] relative overflow-hidden">
 
-            {/* Animated Background Elements (Unchanged) */}
+            {/* Animated Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-10 left-10 w-32 h-32 bg-primary/10 rounded-full animate-pulse"></div>
                 <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary/10 rounded-full animate-pulse delay-1000"></div>
@@ -96,7 +110,7 @@ const Login = () => {
 
             <div className="w-full max-w-237.5 overflow-hidden rounded-3xl bg-bg-main shadow-xl shadow-primary/5 border border-border-warm relative z-10 backdrop-blur-sm flex flex-col md:flex-row-reverse">
 
-                {/* Left Side: Image/Branding (Unchanged) */}
+                {/* Left Side: Image/Branding */}
                 <div className="hidden md:block w-1/2 relative bg-linear-to-br from-primary/10 to-primary/5 overflow-hidden group">
                     <div className="absolute inset-0 bg-linear-to-t from-primary/40 to-transparent z-10"></div>
                     <div className="absolute inset-0 bg-linear-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1500 ease-in-out z-20"></div>
@@ -145,13 +159,20 @@ const Login = () => {
                         </p>
                     </div>
 
+                    {/* Server Error Message */}
+                    {error && (
+                        <div className="mb-4 p-3 rounded-xl bg-red-soft border border-red-200 text-red-text text-sm text-right animate-fadeIn">
+                            {error}
+                        </div>
+                    )}
+
                     {/* Use handleSubmit from Hook Form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative">
-                        
+
                         {/* Email Input */}
                         <div className="space-y-1.5 group">
                             <label className="block text-sm font-semibold text-text-main mr-1 transition-colors group-focus-within:text-primary">
-                                البريد الإلكتروني   
+                                البريد الإلكتروني
                             </label>
                             <div className="relative">
                                 <input
@@ -211,14 +232,21 @@ const Login = () => {
                         {/* Login Button */}
                         <button
                             type="submit"
-                            className="w-full py-3.5 bg-primary text-white font-bold text-base rounded-xl hover:bg-[#d43d0a] shadow-lg shadow-primary/20 transition-all duration-300 flex items-center justify-center gap-2 hover:gap-3 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group"
+                            disabled={isLoading}
+                            className="w-full py-3.5 bg-primary text-white font-bold text-base rounded-xl hover:bg-[#d43d0a] shadow-lg shadow-primary/20 transition-all duration-300 flex items-center justify-center gap-2 hover:gap-3 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
-                            <span>تسجيل الدخول</span>
-                            <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                            {isLoading ? (
+                                <span>جاري تسجيل الدخول...</span>
+                            ) : (
+                                <>
+                                    <span>تسجيل الدخول</span>
+                                    <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
+                                </>
+                            )}
                         </button>
                     </form>
 
-                    {/* Footer / Divider (Unchanged) */}
+                    {/* Footer / Divider */}
                     <div className="relative my-6">
                         <div className="absolute inset-0 flex items-center">
                             <div className="w-full border-t border-border-warm"></div>

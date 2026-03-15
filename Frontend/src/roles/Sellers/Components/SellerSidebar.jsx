@@ -7,15 +7,24 @@ import {
   Store,
   X,
   Menu,
-  ChevronLeft
 } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Logos/logo02.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutThunk } from '../../../Auth/Features/authThunks';
 
 export default function SellerSidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.auth);
+
+  const handleLogout = async () => {
+    await dispatch(logoutThunk());
+    navigate('/auth/login', { replace: true });
+  };
 
   const navLinks = [
     { name: "الرئيسية", path: "/seller", icon: LayoutDashboard },
@@ -50,7 +59,7 @@ export default function SellerSidebar() {
         ${isOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
       `}>
         {/* Brand */}
-      <div className="h-20 flex items-center justify-center px-4 border-b border-border-warm">
+        <div className="h-20 flex items-center justify-center px-4 border-b border-border-warm">
           <Link to="/seller" className="flex items-center justify-center">
             <img
               src={logo}
@@ -71,7 +80,6 @@ export default function SellerSidebar() {
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             const Icon = link.icon;
-
             return (
               <Link 
                 key={link.name}
@@ -99,13 +107,14 @@ export default function SellerSidebar() {
 
         {/* Logout */}
         <div className="p-4 border-t border-border-warm">
-          <Link 
-            to="/" 
-            className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 w-full rounded-xl font-bold transition-all"
+          <button 
+            onClick={handleLogout}
+            disabled={isLoading}
+            className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 w-full rounded-xl font-bold transition-all disabled:opacity-50"
           >
             <LogOut size={20} /> 
-            <span>تسجيل الخروج</span>
-          </Link>
+            <span>{isLoading ? 'جاري الخروج...' : 'تسجيل الخروج'}</span>
+          </button>
         </div>
       </aside>
     </>
