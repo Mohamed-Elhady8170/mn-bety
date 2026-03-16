@@ -18,7 +18,7 @@ import NotFound from "../Auth/Pages/NotFound";
 import ProductDetails from "../roles/Users/Pages/ProductDetails";
 import WishList from "../roles/Users/Pages/WishList";
 import SellersPage from "../roles/Users/Pages/SellerPage";
-import OrderHistory from "../roles/Users/Pages/Orderhistory";
+import OrderHistory from "../roles/Users/Pages/OrderHistory";
 import SellerLayout from "../roles/Sellers/Pages/SellerLayout";
 import Dashboard from "../roles/Sellers/Pages/Dashboard";
 import ManageProducts from "../roles/Sellers/Pages/ManageProducts";
