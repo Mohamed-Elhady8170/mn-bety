@@ -2,6 +2,7 @@ import Pagination from '../Components/ProdectsPageComponents/Pagination';
 import ProductGrid from '../Components/ProdectsPageComponents/ProductGrid';
 import Sidebar from '../Components/ProdectsPageComponents/Sidebar';
 import TopBar from '../Components/ProdectsPageComponents/TopBar';
+import { ReviewModal } from '../Components/ProdectsPageComponents/ReviewModal';
 import React from 'react';
 import { useState } from "react";
 
@@ -105,6 +106,14 @@ export default function ProductPage() {
   const [sort, setSort] = useState("latest");
   const [page, setPage] = useState(1);
 
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isReviewOpen, setIsReviewOpen] = useState(false);
+  const handleOpenReview = (product) => {
+    console.log("تم الضغط على منتج:", product.title); 
+    setSelectedProduct(product);
+    setIsReviewOpen(true); 
+  };
+
   const handleToggleFavorite = (id) => {
     setProducts((prev) =>
       prev.map((p) => (p.id === id ? { ...p, isFavorite: !p.isFavorite } : p))
@@ -119,7 +128,7 @@ export default function ProductPage() {
       if (sort === "rating") return b.rating - a.rating;
       return 0;
     });
-    
+
   return (
     <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -127,7 +136,16 @@ export default function ProductPage() {
           <Sidebar priceRange={priceRange} setPriceRange={setPriceRange} />
           <main className="flex-1 w-full">
             <TopBar count={sorted.length} sort={sort} setSort={setSort} />
-            <ProductGrid products={sorted} onToggleFavorite={handleToggleFavorite} />
+            <ProductGrid
+              products={sorted}
+              onToggleFavorite={handleToggleFavorite}
+              onOpenReview={handleOpenReview}
+            />
+            <ReviewModal
+              isOpen={isReviewOpen}
+              onClose={() => setIsReviewOpen(false)}
+              product={selectedProduct}
+            />
             <Pagination current={page} total={5} onChange={setPage} />
           </main>
         </div>

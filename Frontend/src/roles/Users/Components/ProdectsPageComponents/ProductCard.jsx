@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { 
+  FiShoppingCart, 
+  FiMessageSquare, 
+  FiMapPin        
+} from 'react-icons/fi';
+
 import FavoriteButton from './FavoriteButton';
 import StarRating from './StarRating';
-import { FiShoppingCart } from 'react-icons/fi';
-import { HiOutlineLocationMarker } from 'react-icons/hi';
-import { NavLink } from 'react-router-dom';
-
 const PRODUCTS = [
   {
     id: 1,
@@ -89,13 +92,14 @@ const PRODUCTS = [
   },
 ];
 
-export default function ProductCard({ product, onToggleFavorite }) {
+export default function ProductCard({ product, onToggleFavorite, onOpenReview }) {
   return (
-    <NavLink 
-      to={`/user/products/details`} 
-      className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col"
-    >
-      <div className="relative overflow-hidden" style={{ height: 200 }}>
+    <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
+      <NavLink 
+        to={`/user/products/details`} 
+        className="relative overflow-hidden" 
+        style={{ height: 200 }}
+      >
         <img
           src={product.image}
           alt={product.title}
@@ -110,18 +114,33 @@ export default function ProductCard({ product, onToggleFavorite }) {
           active={product.isFavorite}
           onToggle={() => onToggleFavorite(product.id)}
         />
-      </div>
+      </NavLink>
 
       {/* Info */}
       <div className="p-4 flex flex-col flex-1 gap-2" dir="rtl">
-        <span className="text-xs text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full w-fit">
-          {product.tag}
-        </span>
+        <div className="flex justify-between items-start">
+          <span className="text-xs text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full w-fit">
+            {product.tag}
+          </span>
+          <button 
+            onClick={(e) => {
+              e.preventDefault(); 
+              onOpenReview(product); 
+            }}
+            className="flex items-center gap-1 text-[10px] text-text-subtle hover:text-primary transition-colors font-medium"
+          >
+            <FiMessageSquare className="w-3 h-3" />
+            <span>أضف تقييم</span>
+          </button>
+        </div>
+
         <h3 className="text-sm font-bold text-text-main leading-snug">{product.title}</h3>
+        
         <p className="text-xs text-text-subtle flex items-center gap-1">
-          <HiOutlineLocationMarker className="w-3.5 h-3.5 text-text-subtle" />
+          <FiMapPin className="w-3.5 h-3.5 text-text-subtle" />
           <span>{product.subtitle}</span>
         </p>
+
         <StarRating rating={product.rating} />
 
         {/* Price + Cart */}
@@ -137,6 +156,6 @@ export default function ProductCard({ product, onToggleFavorite }) {
           </div>
         </div>
       </div>
-    </NavLink>
+    </div>
   );
 }
