@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
+import { publicAxios } from "../../../lib/axios"; 
 
 const BASE = "http://localhost:4000";
 
@@ -13,7 +14,7 @@ export const fetchRootCategories = createAsyncThunk(
   "category/fetchRootCategories",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${BASE}/api/categories`, {
+      const { data } = await publicAxios.get(`${BASE}/api/categories`, {
         params: { active: true },
       });
       return data.data.categories;
@@ -31,7 +32,7 @@ export const fetchSubcategories = createAsyncThunk(
   "category/fetchSubcategories",
   async (parentId, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${BASE}/api/categories/${parentId}/children`);
+      const { data } = await publicAxios.get(`${BASE}/api/categories/${parentId}/children`);
       return data.data.children;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to load subcategories");
