@@ -7,6 +7,15 @@
     "login": "Login",
     "signup": "Sign Up",
     "dark_mode": "Dark",
-    "light_mode": "Light"
+    "light_mode": "Light",
+    "or": "or"
+  },
+
+  "auth_footer": {
+    "copyright": "Min Baiti. All rights reserved. Made with love in Egypt",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy"
   }
+
+
 }

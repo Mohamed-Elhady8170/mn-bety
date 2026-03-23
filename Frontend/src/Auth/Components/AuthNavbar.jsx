@@ -2,11 +2,23 @@ import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Globe, Home } from 'lucide-react';
 import logo from '../../assets/Logos/logo02.png';
 import { Link } from 'react-router-dom';
-import useDarkMode from '../../hooks/useDarkMode';   
+import useDarkMode from '../../hooks/useDarkMode';
+import { useTranslation } from 'react-i18next';
 
 const AuthNavbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isDark, toggleDarkMode] = useDarkMode();    
+    const [isDark, toggleDarkMode] = useDarkMode();
+    const { t, i18n } = useTranslation();
+
+    const currentLang = i18n.language;
+
+    const toggleLanguage = () => {
+        const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
+        i18n.changeLanguage(newLang);
+        document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = newLang;
+        localStorage.setItem('preferred-language', newLang);
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,7 +35,6 @@ const AuthNavbar = () => {
                     ? 'bg-bg-main/95 backdrop-blur-md shadow-lg'
                     : 'bg-bg-main'
             } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
-            dir="rtl"
         >
             <div className="max-w-7xl mx-auto h-full">
                 <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
@@ -31,7 +42,7 @@ const AuthNavbar = () => {
                     <Link to="/" className="flex items-center h-full">
                         <img
                             src={logo}
-                            alt="من بيتي"
+                            alt={t('common.home')}
                             className="h-16 sm:h-24 w-auto object-contain -my-4"
                         />
                     </Link>
@@ -43,7 +54,7 @@ const AuthNavbar = () => {
                             className="hidden sm:flex items-center gap-1 px-4 py-2 text-sm font-bold text-primary border border-primary rounded-xl hover:bg-primary hover:text-white transition-all"
                         >
                             <Home className="w-4 h-4" />
-                            <span>الرئيسية</span>
+                            <span>{t('common.home')}</span>
                         </Link>
 
                         {/* Desktop: Dark Mode Toggle */}
@@ -64,11 +75,13 @@ const AuthNavbar = () => {
 
                         {/* Desktop: Language Button */}
                         <button
-                            className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main"
+                            onClick={toggleLanguage}
+                            className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-105 hover:shadow-lg text-text-main text-sm font-bold"
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ec5e0c10'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}
                         >
                             <Globe className="w-4 h-4 sm:w-5 sm:h-5 transition-all duration-500 hover:scale-110" />
+                            <span>{currentLang.startsWith('ar') ? 'EN' : 'AR'}</span>
                         </button>
 
                         {/* Mobile: Home Icon */}
@@ -97,6 +110,7 @@ const AuthNavbar = () => {
 
                         {/* Mobile: Language Button */}
                         <button
+                            onClick={toggleLanguage}
                             className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main"
                             onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ec5e0c10'}
                             onMouseLeave={(e) => e.currentTarget.style.backgroundColor = ''}

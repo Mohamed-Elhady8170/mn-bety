@@ -108,7 +108,7 @@ const Navbar = () => {
           ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
           : "bg-bg-main"
       } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
-      dir="rtl"
+    
     >
       <div className="max-w-7xl mx-auto h-full">
         <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
