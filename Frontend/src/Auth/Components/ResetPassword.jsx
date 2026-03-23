@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Lock, Eye, EyeOff, Check, ArrowRight, Sparkles, Award, Shield, Truck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Floating icons data
 const floatingIcons = [
@@ -20,13 +21,14 @@ const ResetPassword = () => {
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const getPasswordErrorMessage = (password) => {
-        if (!password) return 'كلمة المرور مطلوبة';
-        if (password.length < 8) return 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-        if (!/[a-z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل';
-        if (!/[A-Z]/.test(password)) return 'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل';
-        if (!/\d/.test(password)) return 'كلمة المرور يجب أن تحتوي على رقم واحد على الأقل';
+        if (!password) return t('auth.validation.password_required');
+        if (password.length < 8) return t('auth.validation.password_min');
+        if (!/[a-z]/.test(password)) return t('auth.validation.password_lowercase');
+        if (!/[A-Z]/.test(password)) return t('auth.validation.password_uppercase');
+        if (!/\d/.test(password)) return t('auth.validation.password_number');
         return '';
     };
 
@@ -34,19 +36,17 @@ const ResetPassword = () => {
         const newErrors = {};
         let isValid = true;
 
-        // Password validation
         const passwordError = getPasswordErrorMessage(password);
         if (passwordError) {
             newErrors.password = passwordError;
             isValid = false;
         }
 
-        // Confirm password validation
         if (!confirmPassword) {
-            newErrors.confirmPassword = 'تأكيد كلمة المرور مطلوب';
+            newErrors.confirmPassword = t('auth.validation.confirm_password_required');
             isValid = false;
         } else if (confirmPassword !== password) {
-            newErrors.confirmPassword = 'كلمة المرور غير متطابقة';
+            newErrors.confirmPassword = t('auth.validation.confirm_password_mismatch');
             isValid = false;
         }
 
@@ -81,9 +81,9 @@ const ResetPassword = () => {
             }
         } else if (field === 'confirmPassword') {
             if (!confirmPassword) {
-                setErrors(prev => ({ ...prev, confirmPassword: 'تأكيد كلمة المرور مطلوب' }));
+                setErrors(prev => ({ ...prev, confirmPassword: t('auth.validation.confirm_password_required') }));
             } else if (confirmPassword !== password) {
-                setErrors(prev => ({ ...prev, confirmPassword: 'كلمة المرور غير متطابقة' }));
+                setErrors(prev => ({ ...prev, confirmPassword: t('auth.validation.confirm_password_mismatch') }));
             }
         }
     };
@@ -158,21 +158,21 @@ const ResetPassword = () => {
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
                             <Lock className="text-primary w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-text-main mb-2">تعيين كلمة مرور جديدة</h2>
-                        <p className="text-text-subtle text-sm md:text-base">يرجى إدخال كلمة المرور الجديدة أدناه لتأمين حسابك في سوق الحرف.</p>
+                        <h2 className="text-2xl md:text-3xl font-black text-text-main mb-2">{t('auth.reset_password.title')}</h2>
+                        <p className="text-text-subtle text-sm md:text-base">{t('auth.reset_password.subtitle')}</p>
                     </div>
 
                     <form onSubmit={handleSubmit} className="space-y-4">
                         {/* New Password Field */}
                         <div className="space-y-2 group">
                             <label className="block text-sm font-semibold text-text-main transition-colors group-focus-within:text-primary">
-                                كلمة المرور الجديدة
+                                {t('auth.reset_password.new_password')}
                             </label>
                             <div className="relative">
                                 <Lock className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${touched.password && errors.password ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary group-focus-within:scale-110'}`} />
                                 <input
                                     className={`w-full rounded-xl border ${touched.password && errors.password ? 'border-red-text' : 'border-border-warm'} bg-bg-subtle py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 outline-none text-text-main placeholder:text-text-subtle group-focus-within:shadow-lg group-focus-within:shadow-primary/10`}
-                                    placeholder="أدخل كلمة المرور الجديدة"
+                                    placeholder={t('auth.reset_password.new_password_placeholder')}
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={handlePasswordChange}
@@ -196,13 +196,13 @@ const ResetPassword = () => {
                         {/* Confirm Password Field */}
                         <div className="space-y-2 group">
                             <label className="block text-sm font-semibold text-text-main transition-colors group-focus-within:text-primary">
-                                تأكيد كلمة المرور
+                                {t('auth.reset_password.confirm_password')}
                             </label>
                             <div className="relative">
                                 <Lock className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${touched.confirmPassword && errors.confirmPassword ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary group-focus-within:scale-110'}`} />
                                 <input
                                     className={`w-full rounded-xl border ${touched.confirmPassword && errors.confirmPassword ? 'border-red-text' : 'border-border-warm'} bg-bg-subtle py-3 pr-10 pl-10 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 outline-none text-text-main placeholder:text-text-subtle group-focus-within:shadow-lg group-focus-within:shadow-primary/10`}
-                                    placeholder="أعد إدخال كلمة المرور"
+                                    placeholder={t('auth.reset_password.confirm_password_placeholder')}
                                     type={showConfirmPassword ? "text" : "password"}
                                     value={confirmPassword}
                                     onChange={handleConfirmPasswordChange}
@@ -226,19 +226,19 @@ const ResetPassword = () => {
                         {/* Password requirements hint */}
                         {touched.password && (
                             <div className="text-xs text-text-subtle pr-1 space-y-1 bg-bg-subtle/50 p-3 rounded-lg border border-border-warm">
-                                <p className="font-semibold mb-1">متطلبات كلمة المرور:</p>
+                                <p className="font-semibold mb-1">{t('auth.password_requirements.title')}</p>
                                 <ul className="list-disc list-inside mr-2 space-y-1">
                                     <li className={password.length >= 8 ? 'text-green-600 dark:text-green-400' : ''}>
-                                        • 8 أحرف على الأقل
+                                        • {t('auth.password_requirements.min_chars')}
                                     </li>
                                     <li className={/[a-z]/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
-                                        • حرف صغير واحد على الأقل (a-z)
+                                        • {t('auth.password_requirements.lowercase')}
                                     </li>
                                     <li className={/[A-Z]/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
-                                        • حرف كبير واحد على الأقل (A-Z)
+                                        • {t('auth.password_requirements.uppercase')}
                                     </li>
                                     <li className={/\d/.test(password) ? 'text-green-600 dark:text-green-400' : ''}>
-                                        • رقم واحد على الأقل (0-9)
+                                        • {t('auth.password_requirements.number')}
                                     </li>
                                 </ul>
                             </div>
@@ -250,7 +250,7 @@ const ResetPassword = () => {
                                 type="submit"
                                 className="w-full h-12 bg-primary hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] transition-all flex items-center justify-center gap-2 group"
                             >
-                                <span>حفظ وتغيير كلمة المرور</span>
+                                <span>{t('auth.reset_password.save_btn')}</span>
                                 <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                             </button>
                         </div>
@@ -258,7 +258,7 @@ const ResetPassword = () => {
                         {/* Secondary Link */}
                         <div className="text-center pt-2 animate-fadeIn delay-200">
                             <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main font-medium hover:text-primary transition-colors group">
-                                <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
+                                <span className="group-hover:translate-x-1 transition-transform">{t('auth.back_to_login')}</span>
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         </div>

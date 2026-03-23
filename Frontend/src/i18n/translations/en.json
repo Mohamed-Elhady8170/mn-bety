@@ -16,8 +16,7 @@
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy"
   },
-
-   "auth": {
+ "auth": {
     "back_to_login": "Back to Login",
     "having_trouble": "Having trouble?",
     "contact_support": "Contact Support",
@@ -75,6 +74,27 @@
       "have_account": "Already have an account?",
       "branding_title": "Professionalism, Quality, and Authenticity",
       "branding_subtitle": "Join us to revive Arab heritage by supporting creative artisans and making their unique products accessible to every home."
+    },
+    "forgot_password": {
+      "title": "Forgot Password?",
+      "subtitle": "No worries, enter your email and we'll send you a code to reset your password instantly.",
+      "send_code_btn": "Send Verification Code"
+    },
+    "reset_password": {
+      "title": "Set New Password",
+      "subtitle": "Please enter your new password below to secure your Min Baiti account.",
+      "new_password": "New Password",
+      "new_password_placeholder": "Enter your new password",
+      "confirm_password": "Confirm Password",
+      "confirm_password_placeholder": "Re-enter your password",
+      "save_btn": "Save New Password"
+    },
+    "verify_code": {
+      "title": "Verify Code",
+      "subtitle": "Enter the 6-digit code sent to your email address",
+      "verify_btn": "Verify",
+      "no_code": "Didn't receive the code?",
+      "resend": "Resend Code"
     }
   },
 

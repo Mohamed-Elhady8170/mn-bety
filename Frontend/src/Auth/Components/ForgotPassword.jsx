@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Mail, ArrowRight, Sparkles, Award, Shield, Truck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Floating icons data
 const floatingIcons = [
@@ -17,6 +18,7 @@ const ForgotPassword = () => {
     const [error, setError] = useState('');
     const [touched, setTouched] = useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const validateEmail = (email) => {
         const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -24,8 +26,8 @@ const ForgotPassword = () => {
     };
 
     const getEmailErrorMessage = (email) => {
-        if (!email) return 'البريد الإلكتروني مطلوب';
-        if (!validateEmail(email)) return 'البريد الإلكتروني غير صالح (مثال: name@domain.com)';
+        if (!email) return t('auth.validation.email_required');
+        if (!validateEmail(email)) return t('auth.validation.email_invalid');
         return '';
     };
 
@@ -111,10 +113,10 @@ const ForgotPassword = () => {
                     {/* Text Section */}
                     <div className="flex flex-col gap-3 text-right animate-fadeIn">
                         <h1 className="text-text-main text-2xl md:text-3xl font-black leading-tight">
-                            نسيت كلمة المرور؟
+                            {t('auth.forgot_password.title')}
                         </h1>
                         <p className="text-text-subtle text-sm md:text-base font-normal leading-relaxed">
-                            لا تقلق، أدخل بريدك الإلكتروني وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك فوراً.
+                            {t('auth.forgot_password.subtitle')}
                         </p>
                     </div>
 
@@ -122,7 +124,7 @@ const ForgotPassword = () => {
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                         <div className="flex flex-col gap-2 group">
                             <label className="text-text-main text-sm font-semibold px-1 transition-colors group-focus-within:text-primary">
-                                البريد الإلكتروني
+                                {t('auth.fields.email')}
                             </label>
                             <div className="relative">
                                 <Mail className={`absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${error && touched ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary'}`} />
@@ -147,7 +149,7 @@ const ForgotPassword = () => {
                             type="submit"
                             className="flex w-full cursor-pointer items-center justify-center rounded-xl h-12 bg-primary hover:bg-[#d43d0a] text-white text-base font-bold transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] gap-2 group"
                         >
-                            <span>إرسال رمز التحقق</span>
+                            <span>{t('auth.forgot_password.send_code_btn')}</span>
                             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
                         </button>
                     </form>
@@ -155,21 +157,21 @@ const ForgotPassword = () => {
                     {/* Decorative Divider */}
                     <div className="flex items-center gap-4 py-2">
                         <div className="h-px grow bg-border-warm"></div>
-                        <span className="text-text-subtle text-xs uppercase tracking-widest font-bold">أو</span>
+                        <span className="text-text-subtle text-xs uppercase tracking-widest font-bold">{t('common.or')}</span>
                         <div className="h-px grow bg-border-warm"></div>
                     </div>
 
                     {/* Support Link */}
                     <div className="text-center animate-fadeIn delay-200">
                         <p className="text-text-subtle text-sm">
-                            تواجه مشكلة؟ <a href="#" className="text-primary font-bold hover:underline mr-1 transition-all hover:scale-105 inline-block">تواصل مع الدعم الفني</a>
+                            {t('auth.having_trouble')} <a href="#" className="text-primary font-bold hover:underline mr-1 transition-all hover:scale-105 inline-block">{t('auth.contact_support')}</a>
                         </p>
                     </div>
 
                     {/* Back to Login */}
                     <div className="text-center">
                         <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main font-medium hover:text-primary transition-colors group">
-                            <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
+                            <span className="group-hover:translate-x-1 transition-transform">{t('auth.back_to_login')}</span>
                             <ArrowRight className="w-4 h-4" />
                         </Link>
                     </div>

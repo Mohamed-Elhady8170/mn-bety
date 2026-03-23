@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Mail, ArrowRight, Sparkles, Award, Shield, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 // Floating icons data
 const floatingIcons = [
@@ -15,6 +16,7 @@ const floatingIcons = [
 const VerifyCode = () => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const inputRefs = useRef([]);
+    const { t } = useTranslation();
 
     const handleChange = (index, value) => {
         if (value.length > 1) return;
@@ -23,7 +25,6 @@ const VerifyCode = () => {
         newOtp[index] = value;
         setOtp(newOtp);
 
-        // Auto-focus next input
         if (value && index < 5) {
             inputRefs.current[index + 1]?.focus();
         }
@@ -91,9 +92,9 @@ const VerifyCode = () => {
                         <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
                             <Mail className="text-primary w-8 h-8" />
                         </div>
-                        <h2 className="text-2xl md:text-3xl font-black text-text-main mb-2">تحقق من الرمز</h2>
+                        <h2 className="text-2xl md:text-3xl font-black text-text-main mb-2">{t('auth.verify_code.title')}</h2>
                         <p className="text-text-subtle text-sm md:text-base leading-relaxed">
-                            أدخل الرمز المكون من 6 أرقام المرسل إلى بريدك الإلكتروني
+                            {t('auth.verify_code.subtitle')}
                         </p>
                     </div>
 
@@ -120,20 +121,20 @@ const VerifyCode = () => {
                         </div>
 
                         {/* Action Button */}
-                        <Link to="/auth/reset-password" className="w-full block mb-4"> 
+                        <Link to="/auth/reset-password" className="w-full block mb-4">
                             <button className="w-full h-12 bg-primary hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] flex items-center justify-center gap-2">
-                                <span>تحقق</span>
+                                <span>{t('auth.verify_code.verify_btn')}</span>
                             </button>
                         </Link>
 
                         {/* Footer Links */}
                         <div className="text-center space-y-3 animate-fadeIn delay-200">
                             <p className="text-text-subtle text-sm">
-                                لم يصلك الرمز؟
-                                <a href="#" className="text-primary font-bold hover:underline mr-1 transition-all hover:scale-105 inline-block">إعادة إرسال الرمز</a>
+                                {t('auth.verify_code.no_code')}
+                                <a href="#" className="text-primary font-bold hover:underline mr-1 transition-all hover:scale-105 inline-block">{t('auth.verify_code.resend')}</a>
                             </p>
                             <Link to="/auth/login" className="inline-flex items-center gap-1 text-sm text-text-main font-medium hover:text-primary transition-colors group">
-                                <span className="group-hover:translate-x-1 transition-transform">العودة إلى تسجيل الدخول</span>
+                                <span className="group-hover:translate-x-1 transition-transform">{t('auth.back_to_login')}</span>
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         </div>
