@@ -5,32 +5,34 @@ import confetti from 'canvas-confetti';
 import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
-
-const categories = [
-  {
-    title: "أكلات بيتية ",
-    description: "وصفات منزلية بطعم مميز وجودة مضمونة",
-    image: "https://i.pinimg.com/736x/82/e0/36/82e036e6857e01a627594c85b60fcb61.jpg",
-  },
-  {
-    title: "هاند ميد ",
-    description: "منتجات مصنوعة يدويًا بحب وإبداع",
-    image: "https://i.pinimg.com/736x/b2/3e/fd/b23efd46bfdcebf0a435dfbc81b0a7bf.jpg",
-  },
-  {
-    title: "إكسسوارات ",
-    description: "قطع مميزة تضيف لمسة أناقة ليكي",
-    image: "https://i.pinimg.com/1200x/0a/b0/ab/0ab0ab56129f7912e0e387557bdc5964.jpg",
-  },
-  {
-    title: " تصميم",
-    description: "تصميمات عصرية بخامات عالية الجودة",
-    image: "https://i.pinimg.com/736x/1a/56/91/1a5691a3461d95bcd8e5ffb6a65cc137.jpg",
-  }
-];
+import { useTranslation } from "react-i18next";
 
 export default function LandingPage() {
   const typedRef = useRef(null);
+  const { t } = useTranslation();
+
+  const categories = [
+    {
+      title: t('home.categories.home_food.title'),
+      description: t('home.categories.home_food.description'),
+      image: "https://i.pinimg.com/736x/82/e0/36/82e036e6857e01a627594c85b60fcb61.jpg",
+    },
+    {
+      title: t('home.categories.handmade.title'),
+      description: t('home.categories.handmade.description'),
+      image: "https://i.pinimg.com/736x/b2/3e/fd/b23efd46bfdcebf0a435dfbc81b0a7bf.jpg",
+    },
+    {
+      title: t('home.categories.accessories.title'),
+      description: t('home.categories.accessories.description'),
+      image: "https://i.pinimg.com/1200x/0a/b0/ab/0ab0ab56129f7912e0e387557bdc5964.jpg",
+    },
+    {
+      title: t('home.categories.design.title'),
+      description: t('home.categories.design.description'),
+      image: "https://i.pinimg.com/736x/1a/56/91/1a5691a3461d95bcd8e5ffb6a65cc137.jpg",
+    }
+  ];
 
   const runSchoolPride = () => {
     const end = Date.now() + (1 * 1000);
@@ -57,18 +59,13 @@ export default function LandingPage() {
       }
     }());
   };
+  const typedStrings = t('home.hero.typed_strings', { returnObjects: true });
 
   useEffect(() => {
     runSchoolPride();
 
     const typed = new Typed(typedRef.current, {
-      strings: [
-        "دعم المشاريع المنزلية ",
-        "منتجات هاند ميد بجودة عالية ",
-        "أكلات بيتي بطعم زمان ",
-        "إبداعات بأيدي مصرية ",
-        "اشتري بسهولة وادعم حلم حد تاني "
-      ],
+      strings: typedStrings,
       typeSpeed: 60,
       backSpeed: 30,
       loop: true,
@@ -78,7 +75,7 @@ export default function LandingPage() {
     return () => {
       typed.destroy();
     };
-  }, []);
+  }, [typedStrings]);
 
   return (
     <>
@@ -86,8 +83,8 @@ export default function LandingPage() {
 
       {/* Hero Section ============== */}
       <section
-        dir="rtl" id="home"
-        className="relative w-full min-h-150 flex items-center bg-bg-light overflow-hidden px-6 md:px-20 text-right"
+        id="home"
+        className="relative w-full min-h-150 flex items-center bg-bg-light overflow-hidden px-6 md:px-20 text-start"
       >
         <div
           className="absolute inset-0 pointer-events-none opacity-10"
@@ -102,7 +99,7 @@ export default function LandingPage() {
           <div className="space-y-6 order-2 md:order-1">
             <h5 className="text-text-subtle font-medium tracking-widest uppercase text-1xl flex items-center gap-2">
               <FaAsterisk className="text-primary animate-spin-slow text-[15px]" />
-              <span>منصة لدعم المشاريع المنزلية</span>
+              <span>{t('home.hero.tagline')}</span>
             </h5>
 
             <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-text-main">
@@ -110,33 +107,30 @@ export default function LandingPage() {
             </h1>
 
             <p className="text-text-subtle text-lg leading-relaxed">
-              اكتشف أفضل المنتجات المصنوعة بحب وإتقان،
-              وادعم أصحاب المشاريع الصغيرة في مكان واحد.
+              {t('home.hero.description')}
             </p>
 
             <button className="bg-primary hover:bg-[#d35400] text-white px-8 py-3 rounded-full transition shadow-lg shadow-primary/20">
-              تصفح المنتجات
+              {t('home.hero.browse_btn')}
             </button>
           </div>
 
           {/* Images Section */}
           <div className="hidden md:flex justify-center md:justify-end gap-6 h-112.5 order-1 md:order-2">
-            {/* First image - visible on medium and large */}
             <div className="animate-float w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl"
               style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
               <img
                 src="https://i.pinimg.com/736x/51/83/dc/5183dc85829d8dc446a7421afa04f0e3.jpg"
-                alt="منتج هاند ميد"
+                alt={t('home.categories.handmade.title')}
                 className="w-full h-full object-cover"
               />
             </div>
 
-            {/* Second image - visible only on large screens */}
             <div className="hidden xl:block animate-float-delayed mt-12 w-48 md:w-64 h-full rounded-full overflow-hidden shadow-xl"
               style={{ border: '8px solid var(--color-image-border, #ffffff)' }}>
               <img
                 src="https://i.pinimg.com/1200x/e9/bb/5d/e9bb5da6c8b0b37db56773600e899f97.jpg"
-                alt="أكلات بيتية"
+                alt={t('home.categories.home_food.title')}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -145,19 +139,18 @@ export default function LandingPage() {
       </section>
 
       {/* Services Section=============== */}
-      <section dir="rtl" id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-right">
+      <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <h5 className="text-primary font-medium tracking-widest uppercase text-1xs flex items-center gap-2">
               <FaAsterisk className="text-primary animate-spin-slow text-[15px]" />
-              <span>الفئات المتاحة</span>
+              <span>{t('home.categories_section.label')}</span>
             </h5>
             <h2 className="text-4xl md:text-5xl font-extrabold text-text-main mb-6">
-              اكتشف أقسام المشاريع المنزلية
+              {t('home.categories_section.title')}
             </h2>
             <p className="text-text-subtle max-w-2xl leading-relaxed">
-              نوفر لك منصة متكاملة تجمع نخبة من المشاريع المنزلية المميزة في مكان واحد، لتسهيل عملية البيع والشراء ودعم رواد الأعمال الصغار. باختيارك منتجات محلية مصنوعة بعناية
-              ، تساهمين في تنمية مشروع ناشئ وتحويل الطموح إلى نجاح مستدام.
+              {t('home.categories_section.description')}
             </p>
           </div>
 
@@ -177,26 +170,26 @@ export default function LandingPage() {
       </section>
 
       {/* Who We Are Section */}
-      <section dir="rtl" id="about" className="py-24 px-6 md:px-20 bg-bg-light text-right relative overflow-hidden">
+      <section id="about" className="py-24 px-6 md:px-20 bg-bg-light text-start relative overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28 items-center relative z-10">
           <div className="space-y-8">
             <div>
               <h5 className="text-text-subtle font-medium tracking-widest uppercase text-1xl flex items-center gap-2">
                 <FaAsterisk className="text-primary animate-spin-slow text-[15px]" />
-                <span>من نحن</span>
+                <span>{t('common.about')}</span>
               </h5>
               <h2 className="text-2xl md:text-3xl font-black text-text-main leading-tight mb-6">
-                معًا لدعم كل مشروع منزلي <br /> وتحويل الشغف لنجاح حقيقي
+                {t('home.about_section.title')}
               </h2>
               <p className="text-text-subtle leading-relaxed max-w-lg">
-                منصتنا بتجمع أصحاب المشاريع المنزلية في مكان واحد.
+                {t('home.about_section.description')}
               </p>
             </div>
 
             <div className="space-y-6">
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
-                  <span>نسبة رضا البائعين</span>
+                  <span>{t('home.about_section.sellers_satisfaction')}</span>
                   <span>80%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
@@ -205,7 +198,7 @@ export default function LandingPage() {
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
-                  <span>نسبة رضا المشتري</span>
+                  <span>{t('home.about_section.buyers_satisfaction')}</span>
                   <span>90%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
@@ -218,33 +211,33 @@ export default function LandingPage() {
               onClick={runSchoolPride}
               className="bg-primary text-white px-10 py-4 rounded-lg font-bold hover:bg-[#d35400] transition-all shadow-lg shadow-primary/20"
             >
-              اكتشف المزيد
+              {t('home.about_section.discover_btn')}
             </button>
           </div>
 
           <div className="relative flex justify-center lg:justify-start">
             <div className="w-full aspect-4/3 overflow-hidden rounded-tr-[100px] rounded-br-4xl rounded-bl-[100px] rounded-tl-4xl shadow-2xl bg-white"
               style={{ border: '10px solid var(--color-image-border, #ffffff)' }}>
-              <img src={aboutImage} alt="مشاريع منزلية" className="w-full h-full object-cover" />
+              <img src={aboutImage} alt={t('home.about_section.image_alt')} className="w-full h-full object-cover" />
             </div>
           </div>
         </div>
       </section>
 
       {/* Sell Now Section */}
-      <section dir="rtl" id="sell" className="py-16 px-6 md:px-20">
+      <section  id="sell" className="py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto relative h-72 rounded-3xl overflow-hidden flex items-center justify-center text-center">
           <img
             src="https://i.pinimg.com/736x/02/33/ba/0233ba523edd056c8fb8b3340d71de39.jpg"
             className="absolute inset-0 w-full h-full object-cover"
-            alt="مشاريع منزلية"
+            alt={t('home.sell_section.image_alt')}
           />
           <div className="absolute inset-0 bg-black/40"></div>
           <div className="relative z-10 space-y-5 px-4 text-white">
-            <span className="text-sm font-medium tracking-wide">فرصتك تبدأ مشروعك من بيتك</span>
-            <h2 className="text-3xl md:text-5xl font-bold">اعرض منتجاتك وابدأ رحلتك الآن</h2>
+            <span className="text-sm font-medium tracking-wide">{t('home.sell_section.tagline')}</span>
+            <h2 className="text-3xl md:text-5xl font-bold">{t('home.sell_section.title')}</h2>
             <button className="bg-white text-primary px-10 py-3 rounded-lg font-bold transition transform hover:scale-105 hover:bg-gray-100 shadow-lg">
-              ابدأ البيع الآن
+              {t('common.start_selling')}
             </button>
           </div>
         </div>

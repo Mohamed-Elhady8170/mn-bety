@@ -15,7 +15,71 @@
     "copyright": "Min Baiti. All rights reserved. Made with love in Egypt",
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy"
-  }
+  },
 
+
+  "home": {
+
+    "hero": {
+      "tagline": "A Platform Supporting Home-Based Businesses",
+      "description": "Discover the best products made with love and care, and support small business owners all in one place.",
+      "browse_btn": "Browse Products",
+      "typed_strings": [
+        "Supporting Home Businesses ",
+        "High Quality Handmade Products ",
+        "Homemade Food with a Classic Taste ",
+        "Creations by Egyptian Hands ",
+        "Shop Easily and Support Someone's Dream "
+      ]
+    },
+
+    "categories": {
+      "home_food": {
+        "title": "Home Food",
+        "description": "Homemade recipes with a unique taste and guaranteed quality"
+      },
+      "handmade": {
+        "title": "Handmade",
+        "description": "Products crafted by hand with love and creativity"
+      },
+      "accessories": {
+        "title": "Accessories",
+        "description": "Unique pieces that add a touch of elegance to your style"
+      },
+      "design": {
+        "title": "Design",
+        "description": "Modern designs with premium quality materials"
+      }
+    },
+
+    "categories_section": {
+      "label": "Available Categories",
+      "title": "Discover Home Business Categories",
+      "description": "We provide an integrated platform bringing together the best home-based businesses in one place, making buying and selling easier and supporting small entrepreneurs. By choosing locally handcrafted products, you help grow a new business and turn ambition into sustainable success."
+    },
+
+    "about_section": {
+      "title": "Together to Support Every Home Business and Turn Passion into Real Success",
+      "description": "Our platform brings home business owners together in one place.",
+      "sellers_satisfaction": "Seller Satisfaction Rate",
+      "buyers_satisfaction": "Buyer Satisfaction Rate",
+      "discover_btn": "Discover More",
+      "image_alt": "Home businesses"
+    },
+
+    "sell_section": {
+      "tagline": "Your chance to start your business from home",
+      "title": "List Your Products and Start Your Journey Now",
+      "image_alt": "Home businesses"
+    }
+
+  },
+
+
+  "not_found": {
+    "title": "Page Not Found",
+    "subtitle": "Sorry, the page you're looking for doesn't exist or has been moved. Check the URL or return to the homepage.",
+    "or_you_can": "Or you can"
+  }
 
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, AlertTriangle, Sparkles, Award, Shield, Truck } from 'lucide-react';
-import useDarkMode from '../../hooks/useDarkMode';  
+import useDarkMode from '../../hooks/useDarkMode';
+import { useTranslation } from 'react-i18next';
 
 // Floating icons data  
 const floatingIcons = [
@@ -14,8 +15,8 @@ const floatingIcons = [
 ];
 
 const NotFound = () => {
-
   useDarkMode();
+  const { t } = useTranslation();
 
   return (
     <main className="flex-1 flex items-center justify-center p-4 md:p-6 bg-bg-light font-cairo min-h-screen relative overflow-hidden">
@@ -81,11 +82,11 @@ const NotFound = () => {
 
           {/* Text Content */}
           <h2 className="text-3xl md:text-4xl font-black text-text-main mb-3 animate-fadeIn">
-            الصفحة غير موجودة
+            {t('not_found.title')}
           </h2>
 
           <p className="text-text-subtle text-base md:text-lg mb-8 max-w-md animate-fadeIn delay-100">
-            عذراً، الصفحة التي تبحث عنها غير موجودة أو قد تم نقلها. تحقق من الرابط أو عد إلى الصفحة الرئيسية.
+            {t('not_found.subtitle')}
           </p>
 
           {/* Action Buttons */}
@@ -93,22 +94,22 @@ const NotFound = () => {
             <Link to="/" className="flex-1">
               <button className="w-full h-12 bg-primary hover:bg-[#d43d0a] text-white rounded-xl text-base font-bold transition-all shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] flex items-center justify-center gap-2">
                 <Home className="w-4 h-4" />
-                <span>الصفحة الرئيسية</span>
+                <span>{t('common.home')}</span>
               </button>
             </Link>
 
             <Link to="/auth/login" className="flex-1">
               <button className="w-full h-12 border-2 border-primary text-primary hover:bg-primary hover:text-white rounded-xl text-base font-bold transition-all active:scale-[0.98] flex items-center justify-center gap-2">
-                <span>تسجيل الدخول</span>
+                <span>{t('common.login')}</span>
               </button>
             </Link>
           </div>
 
           {/* Help Text */}
           <p className="mt-8 text-sm text-text-subtle">
-            أو يمكنك{" "}
+            {t('not_found.or_you_can')}{" "}
             <a href="#" className="text-primary font-bold hover:underline">
-              التواصل مع الدعم الفني
+              {t('auth.contact_support')}
             </a>
           </p>
         </div>
