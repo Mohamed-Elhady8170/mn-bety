@@ -1,6 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { MdOutlineConfirmationNumber } from "react-icons/md";
 import { MdLocalShipping } from "react-icons/md";
+
 function OrderInfo() {
+  const { t } = useTranslation();
+  
   // for test !!!
   const orderNumber = "#SH-98231";
   const shippingDate = "15 أكتوبر 2023";
@@ -12,7 +16,7 @@ function OrderInfo() {
           <MdOutlineConfirmationNumber />
         </div>
         <div>
-          <p className="text-sm text-text-muted font-medium">رقم الطلب</p>
+          <p className="text-sm text-text-muted font-medium">{t('order_success.order_number_label')}</p>
           <p className="text-xl font-bold text-text-main">{orderNumber}</p>
         </div>
       </div>
@@ -22,7 +26,7 @@ function OrderInfo() {
         </div>
         <div>
           <p className="text-sm text-text-muted font-medium">
-            موعد التوصيل المتوقع
+            {t('order_success.expected_delivery_label')}
           </p>
           <p className="text-xl font-bold text-text-main">{shippingDate}</p>
         </div>

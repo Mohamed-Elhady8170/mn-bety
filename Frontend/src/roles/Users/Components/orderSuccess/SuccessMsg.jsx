@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { FaRegCheckCircle } from "react-icons/fa";
 
 function SuccessMsg() {
+  const { t } = useTranslation();
+  
   return (
     <div>
       <div className="flex flex-col items-center text-center mb-10">
@@ -8,11 +11,10 @@ function SuccessMsg() {
           <FaRegCheckCircle className="text-5xl" />
         </div>
         <h1 className="text-text-main text-4xl font-extrabold mb-3">
-          شكراً لطلبك!
+          {t('order_success.thank_you_title')}
         </h1>
         <p className="text-text-muted text-lg max-w-md">
-          لقد استلمنا طلبك وبدأنا في تجهيزه بكل حب وعناية. ستصلك رسالة تأكيد عبر
-          البريد الإلكتروني قريباً.
+          {t('order_success.thank_you_message')}
         </p>
       </div>
     </div>

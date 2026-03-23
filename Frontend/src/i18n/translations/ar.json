@@ -355,6 +355,21 @@
       "total": "الإجمالي",
       "checkout_btn": "إتمام الشراء"
     }
-  }
+  },
+  "order_success": {
+  "track_order_btn": "تتبع الطلب",
+  "continue_shopping_btn": "متابعة التسوق",
+   "order_number_label": "رقم الطلب",
+  "expected_delivery_label": "موعد التوصيل المتوقع",
+   "subtotal": "اجمالى السعر",
+  "shipping_fee": "رسوم التوصيل",
+  "total": "الإجمالي الكلي",
+   "thank_you_title": "شكراً لطلبك!",
+  "thank_you_message": "لقد استلمنا طلبك وبدأنا في تجهيزه بكل حب وعناية. ستصلك رسالة تأكيد عبر البريد الإلكتروني قريباً.",
+   "order_summary_title": "ملخص الطلب",
+    "quality_guarantee": "ضمان الجودة اليدوية والأصالة",
+  "have_question": "هل لديك استفسار؟",
+  "contact_support": "تواصل مع خدمة العملاء"
+}
 
 }

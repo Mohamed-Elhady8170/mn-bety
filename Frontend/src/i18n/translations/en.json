@@ -356,6 +356,21 @@
     "total": "Total",
     "checkout_btn": "Checkout"
   }
+},
+"order_success": {
+  "track_order_btn": "Track Order",
+  "continue_shopping_btn": "Continue Shopping",
+   "order_number_label": "Order Number",
+  "expected_delivery_label": "Expected Delivery Date",
+   "subtotal": "Subtotal",
+  "shipping_fee": "Shipping Fee",
+  "total": "Total",
+    "thank_you_title": "Thank You for Your Order!",
+  "thank_you_message": "We have received your order and are preparing it with love and care. You will receive a confirmation email shortly.",
+   "order_summary_title": "Order Summary",
+   "quality_guarantee": "Handmade Quality & Authenticity Guarantee",
+  "have_question": "Have a question?",
+  "contact_support": "Contact Customer Service"
 }
 
 }
