@@ -274,6 +274,66 @@
     "title": "Page Not Found",
     "subtitle": "Sorry, the page you're looking for doesn't exist or has been moved. Check the URL or return to the homepage.",
     "or_you_can": "Or you can"
+  },
+
+  "about_section": {
+    "title": "Our Story Started with Passion",
+    "quote_prefix": "We started ",
+    "quote_highlight": "Mn Bety",
+    "quote_suffix": " with a simple dream: creating a safe and trusted space that brings together talented artisans and homemade food lovers with enthusiasts of quality and authenticity. We believe every piece tells a story of love and passion."
+  },
+
+  "hero_about": {
+    "tagline": "From our homes to your heart",
+    "title_part1": "More than just a store..",
+    "title_part2": "We are",
+    "title_highlight": "a creative family"
+  },
+
+  "how_section": {
+    "title_part1": "How Do We Make",
+    "title_highlight": "the Change?",
+    "subtitle": "We don't just provide a selling platform; we build a bridge connecting the warmth of homes with the ambition of artisans and lovers of authenticity.",
+    "cards": [
+      {
+        "title": "Empower Artisans",
+        "description": "We provide the technological tools and necessary training for every seller from their home, turning their innate talent into a sustainable and profitable business."
+      },
+      {
+        "title": "Guarantee Highest Standards",
+        "description": "We are the bridge of trust; we review and monitor every handmade or homemade product to ensure a safe, clean, and high-quality shopping experience for the customer."
+      },
+      {
+        "title": "Aim for Global Reach",
+        "description": "Our vision is to be the leading platform in the Middle East that makes 'Made at Home' a source of pride that conquers global markets and supports our local economy."
+      }
+    ]
+  },
+
+  "stats_section": {
+    "items": [
+      { "label": "Artisans & Creators", "value": "15+" },
+      { "label": "Handmade Products", "value": "500+" },
+      { "label": "Happy Customers", "value": "12k+" }
+    ]
+  },
+
+  "values_section": {
+    "title": "Our Core Values",
+    "cards": [
+      {
+        "title": "Guaranteed Quality",
+        "description": "Every product undergoes a thorough inspection to ensure it meets our standards of cleanliness and craftsmanship."
+      },
+      {
+        "title": "Community First",
+        "description": "By shopping here, you directly support artisan families and ambitious small businesses."
+      },
+      {
+        "title": "Authenticity & Creativity",
+        "description": "Handcrafted pieces made with love, unlike anything you'll find in commercial markets."
+      }
+    ]
   }
 
 }

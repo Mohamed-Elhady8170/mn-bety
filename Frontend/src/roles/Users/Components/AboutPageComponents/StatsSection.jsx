@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const Counter = ({ end, duration = 2000 }) => {
   const [count, setCount] = useState(0);
@@ -25,20 +26,19 @@ const Counter = ({ end, duration = 2000 }) => {
 };
 
 export default function StatsSection() {
+  const { t } = useTranslation();
+  const statsItems = t('stats_section.items', { returnObjects: true });
+  
   return (
     <>
-    <section className="py-10 bg-primary/5 relative overflow-hidden border-y border-primary/10">
+      <section className="py-10 bg-primary/5 relative overflow-hidden border-y border-primary/10">
         <div className="absolute inset-0 opacity-20 pointer-events-none"
           style={{ backgroundImage: 'radial-gradient(var(--color-primary) 4px, transparent 2px)', backgroundSize: '40px 40px' }}>
         </div>
 
         <div className="max-w-6xl mx-auto px-6 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-center">
-            {[
-              { label: 'حرفي ومبدع', value: '15+' },
-              { label: 'منتج يدوي', value: '500+' },
-              { label: 'عميل سعيد', value: '12k+' },
-            ].map((stat, i) => (
+            {statsItems.map((stat, i) => (
               <div key={i} className="relative group text-center px-4 py-8">
                 <div className="absolute inset-0 scale-75 opacity-0 bg-primary/5 rounded-[3rem] transition-all duration-700 -z-10 group-hover:scale-100 group-hover:opacity-100"></div>
                 
