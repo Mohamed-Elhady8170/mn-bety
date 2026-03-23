@@ -1,5 +1,3 @@
-
-
 // import React, { useState, useRef } from 'react';
 // import { 
 //   MdEdit, MdCalendarToday, MdPerson, MdHistory, MdShoppingBag, 
@@ -9,10 +7,10 @@
 
 // const ProfilePage = () => {
 //   const [activeTab, setActiveTab] = useState('info');
-  
+
 //   // نظام عرض الطلبات (عرض 3 في كل مرة)
 //   const [visibleOrdersCount, setVisibleOrdersCount] = useState(3);
-  
+
 //   const nameInputRef = useRef(null);
 
 //   // مصفوفة بيانات طلبات كبيرة للتجربة
@@ -46,7 +44,7 @@
 //   return (
 //     <div className="min-h-screen bg-[#f8f7f6] py-8 px-4 md:px-20 lg:px-40 text-right" dir="rtl">
 //       <div className="max-w-[960] mx-auto">
-        
+
 //         {/* Header Section */}
 //         <section className="bg-white rounded-xl p-6 mb-8 border border-[#e6d9d1] shadow-sm">
 //           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
@@ -100,7 +98,7 @@
 //                   <label className="text-sm font-bold text-text-main block">الاسم الكامل</label>
 //                   <input ref={nameInputRef} className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-2 focus:ring-[#d2631e]" defaultValue="محمد الهادي" />
 //                 </div>
-                
+
 //                 <div className="space-y-2">
 //                   <label className="text-sm font-bold text-text-main block">البريد الإلكتروني</label>
 //                   <input className="w-full rounded-xl border-[#e6d9d1] bg-[#f8f7f6] p-4 outline-none focus:ring-1 focus:ring-[#d2631e]" type="email" defaultValue="hadyyyy@email.com" />
@@ -148,7 +146,7 @@
 //                 <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
 //                   <MdShoppingBag className="text-[#d2631e]" /> سجل الطلبات
 //                 </h3>
-                
+
 //                 {allOrdersData.slice(0, visibleOrdersCount).map((order) => (
 //                   <OrderItem key={order.id} {...order} />
 //                 ))}
@@ -220,27 +218,29 @@
 // export default ProfilePage;
 
 import React, { useState, useRef } from 'react';
-import { 
-  MdEdit, MdCalendarToday, MdPerson, MdHistory, MdShoppingBag, 
-  MdInventory2, MdLocalShipping, MdCheckCircle, MdPending, 
-  MdChevronLeft, MdDelete 
+import {
+  MdEdit, MdCalendarToday, MdPerson, MdHistory, MdShoppingBag,
+  MdInventory2, MdLocalShipping, MdCheckCircle, MdPending,
+  MdChevronLeft, MdDelete
 } from "react-icons/md";
+import { useTranslation } from 'react-i18next';
 
 const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState('info');
   const [visibleOrdersCount, setVisibleOrdersCount] = useState(3);
   const nameInputRef = useRef(null);
+  const { t } = useTranslation();
 
   const allOrdersData = [
-     { id: "77421", date: "24 أكتوبر 2023", items: "3", price: "450.00", status: "delivered" },
-     { id: "88210", date: "02 نوفمبر 2023", items: "1", price: "125.50", status: "pending" },
-     { id: "65129", date: "15 سبتمبر 2023", items: "5", price: "890.00", status: "delivered" },
-     { id: "99201", date: "10 أغسطس 2023", items: "2", price: "210.00", status: "delivered" },
-     { id: "11204", date: "05 أغسطس 2023", items: "1", price: "55.00", status: "pending" },
-     { id: "44302", date: "01 يوليو 2023", items: "4", price: "600.00", status: "delivered" },
-     { id: "55603", date: "20 يونيو 2023", items: "2", price: "320.00", status: "delivered" },
-     { id: "22109", date: "10 مايو 2023", items: "1", price: "150.00", status: "pending" },
-     { id: "33405", date: "05 أبريل 2023", items: "3", price: "420.00", status: "delivered" },
+    { id: "77421", date: "24 أكتوبر 2023", items: "3", price: "450.00", status: "delivered" },
+    { id: "88210", date: "02 نوفمبر 2023", items: "1", price: "125.50", status: "pending" },
+    { id: "65129", date: "15 سبتمبر 2023", items: "5", price: "890.00", status: "delivered" },
+    { id: "99201", date: "10 أغسطس 2023", items: "2", price: "210.00", status: "delivered" },
+    { id: "11204", date: "05 أغسطس 2023", items: "1", price: "55.00", status: "pending" },
+    { id: "44302", date: "01 يوليو 2023", items: "4", price: "600.00", status: "delivered" },
+    { id: "55603", date: "20 يونيو 2023", items: "2", price: "320.00", status: "delivered" },
+    { id: "22109", date: "10 مايو 2023", items: "1", price: "150.00", status: "pending" },
+    { id: "33405", date: "05 أبريل 2023", items: "3", price: "420.00", status: "delivered" },
   ];
 
   const handleEditClick = () => {
@@ -249,86 +249,83 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-main text-text-main py-10 px-4 md:px-20 transition-colors duration-300" dir="rtl">
+    <div className="min-h-screen bg-bg-main text-text-main py-10 px-4 md:px-20 transition-colors duration-300">
       <div className="max-w-4xl mx-auto">
-      
+
         <section className="card mb-8 animate-fadeIn">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row items-center gap-6">
-            
+
               <div className="flex-center h-32 w-32 rounded-full bg-bg-subtle border-4 border-primary/20 shadow-xl text-primary">
                 <MdPerson size={64} />
               </div>
-              <div className="text-center sm:text-right">
+              <div className="text-center sm:text-start">
                 <h1 className="text-3xl font-bold mb-1">محمد الهادي</h1>
                 <p className="text-text-subtle flex items-center justify-center sm:justify-start gap-2">
-                  <MdCalendarToday className="text-primary" /> عضو منذ يناير 2026
+                  <MdCalendarToday className="text-primary" /> {t('profile.member_since')} يناير 2026
                 </p>
                 <div className="mt-3">
-                  <span className="badge bg-primary/10 text-primary">عميل متميز</span>
+                  <span className="badge bg-primary/10 text-primary">{t('profile.premium_customer')}</span>
                 </div>
               </div>
             </div>
             <button onClick={handleEditClick} className="btn btn-gray flex items-center gap-2">
-              <MdEdit /> تعديل الملف
+              <MdEdit /> {t('profile.edit_profile')}
             </button>
           </div>
         </section>
 
         <div className="card p-0! overflow-hidden shadow-lg animate-fadeIn delay-100">
           <div className="flex border-b border-border-main bg-bg-subtle/30 px-6">
-            <button 
+            <button
               onClick={() => setActiveTab('info')}
               className={`flex items-center gap-2 py-5 px-6 font-bold transition-all ${activeTab === 'info' ? 'text-primary border-b-4 border-primary' : 'text-text-subtle hover:text-primary'}`}
             >
-              <MdPerson className="text-xl" /> معلوماتي
+              <MdPerson className="text-xl" /> {t('profile.personal_info')}
             </button>
-            <button 
+            <button
               onClick={() => setActiveTab('orders')}
               className={`flex items-center gap-2 py-5 px-6 font-bold transition-all ${activeTab === 'orders' ? 'text-primary border-b-4 border-primary' : 'text-text-subtle hover:text-primary'}`}
             >
-              <MdHistory className="text-xl" /> سجل الطلبات
-            </button>
+              <MdHistory className="text-xl" /> {t('profile.orders_history')}    
+                      </button>
           </div>
 
-          <div className="p-6 lg:p-10">
+           <div className="p-6 lg:p-10">
             {activeTab === 'info' ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fadeIn">
-                <div className="space-y-2 text-right">
-                  <label className="text-sm font-bold text-text-subtle block">الاسم الكامل</label>
+                <div className="space-y-2 text-start">
+                  <label className="text-sm font-bold text-text-subtle block">{t('profile.full_name')}</label>
                   <input ref={nameInputRef} className="input-text" defaultValue="محمد الهادي" />
                 </div>
-                <div className="space-y-2 text-right">
-                  <label className="text-sm font-bold text-text-subtle block">البريد الإلكتروني</label>
+                <div className="space-y-2 text-start">
+                  <label className="text-sm font-bold text-text-subtle block">{t('profile.email')}</label>
                   <input className="input-text" type="email" defaultValue="hadyyyy@email.com" />
                 </div>
-                <div className="space-y-2 text-right">
-                  <label className="text-sm font-bold text-text-subtle block">رقم الهاتف</label>
+                <div className="space-y-2 text-start">
+                  <label className="text-sm font-bold text-text-subtle block">{t('profile.phone')}</label>
                   <input className="input-text" dir="ltr" defaultValue="+20 1245698710" />
                 </div>
-                <div className="space-y-2 text-right">
-                  <label className="text-sm font-bold text-text-subtle block">المدينة</label>
+                <div className="space-y-2 text-start">
+                  <label className="text-sm font-bold text-text-subtle block">{t('profile.city')}</label>
                   <select className="input-text appearance-none">
                     <option>المنوفيه</option>
-                    <option>القاهره</option>
-                    <option>الدقهليه</option>
-                    <option>الاسكندريه</option>
                   </select>
                 </div>
-                <div className="md:col-span-2 space-y-2 text-right">
-                  <label className="text-sm font-bold text-text-subtle block">عنوان التوصيل</label>
+                <div className="md:col-span-2 space-y-2 text-start">
+                  <label className="text-sm font-bold text-text-subtle block">{t('profile.address')}</label>
                   <textarea className="input-text h-24 pt-3" defaultValue="قويسنا - المنوفيه" />
                 </div>
-                <div className="md:col-span-2 flex justify-end mt-4">
-                  <button className="btn btn-primary w-full md:w-auto px-12">حفظ التغييرات</button>
+                <div className="md:col-span-2 flex justify-start mt-4">
+                  <button className="btn btn-primary w-full md:w-auto px-12">{t('profile.save_changes')}</button>
                 </div>
               </div>
             ) : (
               <div className="space-y-6 animate-fadeIn">
                 <h3 className="text-xl font-bold flex items-center gap-2 text-primary">
-                  <MdShoppingBag />مشترياتي 
+                  <MdShoppingBag />{t('profile.my_purchases')}
                 </h3>
-                
+
                 <div className="grid gap-4">
                   {allOrdersData.slice(0, visibleOrdersCount).map((order) => (
                     <OrderItem key={order.id} {...order} />
@@ -337,10 +334,10 @@ const ProfilePage = () => {
 
                 <div className="mt-8 flex flex-col items-center gap-4">
                   {visibleOrdersCount < allOrdersData.length && (
-                    <button onClick={() => setVisibleOrdersCount(v => v + 3)} className="text-primary font-bold hover:underline">عرض المزيد</button>
+                    <button onClick={() => setVisibleOrdersCount(v => v + 3)} className="text-primary font-bold hover:underline">{t('profile.show_more')}</button>
                   )}
                   {visibleOrdersCount > 3 && (
-                    <button onClick={() => setVisibleOrdersCount(v => v -3)} className="text-text-muted text-sm hover:underline">عرض أقل</button>
+                    <button onClick={() => setVisibleOrdersCount(v => v - 3)} className="text-text-muted text-sm hover:underline">{t('profile.show_less')}</button>
                   )}
                 </div>
               </div>
@@ -349,14 +346,15 @@ const ProfilePage = () => {
         </div>
 
         <button className="flex items-center gap-2 mx-auto text-red-text hover:bg-red-soft  px-4 py-2 rounded-lg transition-all mt-6 font-bold">
-          <MdDelete className="text-lg" /> حذف الحساب نهائياً
-        </button>
+  <MdDelete className="text-lg" /> {t('profile.delete_account')}
+          </button>
       </div>
     </div>
   );
 };
 
 const OrderItem = ({ id, date, items, price, status }) => {
+  const { t } = useTranslation();
   const isDelivered = status === 'delivered';
   return (
     <div className="flex flex-col md:flex-row items-center justify-between p-5 border border-border-main rounded-2xl hover:bg-bg-subtle transition-all group card-hover">
@@ -365,18 +363,18 @@ const OrderItem = ({ id, date, items, price, status }) => {
         <div className="flex-center h-16 w-16 shrink-0 bg-bg-subtle rounded-xl shadow-sm group-hover:bg-bg-main transition-colors text-primary">
           {isDelivered ? <MdInventory2 size={32} /> : <MdLocalShipping size={32} />}
         </div>
-        <div className="text-right">
-          <p className="font-bold text-lg">طلب #{id}</p>
-          <p className="text-text-subtle text-sm">{date} • {items} قطع</p>
+        <div className="text-start">
+                  <p className="font-bold text-lg">{t('profile.order')} #{id}</p>
+          <p className="text-text-subtle text-sm">{date} • {items} {t('profile.items')}</p>
         </div>
       </div>
-      
+
       <div className="mt-4 md:mt-0 flex items-center justify-between w-full md:w-auto gap-10">
-        <div className="text-left md:text-right">
+        <div className="text-left md:text-start">
           <p className="font-black text-xl text-primary">{price} ج.م</p>
           <span className={`badge mt-1 inline-flex items-center gap-1 ${isDelivered ? 'bg-success-green/10 text-success-green' : 'bg-primary/10 text-primary'}`}>
             {isDelivered ? <MdCheckCircle /> : <MdPending />}
-            {isDelivered ? 'تم التوصيل' : 'قيد المعالجة'}
+            {isDelivered ? t('profile.status_delivered') : t('profile.status_pending')}
           </span>
         </div>
         <MdChevronLeft className="text-3xl text-text-muted group-hover:text-primary transition-transform group-hover:-translate-x-1" />

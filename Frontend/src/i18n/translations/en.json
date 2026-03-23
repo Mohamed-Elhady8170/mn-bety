@@ -396,6 +396,28 @@
   "of": "of",
   "products": "products",
   "no_subcategories": "No subcategories"
+},
+"profile": {
+  "title": "My Profile",
+  "member_since": "Member since",
+  "premium_customer": "Premium Customer",
+  "edit_profile": "Edit Profile",
+  "personal_info": "Personal Info",
+  "orders_history": "Order History",
+  "full_name": "Full Name",
+  "email": "Email",
+  "phone": "Phone Number",
+  "city": "City",
+  "address": "Delivery Address",
+  "save_changes": "Save Changes",
+  "my_purchases": "My Purchases",
+  "order": "Order",
+  "items": "items",
+  "status_delivered": "Delivered",
+  "status_pending": "Processing",
+  "show_more": "Show More",
+  "show_less": "Show Less",
+  "delete_account": "Delete Account Permanently"
 }
 
 }
