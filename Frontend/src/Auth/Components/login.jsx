@@ -1,25 +1,12 @@
 import React, { useState } from 'react';
 import { Mail, Eye, EyeOff, LogIn, Sparkles, Shield, Truck, Award } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
-// 1. Import Hook Form and Zod
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginThunk } from '../Features/authThunks';
-
-// 2. Define the Validation Schema
-const loginSchema = z.object({
-    email: z.string()
-        .min(1, 'البريد الإلكتروني مطلوب')
-        .email('البريد الإلكتروني غير صالح (مثال: name@domain.com)'),
-    password: z.string()
-        .min(1, 'كلمة المرور مطلوبة')
-        .min(8, 'كلمة المرور يجب أن تكون 8 أحرف على الأقل')
-        .regex(/[a-z]/, 'كلمة المرور يجب أن تحتوي على حرف صغير واحد على الأقل')
-        .regex(/[A-Z]/, 'كلمة المرور يجب أن تحتوي على حرف كبير واحد على الأقل')
-        .regex(/\d/, 'كلمة المرور يجب أن تحتوي على رقم واحد على الأقل'),
-});
+import { useTranslation } from 'react-i18next';
 
 const floatingIcons = [
     { Icon: Sparkles, delay: 0, size: 20, left: 10, top: 20, duration: 15 },
@@ -34,11 +21,22 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
-    // جيب الـ loading والـ error من الـ store
     const { isLoading, error } = useSelector((state) => state.auth);
 
-    // 3. Initialize useForm
+    const loginSchema = z.object({
+        email: z.string()
+            .min(1, t('auth.validation.email_required'))
+            .email(t('auth.validation.email_invalid')),
+        password: z.string()
+            .min(1, t('auth.validation.password_required'))
+            .min(8, t('auth.validation.password_min'))
+            .regex(/[a-z]/, t('auth.validation.password_lowercase'))
+            .regex(/[A-Z]/, t('auth.validation.password_uppercase'))
+            .regex(/\d/, t('auth.validation.password_number')),
+    });
+
     const {
         register,
         handleSubmit,
@@ -51,13 +49,12 @@ const Login = () => {
         }
     });
 
-    // 4. Submit Handler
     const onSubmit = async (data) => {
         const result = await dispatch(loginThunk(data));
 
         if (loginThunk.fulfilled.match(result)) {
             const roles = result.payload.user.roles;
-               if (roles.includes('seller') && !roles.includes('user')) {
+            if (roles.includes('seller') && !roles.includes('user')) {
                 navigate('/seller');
             } else {
                 navigate('/user');
@@ -126,20 +123,20 @@ const Login = () => {
                             <span className="text-white w-6 h-6"><Sparkles /></span>
                         </div>
                         <h3 className="text-2xl font-black mb-3 leading-tight drop-shadow-lg">
-                            ادعم الحرفيين المحليين وجمّل منزلك بقطع فريدة.
+                            {t('auth.login.branding_title')}
                         </h3>
                         <p className="text-base opacity-90 drop-shadow">
-                            سوق الحرف هو وجهتك الأولى لكل ما هو مصنوع يدوياً وبحب.
+                            {t('auth.login.branding_subtitle')}
                         </p>
 
                         <div className="mt-6 grid grid-cols-2 gap-2">
                             <div className="rounded-lg bg-white/20 backdrop-blur p-2 text-center border border-white/40">
                                 <Shield className="w-4 h-4 mx-auto mb-1 text-white" />
-                                <h4 className="font-bold text-xs text-white">بائعون موثوقون</h4>
+                                <h4 className="font-bold text-xs text-white">{t('auth.trusted_sellers')}</h4>
                             </div>
                             <div className="rounded-lg bg-white/20 backdrop-blur p-2 text-center border border-white/40">
                                 <Truck className="w-4 h-4 mx-auto mb-1 text-white" />
-                                <h4 className="font-bold text-xs text-white">شحن لكل المناطق</h4>
+                                <h4 className="font-bold text-xs text-white">{t('auth.nationwide_shipping')}</h4>
                             </div>
                         </div>
                     </div>
@@ -152,10 +149,10 @@ const Login = () => {
 
                     <div className="mb-6 text-right relative">
                         <h2 className="text-3xl lg:text-4xl font-black text-text-main mb-2 animate-fadeIn">
-                            مرحباً بك مجدداً
+                            {t('auth.login.title')}
                         </h2>
                         <p className="text-base text-text-subtle animate-fadeIn delay-100">
-                            سجل دخولك للوصول إلى عالم الحرف اليدوية
+                            {t('auth.login.subtitle')}
                         </p>
                     </div>
 
@@ -166,13 +163,12 @@ const Login = () => {
                         </div>
                     )}
 
-                    {/* Use handleSubmit from Hook Form */}
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 relative">
 
                         {/* Email Input */}
                         <div className="space-y-1.5 group">
                             <label className="block text-sm font-semibold text-text-main mr-1 transition-colors group-focus-within:text-primary">
-                                البريد الإلكتروني
+                                {t('auth.fields.email')}
                             </label>
                             <div className="relative">
                                 <input
@@ -197,13 +193,13 @@ const Login = () => {
                         <div className="space-y-1.5 group">
                             <div className="flex justify-between items-center px-1">
                                 <label className="text-sm font-semibold text-text-main transition-colors group-focus-within:text-primary">
-                                    كلمة المرور
+                                    {t('auth.fields.password')}
                                 </label>
                                 <Link
                                     to="/auth/forgot-password"
                                     className="text-sm font-medium text-primary hover:underline transition-all hover:scale-105 inline-block"
                                 >
-                                    نسيت كلمة المرور؟
+                                    {t('auth.login.forgot_password')}
                                 </Link>
                             </div>
                             <div className="relative">
@@ -236,10 +232,10 @@ const Login = () => {
                             className="w-full py-3.5 bg-primary text-white font-bold text-base rounded-xl hover:bg-[#d43d0a] shadow-lg shadow-primary/20 transition-all duration-300 flex items-center justify-center gap-2 hover:gap-3 hover:shadow-xl hover:shadow-primary/30 active:scale-95 group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
-                                <span>جاري تسجيل الدخول...</span>
+                                <span>{t('auth.login.loading')}</span>
                             ) : (
                                 <>
-                                    <span>تسجيل الدخول</span>
+                                    <span>{t('common.login')}</span>
                                     <LogIn className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
                                 </>
                             )}
@@ -253,7 +249,7 @@ const Login = () => {
                         </div>
                         <div className="relative flex justify-center text-sm">
                             <span className="px-4 bg-bg-main text-text-subtle relative overflow-hidden group">
-                                أو
+                                {t('common.or')}
                                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
                             </span>
                         </div>
@@ -261,12 +257,12 @@ const Login = () => {
 
                     <div className="text-center animate-fadeIn delay-200">
                         <p className="text-base text-text-subtle">
-                            ليس لديك حساب؟
+                            {t('auth.login.no_account')}
                             <Link
                                 to="/auth/signup"
                                 className="text-primary font-bold hover:underline mr-1.5 inline-block transition-all hover:scale-105 hover:mr-2"
                             >
-                                إنشاء حساب جديد
+                                {t('common.signup')}
                             </Link>
                         </p>
                     </div>

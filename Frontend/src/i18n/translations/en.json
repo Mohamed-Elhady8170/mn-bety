@@ -17,6 +17,68 @@
     "cookies": "Cookie Policy"
   },
 
+   "auth": {
+    "back_to_login": "Back to Login",
+    "having_trouble": "Having trouble?",
+    "contact_support": "Contact Support",
+    "trusted_sellers": "Trusted Sellers",
+    "nationwide_shipping": "Nationwide Shipping",
+    "fields": {
+      "email": "Email Address",
+      "password": "Password",
+      "full_name": "Full Name",
+      "full_name_placeholder": "Enter your full name",
+      "phone": "Phone Number"
+    },
+    "validation": {
+      "email_required": "Email is required",
+      "email_invalid": "Invalid email address (e.g. name@domain.com)",
+      "password_required": "Password is required",
+      "password_min": "Password must be at least 8 characters",
+      "password_lowercase": "Password must contain at least one lowercase letter",
+      "password_uppercase": "Password must contain at least one uppercase letter",
+      "password_number": "Password must contain at least one number",
+      "confirm_password_required": "Please confirm your password",
+      "confirm_password_mismatch": "Passwords do not match",
+      "full_name_min": "Name must be at least 3 characters",
+      "phone_invalid": "Invalid phone number (e.g. +966 50 000 0000)",
+      "terms_required": "You must agree to the terms and conditions"
+    },
+    "password_requirements": {
+      "title": "Password requirements:",
+      "min_chars": "At least 8 characters",
+      "lowercase": "At least one lowercase letter (a-z)",
+      "uppercase": "At least one uppercase letter (A-Z)",
+      "number": "At least one number (0-9)"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Sign in to access the world of handmade crafts",
+      "forgot_password": "Forgot Password?",
+      "loading": "Signing in...",
+      "no_account": "Don't have an account?",
+      "branding_title": "Support local artisans and beautify your home with unique pieces.",
+      "branding_subtitle": "Min Baiti is your first destination for everything handmade with love."
+    },
+    "signup": {
+      "title": "Create New Account",
+      "subtitle": "Join the largest community of artisans and creators in the region",
+      "account_type": "Account Type",
+      "role_buyer": "Buyer (Shop)",
+      "role_seller": "Seller (Artisan)",
+      "terms_prefix": "I agree to the",
+      "terms_link": "Terms & Conditions",
+      "terms_and": "and",
+      "privacy_link": "Privacy Policy",
+      "terms_suffix": "of Min Baiti.",
+      "loading": "Creating account...",
+      "have_account": "Already have an account?",
+      "branding_title": "Professionalism, Quality, and Authenticity",
+      "branding_subtitle": "Join us to revive Arab heritage by supporting creative artisans and making their unique products accessible to every home."
+    }
+  },
+
+
 
   "home": {
 

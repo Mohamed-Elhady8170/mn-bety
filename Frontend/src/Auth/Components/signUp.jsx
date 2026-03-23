@@ -6,21 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { registerThunk } from '../Features/authThunks';
-
-// 1. Validation Schema using Zod
-const signUpSchema = z.object({
-    fullName: z.string().min(3, 'الاسم يجب أن يكون 3 أحرف على الأقل'),
-    email: z.string().email('البريد الإلكتروني غير صالح (مثال: name@domain.com)'),
-    phone: z.string().regex(/^[\d+\-\s]{10,}$/, 'رقم الهاتف غير صالح (مثال: +966 50 000 0000)'),
-    password: z.string()
-        .min(8, 'كلمة المرور يجب أن تكون 8 أحرف على الأقل')
-        .regex(/[a-z]/, 'يجب أن تحتوي على حرف صغير واحد على الأقل')
-        .regex(/[A-Z]/, 'يجب أن تحتوي على حرف كبير واحد على الأقل')
-        .regex(/\d/, 'يجب أن تحتوي على رقم واحد على الأقل'),
-    terms: z.literal(true, {
-        errorMap: () => ({ message: 'يجب الموافقة على الشروط والأحكام' }),
-    }),
-});
+import { useTranslation } from 'react-i18next';
 
 // Floating icons data for background animation
 const floatingIcons = [
@@ -37,10 +23,24 @@ const SignUp = () => {
     const [selectedRole, setSelectedRole] = useState('user');
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const { t } = useTranslation();
 
     const { isLoading, error } = useSelector((state) => state.auth);
 
-    // 2. React Hook Form Setup
+    const signUpSchema = z.object({
+        fullName: z.string().min(3, t('auth.validation.full_name_min')),
+        email: z.string().email(t('auth.validation.email_invalid')),
+        phone: z.string().regex(/^[\d+\-\s]{10,}$/, t('auth.validation.phone_invalid')),
+        password: z.string()
+            .min(8, t('auth.validation.password_min'))
+            .regex(/[a-z]/, t('auth.validation.password_lowercase'))
+            .regex(/[A-Z]/, t('auth.validation.password_uppercase'))
+            .regex(/\d/, t('auth.validation.password_number')),
+        terms: z.literal(true, {
+            errorMap: () => ({ message: t('auth.validation.terms_required') }),
+        }),
+    });
+
     const {
         register,
         handleSubmit,
@@ -57,7 +57,6 @@ const SignUp = () => {
         }
     });
 
-    // Watch password for real-time requirement list coloring
     const passwordValue = watch("password", "");
 
     const onSubmit = async (data) => {
@@ -128,8 +127,8 @@ const SignUp = () => {
                     <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-primary/10 rounded-full blur-xl animate-pulse delay-700"></div>
 
                     <div className="mb-6 animate-fadeIn">
-                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-text-main mb-2">إنشاء حساب جديد</h1>
-                        <p className="text-text-subtle text-sm md:text-base">انضم إلى أكبر مجتمع للحرفيين والمبدعين في المنطقة</p>
+                        <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-text-main mb-2">{t('auth.signup.title')}</h1>
+                        <p className="text-text-subtle text-sm md:text-base">{t('auth.signup.subtitle')}</p>
                     </div>
 
                     {/* Server Error */}
@@ -142,14 +141,14 @@ const SignUp = () => {
                     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                         {/* Role Selector */}
                         <div className="flex flex-col gap-2 animate-fadeIn delay-100">
-                            <span className="text-text-main text-sm font-semibold">نوع الحساب</span>
+                            <span className="text-text-main text-sm font-semibold">{t('auth.signup.account_type')}</span>
                             <div className="flex h-11 w-full items-center justify-center rounded-xl bg-bg-subtle p-1">
                                 <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'user' ? 'bg-bg-main shadow-sm text-primary' : 'text-text-subtle hover:text-primary'}`}>
-                                    <span className="truncate">مشتري (تسوق)</span>
+                                    <span className="truncate">{t('auth.signup.role_buyer')}</span>
                                     <input checked={selectedRole === 'user'} onChange={() => setSelectedRole('user')} className="invisible w-0" name="role" type="radio" value="user" />
                                 </label>
                                 <label className={`flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-lg px-2 text-sm font-bold transition-all duration-300 ${selectedRole === 'seller' ? 'bg-bg-main shadow-sm text-primary' : 'text-text-subtle hover:text-primary'}`}>
-                                    <span className="truncate">بائع (حرفي)</span>
+                                    <span className="truncate">{t('auth.signup.role_seller')}</span>
                                     <input checked={selectedRole === 'seller'} onChange={() => setSelectedRole('seller')} className="invisible w-0" name="role" type="radio" value="seller" />
                                 </label>
                             </div>
@@ -159,13 +158,13 @@ const SignUp = () => {
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                             {/* Full Name */}
                             <div className="flex flex-col gap-1 md:col-span-2 group">
-                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">الاسم الكامل</span>
+                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">{t('auth.fields.full_name')}</span>
                                 <div className="relative">
                                     <User className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${errors.fullName ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary'}`} />
                                     <input
                                         {...register('fullName')}
                                         className={`w-full rounded-xl border ${errors.fullName ? 'border-red-text' : 'border-border-warm'} bg-bg-subtle py-2.5 pr-10 pl-3 text-sm focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all duration-300 outline-none text-text-main placeholder:text-text-subtle group-focus-within:shadow-lg group-focus-within:shadow-primary/10`}
-                                        placeholder="أدخل اسمك بالكامل"
+                                        placeholder={t('auth.fields.full_name_placeholder')}
                                         type="text"
                                     />
                                 </div>
@@ -178,7 +177,7 @@ const SignUp = () => {
 
                             {/* Email */}
                             <div className="flex flex-col gap-1 md:col-span-2 lg:col-span-1 group">
-                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">البريد الإلكتروني</span>
+                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">{t('auth.fields.email')}</span>
                                 <div className="relative">
                                     <Mail className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${errors.email ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary'}`} />
                                     <input
@@ -197,7 +196,7 @@ const SignUp = () => {
 
                             {/* Phone */}
                             <div className="flex flex-col gap-1 md:col-span-2 lg:col-span-1 group">
-                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">رقم الهاتف</span>
+                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">{t('auth.fields.phone')}</span>
                                 <div className="relative">
                                     <Phone className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${errors.phone ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary'}`} />
                                     <input
@@ -217,7 +216,7 @@ const SignUp = () => {
 
                             {/* Password */}
                             <div className="flex flex-col gap-1 md:col-span-2 group">
-                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">كلمة المرور</span>
+                                <span className="text-text-main text-sm font-semibold transition-colors group-focus-within:text-primary">{t('auth.fields.password')}</span>
                                 <div className="relative">
                                     <Lock className={`absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 transition-all duration-300 ${errors.password ? 'text-red-text' : 'text-text-subtle opacity-50 group-focus-within:opacity-100 group-focus-within:text-primary'}`} />
                                     <input
@@ -244,12 +243,12 @@ const SignUp = () => {
 
                         {/* Password Requirements Hint */}
                         <div className="text-xs text-text-subtle pr-1 space-y-1 bg-bg-subtle/50 p-3 rounded-lg border border-border-warm">
-                            <p className="font-semibold mb-1">متطلبات كلمة المرور:</p>
+                            <p className="font-semibold mb-1">{t('auth.password_requirements.title')}</p>
                             <ul className="list-disc list-inside mr-2 space-y-1">
-                                <li className={passwordValue.length >= 8 ? 'text-green-600 dark:text-green-400' : ''}>• 8 أحرف على الأقل</li>
-                                <li className={/[a-z]/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• حرف صغير واحد على الأقل (a-z)</li>
-                                <li className={/[A-Z]/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• حرف كبير واحد على الأقل (A-Z)</li>
-                                <li className={/\d/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• رقم واحد على الأقل (0-9)</li>
+                                <li className={passwordValue.length >= 8 ? 'text-green-600 dark:text-green-400' : ''}>• {t('auth.password_requirements.min_chars')}</li>
+                                <li className={/[a-z]/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• {t('auth.password_requirements.lowercase')}</li>
+                                <li className={/[A-Z]/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• {t('auth.password_requirements.uppercase')}</li>
+                                <li className={/\d/.test(passwordValue) ? 'text-green-600 dark:text-green-400' : ''}>• {t('auth.password_requirements.number')}</li>
                             </ul>
                         </div>
 
@@ -263,7 +262,7 @@ const SignUp = () => {
                                     type="checkbox"
                                 />
                                 <label className="text-xs sm:text-sm text-text-subtle leading-relaxed" htmlFor="terms">
-                                    أوافق على <Link to="#" className="text-primary font-bold hover:underline underline-offset-4 transition-all">الشروط والأحكام</Link> و <Link to="#" className="text-primary font-bold hover:underline underline-offset-4 transition-all">سياسة الخصوصية</Link> الخاصة بسوق الحرف.
+                                    {t('auth.signup.terms_prefix')} <Link to="#" className="text-primary font-bold hover:underline underline-offset-4 transition-all">{t('auth.signup.terms_link')}</Link> {t('auth.signup.terms_and')} <Link to="#" className="text-primary font-bold hover:underline underline-offset-4 transition-all">{t('auth.signup.privacy_link')}</Link> {t('auth.signup.terms_suffix')}
                                 </label>
                             </div>
                             {errors.terms && (
@@ -280,10 +279,10 @@ const SignUp = () => {
                             className="flex w-full cursor-pointer items-center justify-center rounded-xl bg-primary py-3 text-base font-bold text-white shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-[#d43d0a] hover:scale-[1.01] hover:shadow-xl hover:shadow-primary/30 active:scale-[0.98] gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isLoading ? (
-                                <span>جاري إنشاء الحساب...</span>
+                                <span>{t('auth.signup.loading')}</span>
                             ) : (
                                 <>
-                                    <span>إنشاء الحساب</span>
+                                    <span>{t('common.signup')}</span>
                                     <Check className="w-4 h-4 transition-transform duration-300 group-hover:scale-110" />
                                 </>
                             )}
@@ -291,9 +290,9 @@ const SignUp = () => {
 
                         <div className="mt-2 text-center animate-fadeIn delay-300">
                             <p className="text-text-subtle text-sm">
-                                لديك حساب بالفعل؟
+                                {t('auth.signup.have_account')}
                                 <Link to="/auth/login" className="text-primary font-bold hover:underline mr-1 transition-all hover:mr-2">
-                                    تسجيل الدخول
+                                    {t('common.login')}
                                 </Link>
                             </p>
                         </div>
@@ -319,19 +318,19 @@ const SignUp = () => {
                             <Sparkles className="text-3xl text-primary w-8 h-8" />
                         </div>
 
-                        <h3 className="text-xl font-bold text-text-main mb-3 transition-transform duration-500 group-hover:-translate-y-0.75">احترافية، جودة، وأصالة</h3>
+                        <h3 className="text-xl font-bold text-text-main mb-3 transition-transform duration-500 group-hover:-translate-y-0.75">{t('auth.signup.branding_title')}</h3>
                         <p className="max-w-md text-text-subtle text-sm leading-relaxed mb-8">
-                            انضم إلينا لنحيي التراث العربي من خلال دعم الحرفيين المبدعين وتسهيل وصول منتجاتهم الفريدة لكل بيت.
+                            {t('auth.signup.branding_subtitle')}
                         </p>
 
                         <div className="grid grid-cols-2 gap-3">
                             <div className="rounded-xl bg-bg-main/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <Shield className="text-primary mb-1 w-5 h-5 mx-auto" />
-                                <h4 className="font-bold text-xs text-text-main">بائعون موثوقون</h4>
+                                <h4 className="font-bold text-xs text-text-main">{t('auth.trusted_sellers')}</h4>
                             </div>
                             <div className="rounded-xl bg-bg-main/80 backdrop-blur p-3 border border-white/40 transition-all duration-300 hover:scale-105 hover:shadow-lg">
                                 <Truck className="text-primary mb-1 w-5 h-5 mx-auto" />
-                                <h4 className="font-bold text-xs text-text-main">شحن لكل المناطق</h4>
+                                <h4 className="font-bold text-xs text-text-main">{t('auth.nationwide_shipping')}</h4>
                             </div>
                         </div>
                     </div>
