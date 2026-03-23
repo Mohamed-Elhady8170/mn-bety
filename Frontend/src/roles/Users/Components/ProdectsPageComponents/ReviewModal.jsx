@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FiX, FiStar } from "react-icons/fi"; 
 
 export function ReviewModal({ isOpen, onClose, product }) {
+  const { t } = useTranslation();
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [comment, setComment] = useState("");
@@ -29,10 +31,10 @@ export function ReviewModal({ isOpen, onClose, product }) {
             <FiX className="w-5 h-5 text-gray-400" />
           </button>
           <img src={product.image} alt={product.title} className="w-16 h-16 rounded-2xl object-cover mb-3 shadow-md" />
-          <h2 className="text-base font-bold text-gray-800">تقييمك لمنتج {product.title}</h2>
-          <p className="text-xs text-gray-500 mt-1">رأيك بيساعد الأسر المنتجة تطور من نفسها</p>
+          <h2 className="text-base font-bold text-gray-800">{t('review_modal.title_prefix')} {product.title}</h2>
+          <p className="text-xs text-gray-500 mt-1">{t('review_modal.help_text')}</p>
         </div>
-        <div className="p-6 text-center" dir="rtl">
+        <div className="p-6 text-center">
           <div className="flex justify-center gap-1.5 mb-6">
             {[...Array(5)].map((_, index) => {
               const ratingValue = index + 1;
@@ -54,7 +56,7 @@ export function ReviewModal({ isOpen, onClose, product }) {
 
           <textarea
             className="w-full p-4 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-1 focus:ring-primary focus:border-primary focus:outline-none transition-all h-24 resize-none"
-            placeholder="اكتب تعليقك هنا عن جودة المنتج والتجربة..."
+            placeholder={t('review_modal.placeholder')}
             value={comment}
             onChange={(e) => setComment(e.target.value)}
           />
@@ -63,7 +65,7 @@ export function ReviewModal({ isOpen, onClose, product }) {
             onClick={handleSubmit}
             className="w-full mt-6 bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all active:scale-95"
           >
-            إرسال التقييم
+            {t('review_modal.submit_btn')}
           </button>
         </div>
       </div>

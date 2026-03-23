@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setSelectedSub,
@@ -8,7 +9,8 @@ import {
   selectSelectedCategory,
 } from "../../Features/Categoryslice";
 
-export default function TopBar({ count, sort, setSort }) {
+export default function TopBar({ count }) {
+  const { t } = useTranslation();
   const dispatch          = useDispatch();
   const subcategories     = useSelector(selectSubcategories);
   const subLoading        = useSelector(selectSubLoading);
@@ -23,22 +25,22 @@ export default function TopBar({ count, sort, setSort }) {
   return (
     <div
       className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6"
-      dir="rtl"
+   
     >
       {/* ── Title block ── */}
-      <div className="text-right">
+      <div className="text-start">
         <h1 className="text-xl md:text-2xl font-extrabold text-text-main tracking-tight">
-          المنتجات اليدوية المميزة
+          {t('products_page.title')}
         </h1>
         <p className="text-[10px] md:text-xs text-text-subtle mt-1 max-w-xs md:max-w-none">
-          اشتري فقط المنتجات الصناعية يدوياً من قبل أمهر الحرفيين في العالم العربي
+          {t('products_page.subtitle')}
         </p>
       </div>
 
       {/* ── Controls ── */}
       <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-border-main">
         <span className="text-[10px] md:text-xs text-text-subtle shrink-0">
-          عرض {count} من 160 منتج
+          {t('products_page.showing')} {count} {t('products_page.of')} 160 {t('products_page.products')}
         </span>
 
         {/* Subcategory dropdown — driven by selected main category */}
@@ -63,7 +65,7 @@ export default function TopBar({ count, sort, setSort }) {
               disabled
               className="text-xs border border-border-main rounded-lg px-2 md:px-3 py-2 text-text-subtle bg-bg-subtle cursor-not-allowed opacity-60"
             >
-              <option>لا توجد أقسام فرعية</option>
+              <option>{t('products_page.no_subcategories')}</option>
             </select>
           )
         )}

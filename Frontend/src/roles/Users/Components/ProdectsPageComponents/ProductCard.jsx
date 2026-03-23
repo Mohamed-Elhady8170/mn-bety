@@ -8,6 +8,7 @@ import {
 
 import FavoriteButton from './FavoriteButton';
 import StarRating from './StarRating';
+import { useTranslation } from 'react-i18next';
 const PRODUCTS = [
   {
     id: 1,
@@ -93,6 +94,8 @@ const PRODUCTS = [
 ];
 
 export default function ProductCard({ product, onToggleFavorite, onOpenReview }) {
+  const { t } = useTranslation();
+
   return (
     <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col">
       <NavLink 
@@ -117,7 +120,7 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
       </NavLink>
 
       {/* Info */}
-      <div className="p-4 flex flex-col flex-1 gap-2" dir="rtl">
+      <div className="p-4 flex flex-col flex-1 gap-2" >
         <div className="flex justify-between items-start">
           <span className="text-xs text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full w-fit">
             {product.tag}
@@ -130,7 +133,7 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
             className="flex items-center gap-1 text-[10px] text-text-subtle hover:text-primary transition-colors font-medium"
           >
             <FiMessageSquare className="w-3 h-3" />
-            <span>أضف تقييم</span>
+            <span>{t('product.add_review')} </span>
           </button>
         </div>
 
@@ -150,7 +153,7 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
               className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110"
             />
           </button>
-          <div className="text-right">
+          <div className="text-start">
             <span className="text-lg font-extrabold text-text-main">{product.price.toLocaleString()}</span>
             <span className="text-xs text-text-subtle mr-1">{product.currency}</span>
           </div>

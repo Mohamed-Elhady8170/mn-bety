@@ -371,6 +371,31 @@
    "quality_guarantee": "Handmade Quality & Authenticity Guarantee",
   "have_question": "Have a question?",
   "contact_support": "Contact Customer Service"
+},
+"product": {
+  "add_review": "Add Review"
+},
+
+"review_modal": {
+  "title_prefix": "Your Review for",
+  "help_text": "Your feedback helps artisans improve their craft",
+  "placeholder": "Write your review about product quality and experience...",
+  "submit_btn": "Submit Review"
+},
+
+"sidebar": {
+  "categories": "Categories",
+  "price_range": "Price Range",
+  "seller_location": "Seller Location",
+  "no_subcategories": "No subcategories"
+},
+"products_page": {
+  "title": "Featured Handmade Products",
+  "subtitle": "Shop only handcrafted products made by the most skilled artisans in the Arab world",
+  "showing": "Showing",
+  "of": "of",
+  "products": "products",
+  "no_subcategories": "No subcategories"
 }
 
 }

@@ -370,6 +370,31 @@
     "quality_guarantee": "ضمان الجودة اليدوية والأصالة",
   "have_question": "هل لديك استفسار؟",
   "contact_support": "تواصل مع خدمة العملاء"
+},
+"product": {
+  "add_review": "أضف تقييم"
+},
+
+"review_modal": {
+  "title_prefix": "تقييمك لمنتج",
+  "help_text": "رأيك بيساعد الأسر المنتجة تطور من نفسها",
+  "placeholder": "اكتب تعليقك هنا عن جودة المنتج والتجربة...",
+  "submit_btn": "إرسال التقييم"
+},
+
+"sidebar": {
+  "categories": "التصنيفات",
+  "price_range": "نطاق السعر",
+  "seller_location": "موقع البائع",
+  "no_subcategories": "لا توجد أقسام فرعية"
+},
+"products_page": {
+  "title": "المنتجات اليدوية المميزة",
+  "subtitle": "اشتري فقط المنتجات الصناعية يدوياً من قبل أمهر الحرفيين في العالم العربي",
+  "showing": "عرض",
+  "of": "من",
+  "products": "منتج",
+  "no_subcategories": "لا توجد أقسام فرعية"
 }
 
 }

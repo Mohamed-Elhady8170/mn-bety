@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchRootCategories,
@@ -11,7 +12,6 @@ import {
   selectSubcountFor,
 } from "../../Features/Categoryslice";
 
-// ─── Extracted so it can call useSelector legally ────────────────────────────
 function CategoryItem({ cat, isActive, onSelect }) {
   const subCount = useSelector(selectSubcountFor(cat._id));
 
@@ -38,14 +38,14 @@ function CategoryItem({ cat, isActive, onSelect }) {
   );
 }
 
-// ─── Sidebar ─────────────────────────────────────────────────────────────────
 export default function Sidebar({priceRange, setPriceRange}) {
+  const { t } = useTranslation();
   const dispatch         = useDispatch();
   const rootCategories   = useSelector(selectRootCategories);
   const loading          = useSelector(selectRootLoading);
   const error            = useSelector(selectRootError);
   const selectedCategory = useSelector(selectSelectedCategory);
-const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بورسعيد", "المنيا"];
+  const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بورسعيد", "المنيا"];
 
   useEffect(() => {
     dispatch(fetchRootCategories());
@@ -72,7 +72,7 @@ const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بو
           <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h7" />
           </svg>
-          التصنيفات
+          {t('sidebar.categories')}
         </h2>
 
         {loading && (
@@ -100,9 +100,10 @@ const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بو
           </ul>
         )}
       </div>
+      
       {/* Price Range */}
       <div className="w-full bg-bg-main rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-sm">
-        <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">نطاق السعر</h2>
+        <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">{t('sidebar.price_range')}</h2>
         <input
           type="range"
           min={100}
@@ -119,7 +120,7 @@ const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بو
 
       {/* Seller Location */}
       <div className="w-full bg-bg-main rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-sm">
-        <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">موقع البائع</h2>
+        <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">{t('sidebar.seller_location')}</h2>
         <ul className="space-y-1.5 sm:space-y-2">
           {SELLERS.map((s) => (
             <li 
