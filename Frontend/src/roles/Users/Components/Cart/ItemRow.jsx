@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { FaRegTrashAlt } from "react-icons/fa";
 import {
   addToCart,
@@ -9,6 +10,7 @@ import {
 
 function ItemRow({ item }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   return (
     <li className="card flex gap-4">
@@ -21,6 +23,7 @@ function ItemRow({ item }) {
           <button
             onClick={() => dispatch(removeFromCart(item.id))}
             className="text-danger hover:bg-danger/25 rounded-full p-1 transition-colors"
+            aria-label={t('cart.item.remove_btn')}
           >
             <FaRegTrashAlt />
           </button>
@@ -31,6 +34,7 @@ function ItemRow({ item }) {
               onClick={() => dispatch(decreaseQuantity(item.id))}
               className="w-8 h-8 flex-center rounded-md bg-bg-main shadow-sm hover:text-primary"
               disabled={item.quantity <= 0}
+              aria-label={t('cart.item.decrease_quantity')}
             >
               -
             </button>
@@ -40,6 +44,7 @@ function ItemRow({ item }) {
             <button
               onClick={() => dispatch(addToCart(item))}
               className="w-8 h-8 flex-center rounded-md bg-bg-main shadow-sm hover:text-primary"
+              aria-label={t('cart.item.increase_quantity')}
             >
               +
             </button>

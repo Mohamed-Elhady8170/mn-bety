@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { AiOutlineShopping } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 function EmptyCart() {
+  const { t } = useTranslation();
+  
   return (
     <section className="empty-cart layout-container flex-center flex-col py-20">
       <div className="w-24 h-24 bg-beige-soft rounded-full flex-center mb-6">
@@ -9,12 +12,12 @@ function EmptyCart() {
           <AiOutlineShopping />
         </span>
       </div>
-      <h2 className="text-2xl mb-4">Your cart is empty</h2>
+      <h2 className="text-2xl mb-4">{t('cart.empty.title')}</h2>
       <p className="text-clay mb-8">
-        Looks like you haven't added any unique pieces yet.
+        {t('cart.empty.message')}
       </p>
       <Link to="/products">
-        <button className="btn btn-primary">Start Shopping</button>
+        <button className="btn btn-primary">{t('cart.empty.start_shopping_btn')}</button>
       </Link>
     </section>
   );

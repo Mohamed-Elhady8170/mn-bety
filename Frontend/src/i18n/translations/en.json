@@ -334,6 +334,28 @@
         "description": "Handcrafted pieces made with love, unlike anything you'll find in commercial markets."
       }
     ]
+  },
+  "cart": {
+      "title": "Cart",
+  "item_count": "items",
+  "empty": {
+    "title": "Your cart is empty",
+    "message": "Looks like you haven't added any unique pieces yet.",
+    "start_shopping_btn": "Start Shopping"
+  },
+    "item": {
+    "remove_btn": "Remove item",
+   "decrease_quantity": "Decrease quantity",
+    "increase_quantity": "Increase quantity"
+  },
+    "summary": {
+    "title": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total": "Total",
+    "checkout_btn": "Checkout"
   }
+}
 
 }
