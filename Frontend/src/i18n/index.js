@@ -20,12 +20,10 @@ i18n
     resources,
     fallbackLng: 'ar',
     debug: false, 
-    
-    
+    returnObjects: true, 
     interpolation: {
       escapeValue: false,
     },
-    
     react: {
       useSuspense: true,
     },
