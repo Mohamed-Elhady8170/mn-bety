@@ -15,6 +15,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useDarkMode from "../../../hooks/useDarkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,6 +26,24 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isDark, toggleDarkMode] = useDarkMode();
+  const { t, i18n } = useTranslation();
+
+  const currentLang = i18n.language;
+
+  // const toggleLanguage = () => {
+  //   const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
+  //   i18n.changeLanguage(newLang);
+  //   document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+  //   document.documentElement.lang = newLang;
+  //   localStorage.setItem('preferred-language', newLang);
+  // };
+  const toggleLanguage = () => {
+  const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
+  i18n.changeLanguage(newLang);
+  document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = newLang;
+  localStorage.setItem('preferred-language', newLang);
+};
 
   const { user, isLoading } = useSelector((state) => state.auth);
 
@@ -60,7 +79,6 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await dispatch(logoutThunk());
-    // replace: true> back button
     navigate('/auth/login', { replace: true });
   };
 
@@ -69,10 +87,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: "الرئيسية", href: "/user/" },
-    { name: "التصنيفات", href: "/user/products" },
-    { name: "البائعون", href: "/user/contact" },
-    { name: "عن السوق", href: "/user/about" },
+    { name: t('common.home'), href: "/user/" },
+    { name: t('common.categories'), href: "/user/products" },
+    { name: t('users_navbar.sellers'), href: "/user/contact" },
+    { name: t('common.about'), href: "/user/about" },
   ];
 
   return (
@@ -81,7 +99,7 @@ const Navbar = () => {
         ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
         : "bg-bg-main"
         } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
-      dir="rtl"
+     
     >
       <div className="max-w-7xl mx-auto h-full">
         <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
@@ -125,7 +143,7 @@ const Navbar = () => {
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="ابحث عن قطعة فريدة..."
+                placeholder={t('users_navbar.search_placeholder')}
                 className="w-full pr-10 pl-4 py-2.5 bg-bg-subtle border-2 border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm transition-all duration-300 text-text-main placeholder:text-text-subtle"
                 onFocus={(e) => {
                   e.target.style.borderColor = "#ec5e0c";
@@ -151,10 +169,11 @@ const Navbar = () => {
 
             {/* Language Button */}
             <button
+              onClick={toggleLanguage}
               className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-105 hover:shadow-lg text-text-main text-sm font-bold"
             >
               <Globe className="w-4 h-4" />
-              <span>EN</span>
+              <span>{currentLang.startsWith('ar') ? 'EN' : 'AR'}</span>
             </button>
 
             {/* Dark Mode Toggle */}
@@ -194,7 +213,7 @@ const Navbar = () => {
               />
 
               {/* Dropdown Menu */}
-              <div className={`absolute left-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+              <div className={`absolute end-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}>
                 <div className="p-2">
                   {/* اسم اليوزر */}
@@ -208,14 +227,14 @@ const Navbar = () => {
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
-                    ملفي الشخصي
+                    {t('users_navbar.profile')}
                   </Link>
                   <Link
                     to="/user/my-orders"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
-                    طلباتي
+                    {t('users_navbar.my_orders')}
                   </Link>
                   <div className="border-t border-border-warm my-1"></div>
                   <button
@@ -227,7 +246,7 @@ const Navbar = () => {
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-text hover:bg-red-soft rounded-lg transition-colors disabled:opacity-50"
                   >
                     <LogOut className="w-4 h-4" />
-                    <span>{isLoading ? 'جاري الخروج...' : 'تسجيل الخروج'}</span>
+                    <span>{isLoading ? t('users_navbar.logging_out') : t('users_navbar.logout')}</span>
                   </button>
                 </div>
               </div>
@@ -255,7 +274,7 @@ const Navbar = () => {
               <div className="relative w-full">
                 <input
                   type="text"
-                  placeholder="ابحث عن قطعة فريدة..."
+                  placeholder={t('users_navbar.search_placeholder')}
                   className="w-full pr-10 pl-4 py-2.5 bg-bg-mobile-actions border-2 border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 text-sm text-text-main placeholder:text-text-subtle"
                   dir="rtl"
                 />
@@ -306,7 +325,10 @@ const Navbar = () => {
                   )}
                 </button>
 
-                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
+                >
                   <Globe className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 </button>
 

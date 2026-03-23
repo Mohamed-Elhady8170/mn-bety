@@ -16,6 +16,7 @@
     "privacy": "Privacy Policy",
     "cookies": "Cookie Policy"
   },
+
  "auth": {
     "back_to_login": "Back to Login",
     "having_trouble": "Having trouble?",
@@ -97,9 +98,6 @@
       "resend": "Resend Code"
     }
   },
-
-
-
   "home": {
 
     "hero": {
@@ -157,6 +155,45 @@
 
   },
 
+    "users_navbar": {
+    "sellers": "Sellers",
+    "search_placeholder": "Search for a unique piece...",
+    "profile": "My Profile",
+    "my_orders": "My Orders",
+    "logout": "Logout",
+    "logging_out": "Logging out..."
+  },
+
+  "footer": {
+    "about_description": "A platform dedicated to supporting Arab artisans and connecting them with handmade art lovers around the world. Every piece tells a story from our authentic heritage.",
+    "quick_links": {
+      "title": "Quick Links",
+      "about_store": "About the Store",
+      "join_seller": "Join as a Seller",
+      "shipping_policy": "Shipping Policy",
+      "faq": "FAQ"
+    },
+    "support_links": {
+      "title": "Customer Service",
+      "contact_us": "Contact Us",
+      "track_shipment": "Track Shipment"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "location": "Cairo, Egypt"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Be the first to know about new and exclusive pieces",
+      "placeholder": "Your email address",
+      "subscribe_btn": "Subscribe"
+    }
+  },
 
   "not_found": {
     "title": "Page Not Found",
