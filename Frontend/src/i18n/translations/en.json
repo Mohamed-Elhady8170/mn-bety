@@ -98,6 +98,7 @@
       "resend": "Resend Code"
     }
   },
+
   "home": {
 
     "hero": {
@@ -151,8 +152,82 @@
       "tagline": "Your chance to start your business from home",
       "title": "List Your Products and Start Your Journey Now",
       "image_alt": "Home businesses"
-    }
+    },
 
+    "accessories": {
+    "title": "Handmade Accessories",
+    "subtitle": "Handcrafted accessories with modern designs that suit all tastes",
+    "view_all_btn": "View All Categories",
+    "view_more_btn": "View More",
+    "categories": [
+      { "title": "Necklaces", "count": "15 products" },
+      { "title": "Rings", "count": "12 products" },
+      { "title": "Bracelets", "count": "20 products" },
+      { "title": "Full Sets", "count": "10 products" }
+    ]
+  },
+
+   "candles": {
+    "title": "Scented Candles",
+    "subtitle": "Luxury candles with distinctive scents that create a warm and cozy atmosphere",
+    "view_all_btn": "View All Categories",
+    "view_more_btn": "View More",
+    "categories": [
+      { "title": "Soy Candles", "count": "15 products" },
+      { "title": "Event Candles", "count": "12 products" },
+      { "title": "Decorative Candles", "count": "20 products" },
+      { "title": "Fragrant Candles", "count": "10 products" }
+    ]
+  },
+
+   "category_section": {
+    "categories": [
+      "Home Food",
+      "Candles",
+      "Macrame",
+      "Home Decor",
+      "Accessories"
+    ]
+  },
+
+   "cooking": {
+    "title": "Fresh Home Food",
+    "subtitle": "The most delicious homemade dishes prepared with love and high quality",
+    "view_all_btn": "View All Categories",
+    "view_more_btn": "View More",
+    "categories": [
+      { "title": "Homemade Pickles", "count": "15 products" },
+      { "title": "Grills", "count": "12 products" },
+      { "title": "Diet Products", "count": "20 products" },
+      { "title": "Desserts & Cakes", "count": "10 products" }
+    ]
+  },
+
+   "decore": {
+    "title": "Home Decor",
+    "subtitle": "Unique decorative pieces that add beauty and elegance to your home",
+    "view_all_btn": "View All Categories",
+    "view_more_btn": "View More",
+    "categories": [
+      { "title": "Paintings", "count": "15 products" },
+      { "title": "Vases", "count": "12 products" },
+      { "title": "Table Runners", "count": "20 products" },
+      { "title": "Gift Boxes", "count": "10 products" }
+    ]
+  },
+
+   "macrame": {
+    "title": "Macrame & Crochet",
+    "subtitle": "Handmade art pieces with macrame and crochet threads to add a warm touch to your home",
+    "view_all_btn": "View All Categories",
+    "view_more_btn": "View More",
+    "categories": [
+      { "title": "Wall Hangings", "count": "15 products" },
+      { "title": "Keychains", "count": "12 products" },
+      { "title": "Plant Hangers", "count": "20 products" },
+      { "title": "Crochet Bags", "count": "10 products" }
+    ]
+  }
   },
 
     "users_navbar": {
