@@ -117,22 +117,6 @@ export default function Sidebar({priceRange, setPriceRange}) {
           <span className="font-bold text-primary">{priceRange} ج.م</span>
         </div>
       </div>
-
-      {/* Seller Location */}
-      <div className="w-full bg-bg-main rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-sm">
-        <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">{t('sidebar.seller_location')}</h2>
-        <ul className="space-y-1.5 sm:space-y-2">
-          {SELLERS.map((s) => (
-            <li 
-              key={s} 
-              className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-text-main cursor-pointer hover:text-primary transition-colors"
-            >
-              <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded border border-border-main flex items-center justify-center text-[8px] sm:text-xs text-primary shrink-0">✓</span>
-              <span className="truncate">{s}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
     </aside>
   );
 }
