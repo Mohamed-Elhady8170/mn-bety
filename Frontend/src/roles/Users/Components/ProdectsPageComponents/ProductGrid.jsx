@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 function ProductCardSkeleton() {
   return (
     <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm animate-pulse">
-      <div className="h-[200px] bg-bg-subtle" />
+      <div className="h-50 bg-bg-subtle" />
       <div className="p-4 space-y-3">
         <div className="h-3 bg-bg-subtle rounded w-1/3" />
         <div className="h-4 bg-bg-subtle rounded w-3/4" />

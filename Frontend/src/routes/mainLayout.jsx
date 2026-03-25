@@ -54,7 +54,7 @@ export const x = createBrowserRouter([
       { path: "contact", element: <SellersPage /> },
       { path: "profile", element: <ProfilePage /> },
       { path: "products", element: <ProductPage /> },
-      { path: "products/details", element: <ProductDetails /> },
+      { path: "products/:idOrSlug", element: <ProductDetails /> },
       { path: "wishlist", element: <WishList /> },
       { path: "cart", element: <Cart /> },
       { path: "cart/order-success", element: <OrderSuccess /> },
