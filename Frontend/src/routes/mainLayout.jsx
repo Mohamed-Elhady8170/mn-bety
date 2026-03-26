@@ -27,6 +27,7 @@ import ManageOrders from "../roles/Sellers/Pages/ManageOrders";
 import StoreProfile from "../roles/Sellers/Pages/StoreProfile";
 import SellerProductsPage from "../roles/Users/Pages/SellerProductsPage";
 import OrderDetails from "../roles/Sellers/Pages/OrderDetails";
+import EditProduct from "../roles/Sellers/Pages/EditProduct";
 
 export const x = createBrowserRouter([
   {
@@ -72,6 +73,7 @@ export const x = createBrowserRouter([
       { path: "orders", element: <ManageOrders /> },
       { path: "profile", element: <StoreProfile /> },
       { path: "seeorderdetails", element: <OrderDetails /> },
+      { path: "editProduct/:id", element: <EditProduct /> },
     ],
   },
   {
