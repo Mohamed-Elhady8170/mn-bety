@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate }      from "react-router-dom";
-import { useDispatch, useSelector }    from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Star, ShoppingCart, Heart,
   Truck, ShieldCheck, BadgeCheck,
   Wallet, MessageSquare,
+  AlertTriangle, PackageX
 } from "lucide-react";
 import {
   fetchProductByIdOrSlug,
@@ -27,23 +28,23 @@ import { ReviewModal } from "../Components/ProdectsPageComponents/ReviewModal";
 
 export default function ProductDetails() {
   const { idOrSlug } = useParams();
-  const dispatch     = useDispatch();
-  const navigate     = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const product        = useSelector(selectCurrentProduct);
+  const product = useSelector(selectCurrentProduct);
   const productLoading = useSelector(selectCurrentProductLoading);
-  const reviews        = useSelector(selectReviews);
-  const reviewsTotal   = useSelector(selectReviewsTotal);
-  const reviewsPage    = useSelector(selectReviewsPage);
-  const reviewsPages   = useSelector(selectReviewsPages);
+  const reviews = useSelector(selectReviews);
+  const reviewsTotal = useSelector(selectReviewsTotal);
+  const reviewsPage = useSelector(selectReviewsPage);
+  const reviewsPages = useSelector(selectReviewsPages);
   const reviewsLoading = useSelector(selectReviewsLoading);
-  const deleting       = useSelector(selectDeleting);
+  const deleting = useSelector(selectDeleting);
 
   // swap with: useSelector(state => state.auth.userId)
   const currentUserId = null;
 
-  const [activeImage,  setActiveImage]  = useState(0);
-  const [isFavorite,   setIsFavorite]   = useState(false);
+  const [activeImage, setActiveImage] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   // Fetch product
@@ -84,23 +85,22 @@ export default function ProductDetails() {
     );
   }
 
-  const images       = product.images ?? [];
-  const mainImage    = images[activeImage]?.url ?? "https://via.placeholder.com/800";
+  const images = product.images ?? [];
+  const mainImage = images[activeImage]?.url ?? "https://via.placeholder.com/800";
   const displayPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
-  const hasDiscount  = product.discountPrice > 0 && product.discountPrice < product.price;
+  const hasDiscount = product.discountPrice > 0 && product.discountPrice < product.price;
   const categoryName = product.category?.name ?? "";
-  const seller       = product.seller ?? {};
+  const seller = product.seller ?? {};
 
   return (
     <section className="min-h-screen bg-bg-light font-sans pb-20" dir="rtl">
 
-      {/* Breadcrumbs */}
       <div className="max-w-7xl mx-auto px-4 py-4 text-sm text-text-subtle flex gap-2">
-        <button onClick={() => navigate("/")} className="hover:text-primary transition-colors">الرئيسية</button>
+        {/* <button onClick={() => navigate("/")} className="hover:text-primary transition-colors">الرئيسية</button>
         <span>/</span>
         <button onClick={() => navigate("/user/products")} className="hover:text-primary transition-colors capitalize">{categoryName}</button>
         <span>/</span>
-        <span className="text-primary font-medium capitalize">{product.name}</span>
+        <span className="text-primary font-medium capitalize">{product.name}</span> */}
       </div>
 
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12 mt-4">
@@ -128,6 +128,7 @@ export default function ProductDetails() {
 
           <div>
             <h1 className="text-3xl font-bold text-text-main mb-2 leading-tight capitalize">{product.name}</h1>
+            <p className="text-text-subtle leading-relaxed">{product.description}</p>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
                 <span className="text-2xl font-bold text-primary">{displayPrice.toLocaleString()} ج.م</span>
@@ -145,16 +146,18 @@ export default function ProductDetails() {
             </div>
           </div>
 
-          <p className="text-text-subtle leading-relaxed">{product.description}</p>
 
           {product.stock <= 5 && product.stock > 0 && (
-            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-700 font-medium">
-              ⚠️ باقي {product.stock} قطعة فقط في المخزون!
+            <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-700 font-medium flex items-center gap-2">
+              <AlertTriangle size={16} className="text-amber-500 shrink-0" />
+              <span>باقي {product.stock} قطعة فقط في المخزون!</span>
             </div>
           )}
+
           {product.stock === 0 && (
-            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs text-red-600 font-medium">
-              ❌ هذا المنتج غير متاح حالياً
+            <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-xs text-red-600 font-medium flex items-center gap-2">
+              <PackageX size={16} className="text-red-500 shrink-0" />
+              <span>هذا المنتج غير متاح حالياً</span>
             </div>
           )}
 
@@ -323,9 +326,8 @@ export default function ProductDetails() {
               <div className="flex justify-center gap-2 pt-4" dir="ltr">
                 {[...Array(reviewsPages)].map((_, i) => (
                   <button key={i} onClick={() => dispatch(setReviewPage(i + 1))}
-                    className={`w-8 h-8 rounded-lg text-sm font-semibold transition-all ${
-                      reviewsPage === i + 1 ? "bg-primary text-white" : "border border-border-main text-text-main hover:bg-primary/10"
-                    }`}>
+                    className={`w-8 h-8 rounded-lg text-sm font-semibold transition-all ${reviewsPage === i + 1 ? "bg-primary text-white" : "border border-border-main text-text-main hover:bg-primary/10"
+                      }`}>
                     {i + 1}
                   </button>
                 ))}

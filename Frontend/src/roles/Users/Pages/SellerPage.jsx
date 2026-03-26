@@ -161,11 +161,6 @@ export default function SellersPage() {
                       </div>
 
                       <div className="flex flex-wrap gap-y-2 gap-x-4 text-sm">
-                        {location && (
-                          <span className="flex items-center gap-1 text-text-subtle">
-                            <MapPin size={14} className="text-primary" /> {location}
-                          </span>
-                        )}
                         {seller.description && (
                           <span className="px-3 py-1 rounded-lg text-xs font-bold bg-primary/10 text-primary flex items-center gap-1">
                             <ShoppingBag size={12} />
@@ -173,6 +168,12 @@ export default function SellersPage() {
                             {seller.description.length > 40 ? "..." : ""}
                           </span>
                         )}
+                        {location && (
+                          <span className="flex items-center gap-1 text-text-subtle">
+                            <MapPin size={14} className="text-primary" /> {location}
+                          </span>
+                        )}
+                        
                       </div>
                     </div>
                   </div>
