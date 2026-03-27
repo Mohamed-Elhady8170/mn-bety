@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Package, 
-  ShoppingBag, 
+import {
+  LayoutDashboard,
+  Package,
+  ShoppingBag,
   LogOut,
   Store,
   X,
   Menu,
+  RefreshCw
 } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Logos/logo02.png';
@@ -36,7 +37,7 @@ export default function SellerSidebar() {
   return (
     <>
       {/* Mobile Menu Button */}
-      <button 
+      <button
         onClick={() => setIsOpen(true)}
         className="md:hidden fixed top-5 right-4 z-50 p-2 rounded-xl bg-bg-main/95 backdrop-blur-md border border-border-warm shadow-lg text-text-main"
       >
@@ -45,7 +46,7 @@ export default function SellerSidebar() {
 
       {/* Overlay */}
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
           onClick={() => setIsOpen(false)}
         />
@@ -64,31 +65,30 @@ export default function SellerSidebar() {
             <img
               src={logo}
               alt="من بيتي"
-              className="h-24 w-auto object-contain -my-6" 
+              className="h-24 w-auto object-contain -my-6"
             />
           </Link>
-          <button 
+          <button
             onClick={() => setIsOpen(false)}
             className="md:hidden absolute left-4 p-2 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main"
           >
             <X size={18} />
           </button>
         </div>
-        
+
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             const Icon = link.icon;
             return (
-              <Link 
+              <Link
                 key={link.name}
-                to={link.path} 
-                className={`flex items-center justify-between px-4 py-3 rounded-xl font-bold transition-all ${
-                  isActive 
-                    ? "bg-primary/10 text-primary" 
+                to={link.path}
+                className={`flex items-center justify-between px-4 py-3 rounded-xl font-bold transition-all ${isActive
+                    ? "bg-primary/10 text-primary"
                     : "text-text-soft hover:bg-bg-subtle hover:text-text-main"
-                }`}
+                  }`}
                 onClick={() => setIsOpen(false)}
               >
                 <div className="flex items-center gap-3">
@@ -106,13 +106,22 @@ export default function SellerSidebar() {
         </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-border-warm">
-          <button 
+        <div className="p-4 border-t border-border-warm space-y-2">
+          {/* Switch to Customer */}
+          <button
+            onClick={() => navigate('/customer')}
+            className="flex items-center gap-3 px-4 py-3 text-primary hover:bg-primary/10 w-full rounded-xl  transition-all"
+          >
+            <RefreshCw size={20} />
+            <span>العودة لحساب المشتري</span>
+          </button>
+
+          <button
             onClick={handleLogout}
             disabled={isLoading}
             className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 w-full rounded-xl font-bold transition-all disabled:opacity-50"
           >
-            <LogOut size={20} /> 
+            <LogOut size={20} />
             <span>{isLoading ? 'جاري الخروج...' : 'تسجيل الخروج'}</span>
           </button>
         </div>

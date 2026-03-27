@@ -9,6 +9,8 @@ import {
   Heart,
   LogOut,
   Globe,
+  Store,
+  RefreshCw
 } from "lucide-react";
 import logo from "../../../assets/Logos/logo02.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,20 +32,13 @@ const Navbar = () => {
 
   const currentLang = i18n.language;
 
-  // const toggleLanguage = () => {
-  //   const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
-  //   i18n.changeLanguage(newLang);
-  //   document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
-  //   document.documentElement.lang = newLang;
-  //   localStorage.setItem('preferred-language', newLang);
-  // };
   const toggleLanguage = () => {
-  const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
-  i18n.changeLanguage(newLang);
-  document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
-  document.documentElement.lang = newLang;
-  localStorage.setItem('preferred-language', newLang);
-};
+    const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
+    i18n.changeLanguage(newLang);
+    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = newLang;
+    localStorage.setItem('preferred-language', newLang);
+  };
 
   const { user, isLoading } = useSelector((state) => state.auth);
 
@@ -87,10 +82,10 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: t('common.home'), href: "/user/" },
-    { name: t('common.categories'), href: "/user/products" },
-    { name: t('users_navbar.sellers'), href: "/user/contact" },
-    { name: t('common.about'), href: "/user/about" },
+    { name: t('common.home'), href: "/customer/" },
+    { name: t('common.categories'), href: "/customer/products" },
+    { name: t('users_navbar.sellers'), href: "/customer/contact" },
+    { name: t('common.about'), href: "/customer/about" },
   ];
 
   return (
@@ -99,7 +94,7 @@ const Navbar = () => {
         ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
         : "bg-bg-main"
         } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
-     
+
     >
       <div className="max-w-7xl mx-auto h-full">
         <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
@@ -223,19 +218,44 @@ const Navbar = () => {
                     </div>
                   )}
                   <Link
-                    to="/user/profile"
+                    to="/customer/profile"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
                     {t('users_navbar.profile')}
                   </Link>
                   <Link
-                    to="/user/my-orders"
+                    to="/customer/my-orders"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
                     {t('users_navbar.my_orders')}
                   </Link>
+                  {user?.roles?.includes('seller') ? (
+                    // already a seller → show switch button
+                    <button
+                      onClick={() => {
+                        navigate('/seller');
+                        setIsProfileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors "
+                    >
+                      <RefreshCw className="w-4 h-4" />
+                      <span>{t('users_navbar.switch_to_seller')}</span>
+                    </button>
+                  ) : (
+                    // not a seller → show upgrade button
+                    <button
+                      onClick={() => {
+                        navigate('/customer/upgrade-to-seller');
+                        setIsProfileMenuOpen(false);
+                      }}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors "
+                    >
+                      <Store className="w-4 h-4" />
+                      <span>{t('users_navbar.upgrade_to_seller')}</span>
+                    </button>
+                  )}
                   <div className="border-t border-border-warm my-1"></div>
                   <button
                     onClick={() => {
