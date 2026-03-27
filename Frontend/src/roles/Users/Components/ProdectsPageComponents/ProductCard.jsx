@@ -17,6 +17,8 @@ import {
 import { selectWishlistIds } from "../../Features/wishlistSlice";
 import useEmailVerification from "../../../../hooks/useEmailVerification";
 import { showSuccess, showError } from "../../../../lib/toast";
+import { addToCartThunk } from "../../Features/cartSlice"; 
+import toast from "react-hot-toast";
 
 export default function ProductCard({ product, onOpenReview }) {
   const { t } = useTranslation();
@@ -57,6 +59,20 @@ export default function ProductCard({ product, onOpenReview }) {
     }
   };
 
+  const handleAddToCart = (e) => {
+    e.preventDefault(); // Prevents the card from navigating to the details page when clicking the button
+    
+    if (product.stock === 0) {
+      toast.error("عذراً، هذا المنتج غير متوفر حالياً");
+      return;
+    }
+
+    // Always add 1 quantity from the grid view
+    dispatch(addToCartThunk({ productId: product._id, quantity: 1 }))
+      .unwrap()
+      .then(() => toast.success("تمت الإضافة للسلة بنجاح"))
+      .catch((err) => toast.error(err || "حدث خطأ أثناء الإضافة"));
+  };
   return (
     <div
       className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full"
@@ -136,8 +152,20 @@ export default function ProductCard({ product, onOpenReview }) {
             </span>
           </div>
 
-          <button className="w-8 h-8 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center text-white transition-all shadow-sm active:scale-90">
-            <FiShoppingCart size={14} />
+          <button 
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
+            title={product.stock === 0 ? "نفذت الكمية" : "إضافة للسلة"}
+            className={`w-8 h-8 rounded-full flex items-center justify-center text-white transition-all shadow-sm ${
+              product.stock === 0 
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed" 
+                : "bg-primary hover:bg-primary/80 active:scale-90 group"
+            }`}
+          >
+            <FiShoppingCart 
+              size={14} 
+              className={product.stock > 0 ? "transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" : ""} 
+            />
           </button>
         </div>
       </div>
