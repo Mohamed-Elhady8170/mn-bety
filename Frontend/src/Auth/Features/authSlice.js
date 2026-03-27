@@ -12,6 +12,7 @@ import {
   logoutThunk,
   upgradeToSellerThunk,
   deleteSellerAccountThunk,
+   updateMe
 } from './authThunks';
 
 // ─── Load persisted state on app start ───────────────────────────────────────
@@ -164,8 +165,25 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
+      // ─── Update Me ────────────────────────────────────────────────────────────────
+builder
+  .addCase(updateMe.pending, (state) => {
+    state.isLoading = true;
+    state.error = null;
+  })
+  .addCase(updateMe.fulfilled, (state, action) => {
+    state.isLoading = false;
+    // Backend returns updated user — merge into state
+    state.user = { ...state.user, ...action.payload };
+    updateUserInStorage(state.user);
+  })
+  .addCase(updateMe.rejected, (state, action) => {
+    state.isLoading = false;
+    state.error = action.payload;
+  });
   },
 });
+
 
 export const { setAccessToken, clearAuth, clearError, updateUserRoles ,updateEmailVerified } = authSlice.actions;
 export default authSlice.reducer;
