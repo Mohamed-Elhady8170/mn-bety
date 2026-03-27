@@ -27,7 +27,7 @@ export default function ProductCard({ product, onOpenReview }) {
   const mainImage =
     product.images?.[0]?.url ?? "https://via.placeholder.com/400";
   const categoryName = product.category?.name ?? "";
-  const sellerName = product.seller?.user?.fullName ?? "بائع";
+  const sellerName = product.seller?.userId?.fullName ?? "بائع";
   const sellerCity = product.seller?.location?.city ?? "";
   const hasDiscount = product.discountPrice > 0;
   const currentPrice = hasDiscount

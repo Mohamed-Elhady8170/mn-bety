@@ -14,11 +14,9 @@ export const fetchProducts = createAsyncThunk(
   async (params = {}, { rejectWithValue }) => {
     try {
       const { data } = await publicAxios.get("/products", { params });
-      return data.data; // { products, total, page, pages }
+      return data.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data?.message || "Failed to load products"
-      );
+      return rejectWithValue(err.response?.data?.message || "Failed");
     }
   }
 );
@@ -65,27 +63,27 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     // ── Product list (ProductGrid) ─────────────────────────
-    products:     [],
-    total:        0,
-    pages:        1,
-    loading:      false,
-    error:        null,
+    products: [],
+    total: 0,
+    pages: 1,
+    loading: false,
+    error: null,
 
     // ── Filters (controlled by UI — drive fetchProducts) ───
-    page:         1,
-    limit:        6,
-    sort:         "-createdAt",
-    priceRange:   1000,  // max price filter
+    page: 1,
+    limit: 6,
+    sort: "-createdAt",
+    priceRange: 1000,  // max price filter
 
     // ── Single product (product detail page) ───────────────
-    currentProduct:        null,
+    currentProduct: null,
     currentProductLoading: false,
-    currentProductError:   null,
+    currentProductError: null,
 
     // ── Seller products ────────────────────────────────────
-    sellerProducts:        [],
+    sellerProducts: [],
     sellerProductsLoading: false,
-    sellerProductsError:   null,
+    sellerProductsError: null,
   },
 
   reducers: {
@@ -93,19 +91,19 @@ const productSlice = createSlice({
       state.page = action.payload;
     },
     setSort(state, action) {
-      state.sort  = action.payload;
-      state.page  = 1; // reset to page 1 on sort change
+      state.sort = action.payload;
+      state.page = 1; // reset to page 1 on sort change
     },
     setPriceRange(state, action) {
       state.priceRange = action.payload;
-      state.page       = 1;
+      state.page = 1;
     },
     resetProducts(state) {
       state.products = [];
-      state.total    = 0;
-      state.pages    = 1;
-      state.page     = 1;
-      state.error    = null;
+      state.total = 0;
+      state.pages = 1;
+      state.page = 1;
+      state.error = null;
     },
   },
 
@@ -114,48 +112,49 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProducts.pending, (state) => {
         state.loading = true;
-        state.error   = null;
+        state.error = null;
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading  = false;
-        state.products = action.payload.products;
-        state.total    = action.payload.total;
-        state.pages    = action.payload.pages;
-        state.page     = action.payload.page;
+        state.loading = false;
+        const payload = action.payload || {};
+        state.products = payload.products || [];
+        state.total = payload.total || 0;
+        state.pages = payload.pages || 1;
+        state.page = payload.page || 1;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error   = action.payload;
+        state.error = action.payload;
       });
 
     // ── fetchProductByIdOrSlug ─────────────────────────────
     builder
       .addCase(fetchProductByIdOrSlug.pending, (state) => {
         state.currentProductLoading = true;
-        state.currentProductError   = null;
+        state.currentProductError = null;
       })
       .addCase(fetchProductByIdOrSlug.fulfilled, (state, action) => {
         state.currentProductLoading = false;
-        state.currentProduct        = action.payload;
+        state.currentProduct = action.payload;
       })
       .addCase(fetchProductByIdOrSlug.rejected, (state, action) => {
         state.currentProductLoading = false;
-        state.currentProductError   = action.payload;
+        state.currentProductError = action.payload;
       });
 
     // ── fetchSellerProducts ────────────────────────────────
     builder
       .addCase(fetchSellerProducts.pending, (state) => {
         state.sellerProductsLoading = true;
-        state.sellerProductsError   = null;
+        state.sellerProductsError = null;
       })
       .addCase(fetchSellerProducts.fulfilled, (state, action) => {
         state.sellerProductsLoading = false;
-        state.sellerProducts        = action.payload;
+        state.sellerProducts = action.payload;
       })
       .addCase(fetchSellerProducts.rejected, (state, action) => {
         state.sellerProductsLoading = false;
-        state.sellerProductsError   = action.payload;
+        state.sellerProductsError = action.payload;
       });
   },
 });
@@ -164,17 +163,17 @@ export const { setPage, setSort, setPriceRange, resetProducts } =
   productSlice.actions;
 
 // ─── Selectors ────────────────────────────────────────────────────────────────
-export const selectProducts             = (state) => state.product.products;
-export const selectProductsTotal        = (state) => state.product.total;
-export const selectProductsPages        = (state) => state.product.pages;
-export const selectProductsLoading      = (state) => state.product.loading;
-export const selectProductsError        = (state) => state.product.error;
-export const selectCurrentPage          = (state) => state.product.page;
-export const selectCurrentSort          = (state) => state.product.sort;
-export const selectPriceRange           = (state) => state.product.priceRange;
-export const selectCurrentProduct       = (state) => state.product.currentProduct;
-export const selectCurrentProductLoading= (state) => state.product.currentProductLoading;
-export const selectSellerProducts       = (state) => state.product.sellerProducts;
-export const selectSellerProductsLoading= (state) => state.product.sellerProductsLoading;
+export const selectProducts = (state) => state.product.products;
+export const selectProductsTotal = (state) => state.product.total;
+export const selectProductsPages = (state) => state.product.pages;
+export const selectProductsLoading = (state) => state.product.loading;
+export const selectProductsError = (state) => state.product.error;
+export const selectCurrentPage = (state) => state.product.page;
+export const selectCurrentSort = (state) => state.product.sort;
+export const selectPriceRange = (state) => state.product.priceRange;
+export const selectCurrentProduct = (state) => state.product.currentProduct;
+export const selectCurrentProductLoading = (state) => state.product.currentProductLoading;
+export const selectSellerProducts = (state) => state.product.sellerProducts;
+export const selectSellerProductsLoading = (state) => state.product.sellerProductsLoading;
 
 export default productSlice.reducer;
