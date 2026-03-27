@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiShoppingCart, FiMessageSquare, FiMapPin, FiUser } from "react-icons/fi"; 
+import { FiShoppingCart, FiMessageSquare, FiMapPin, FiUser } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FavoriteButton from "./FavoriteButton";
 import StarRating from "./StarRating";
@@ -8,16 +8,18 @@ import StarRating from "./StarRating";
 export default function ProductCard({ product, onToggleFavorite, onOpenReview }) {
   const { t } = useTranslation();
 
-  // ── Map API fields → display values ────────────────────────────────────────
-  const displayPrice    = product.discountPrice > 0 ? product.discountPrice : product.price;
-  const hasDiscount     = product.discountPrice > 0 && product.discountPrice < product.price;
-  const mainImage       = product.images?.[0]?.url ?? "https://via.placeholder.com/400";
-  const categoryName    = product.category?.name ?? "";
-    const sellerName      = product.seller?.user?.fullName ?? "بائع";
-  const sellerCity      = product.seller?.location?.city ?? "";
+  const mainImage = product.images?.[0]?.url ?? "https://via.placeholder.com/400";
+  const categoryName = product.category?.name ?? "";
+  const sellerName = product.seller?.user?.fullName ?? "بائع";
+  const sellerCity = product.seller?.location?.city ?? "";
+  const hasDiscount = product.discountPrice > 0;
+  const currentPrice = hasDiscount
+    ? (product.price - product.discountPrice)
+    : product.price;
 
   return (
     <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full" dir="rtl">
+
       <NavLink
         to={`/customer/products/${product.slug ?? product._id}`}
         className="relative overflow-hidden block"
@@ -29,9 +31,8 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
-        {/* Badge */}
         {product.isFeatured && (
-          <span className="absolute top-3 right-3 text-white text-xs font-bold px-2 py-1 rounded-full bg-amber-500">
+          <span className="absolute top-3 right-3 text-white text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500">
             {t("product.featured") || "مميز"}
           </span>
         )}
@@ -42,15 +43,12 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
         />
       </NavLink>
 
-      {/* Info */}
       <div className="p-4 flex flex-col flex-1 gap-2">
         <div className="flex justify-between items-start">
-          {/* Category tag */}
           <span className="text-xs text-primary font-semibold bg-primary/10 px-2 py-0.5 rounded-full w-fit capitalize">
             {categoryName}
           </span>
 
-          {/* Add review button */}
           <button
             onClick={(e) => {
               e.preventDefault();
@@ -63,50 +61,49 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
           </button>
         </div>
 
-        {/* Name */}
         <h3 className="text-sm font-bold text-text-main leading-snug capitalize h-10 line-clamp-2">
           {product.name}
         </h3>
-
-        <div className="flex flex-col gap-1.5 border-t border-dashed border-border-main pt-2 mt-1">
+        <div className="flex items-center justify-between w-full border-t border-dashed border-border-main pt-2 mt-1">
           <p className="text-xs text-text-main font-medium flex items-center gap-1 capitalize">
             <FiUser className="w-3.5 h-3.5 text-primary" />
             <span>{sellerName}</span>
           </p>
-
-          {/* موقع البائع (المدينة) */}
           {sellerCity && (
             <p className="text-[11px] text-text-subtle flex items-center gap-1">
               <FiMapPin className="w-3.5 h-3.5 text-text-subtle" />
               <span>{sellerCity}</span>
             </p>
           )}
-        </div>
-        {/* ─────────────────────────────────────────── */}
 
-        {/* Rating */}
+
+        </div>
+
         <div className="mt-1">
           <StarRating rating={product.rating} reviews={product.numReviews} />
         </div>
 
-        {/* Price + Cart */}
-        <div className="mt-auto flex items-center justify-between pt-2 border-t border-border-main">
-          <button className="group w-8 h-8 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center text-white transition-all duration-300 shadow-md">
-            <FiShoppingCart className="w-4 h-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
-          </button>
+        <div className="mt-auto flex justify-between items-center pt-2 border-t border-border-main/50">
 
-          <div className="text-end">
+          <div className="flex flex-col text-right">
             {hasDiscount && (
-              <span className="text-[10px] text-text-subtle line-through ml-1">
+              <span className="text-[10px] text-text-subtle line-through leading-none mb-1 opacity-70">
                 {product.price.toLocaleString()} ج.م
               </span>
             )}
-            <span className="text-lg font-extrabold text-text-main">
-              {displayPrice.toLocaleString()}
+
+            <span className="text-sm font-black text-primary leading-none">
+              {currentPrice.toLocaleString()}
+              <small className="text-[10px] font-bold mr-1 text-text-subtle">ج.م</small>
             </span>
-            <span className="text-xs text-text-subtle mr-1">ج.م</span>
           </div>
+
+          <button className="w-8 h-8 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center text-white transition-all shadow-sm active:scale-90">
+            <FiShoppingCart size={14} />
+          </button>
+
         </div>
+
       </div>
     </div>
   );

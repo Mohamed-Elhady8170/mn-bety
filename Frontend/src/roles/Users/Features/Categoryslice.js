@@ -96,11 +96,6 @@ const categorySlice = createSlice({
       .addCase(fetchRootCategories.fulfilled, (state, action) => {
         state.rootLoading    = false;
         state.allCategories = action.payload;
-
-        // Auto-select the first category on initial load
-        if (!state.selectedCategory && action.payload.length > 0) {
-          state.selectedCategory = action.payload[0];
-        }
       })
       .addCase(fetchRootCategories.rejected, (state, action) => {
         state.rootLoading = false;

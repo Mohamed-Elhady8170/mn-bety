@@ -12,6 +12,9 @@ import {
   selectSubcountFor,
 } from "../../Features/Categoryslice";
 
+// استيراد السليكتور الخاص بإجمالي عدد المنتجات من سلايس المنتجات
+import { selectProductsTotal } from "../../Features/productSlice";
+
 function CategoryItem({ cat, isActive, onSelect }) {
   const subCount = useSelector(selectSubcountFor(cat._id));
 
@@ -38,17 +41,24 @@ function CategoryItem({ cat, isActive, onSelect }) {
   );
 }
 
-export default function Sidebar({priceRange, setPriceRange}) {
+export default function Sidebar({ priceRange, setPriceRange }) {
   const { t } = useTranslation();
-  const dispatch         = useDispatch();
-  const rootCategories   = useSelector(selectRootCategories);
-  const loading          = useSelector(selectRootLoading);
-  const error            = useSelector(selectRootError);
+  const dispatch = useDispatch();
+  
+  const rootCategories = useSelector(selectRootCategories);
+  const loading = useSelector(selectRootLoading);
+  const error = useSelector(selectRootError);
   const selectedCategory = useSelector(selectSelectedCategory);
-  const SELLERS = ["القاهرة", "المنوفية", "اسكندرية", "بورسعيد", "المنيا"];
+  
+  // جلب إجمالي عدد المنتجات من الـ State
+  const allProductsCount = useSelector(selectProductsTotal);
 
   useEffect(() => {
     dispatch(fetchRootCategories());
+    
+    // لجعل تاب All تعمل تلقائياً عند الدخول لأول مرة
+    // نقوم بضبط التصنيف المختار على null
+    dispatch(setSelectedCategory(null));
   }, [dispatch]);
 
   useEffect(() => {
@@ -58,8 +68,9 @@ export default function Sidebar({priceRange, setPriceRange}) {
   }, [selectedCategory?._id, dispatch]);
 
   const handleSelect = (cat) => {
-    if (cat._id === selectedCategory?._id) return;
-    dispatch(setSelectedCategory(cat));
+    // إذا كان cat هو null (All) أو تصنيف مختلف، قم بالتحديث
+    if (cat?._id === selectedCategory?._id) return;
+    dispatch(setSelectedCategory(cat)); 
   };
 
   return (
@@ -89,6 +100,27 @@ export default function Sidebar({priceRange, setPriceRange}) {
 
         {!loading && !error && (
           <ul className="space-y-1.5 sm:space-y-2">
+            {/* تاب All المعدلة */}
+            <li
+              onClick={() => handleSelect(null)}
+              className={`flex items-center justify-between px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl cursor-pointer text-xs sm:text-sm transition-all ${
+                selectedCategory === null
+                  ? "bg-primary/10 text-primary font-bold"
+                  : "hover:bg-bg-subtle text-text-main"
+              }`}
+            >
+              <span>all</span>
+              <span
+                className={`text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full font-semibold whitespace-nowrap ${
+                  selectedCategory === null
+                    ? "bg-primary text-white"
+                    : "bg-bg-subtle text-text-subtle"
+                }`}
+              >
+                {allProductsCount}
+              </span>
+            </li>
+
             {rootCategories.map((cat) => (
               <CategoryItem
                 key={cat._id}
@@ -102,7 +134,7 @@ export default function Sidebar({priceRange, setPriceRange}) {
       </div>
       
       {/* Price Range */}
-      <div className="w-full bg-bg-main rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-sm">
+      <div className="w-full bg-bg-main rounded-xl sm:rounded-2xl p-4 sm:p-5 shadow-sm border border-border-main/50 mt-4">
         <h2 className="text-sm font-bold text-text-main mb-3 sm:mb-4">{t('sidebar.price_range')}</h2>
         <input
           type="range"
@@ -110,11 +142,11 @@ export default function Sidebar({priceRange, setPriceRange}) {
           max={1000}
           value={priceRange}
           onChange={(e) => setPriceRange(+e.target.value)}
-          className="w-full accent-primary"
+          className="w-full accent-primary h-1.5 bg-bg-subtle rounded-lg cursor-pointer"
         />
-        <div className="flex justify-between text-[10px] sm:text-xs text-text-subtle mt-1">
+        <div className="flex justify-between text-[10px] sm:text-xs text-text-subtle mt-1 font-bold">
           <span>100 ج.م</span>
-          <span className="font-bold text-primary">{priceRange} ج.م</span>
+          <span className="text-primary">{priceRange} ج.م</span>
         </div>
       </div>
     </aside>

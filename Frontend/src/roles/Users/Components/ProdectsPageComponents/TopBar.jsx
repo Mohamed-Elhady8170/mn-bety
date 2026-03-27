@@ -40,7 +40,7 @@ export default function TopBar({ count }) {
       {/* ── Controls ── */}
       <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0 border-border-main">
         <span className="text-[10px] md:text-xs text-text-subtle shrink-0">
-          {t('products_page.showing')} {count} {t('products_page.of')} 160 {t('products_page.products')}
+          {t('products_page.showing')} {count} {t('products_page.products')}
         </span>
 
         {/* Subcategory dropdown — driven by selected main category */}
