@@ -54,10 +54,12 @@ const Login = () => {
 
         if (loginThunk.fulfilled.match(result)) {
             const roles = result.payload.user.roles;
-            if (roles.includes('seller') && !roles.includes('user')) {
+            // if seller only → go to seller
+            // if customer (with or without seller) → go to customer
+            if (roles.includes('seller') && !roles.includes('customer')) {
                 navigate('/seller');
             } else {
-                navigate('/user');
+                navigate('/customer');
             }
         }
     };
