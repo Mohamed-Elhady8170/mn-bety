@@ -157,7 +157,7 @@ const Navbar = () => {
             {/* Favorite Icon */}
             <button
               className="hidden sm:flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main"
-              onClick={() => navigate("/user/wishlist")}
+              onClick={() => navigate("/customer/wishlist")}
             >
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 hover:scale-110" />
             </button>
@@ -188,7 +188,7 @@ const Navbar = () => {
             {/* Cart Icon */}
             <button
               className="relative flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main"
-              onClick={() => navigate("/user/cart")}
+              onClick={() => navigate("/customer/cart")}
             >
               <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 hover:rotate-6" />
               <span className="absolute -top-1 -right-1 text-white text-[10px] font-bold px-1.5 py-0.5 bg-primary rounded-full animate-bounce">
@@ -328,7 +328,7 @@ const Navbar = () => {
               <div className="grid grid-cols-4 gap-2 pt-2 border-t border-border-warm">
                 <button className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
                   onClick={() => {
-                    navigate("/user/wishlist");
+                    navigate("/customer/wishlist");
                     setIsOpen(false);
                   }}>
                   <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
