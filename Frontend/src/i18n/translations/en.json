@@ -236,7 +236,9 @@
     "profile": "My Profile",
     "my_orders": "My Orders",
     "logout": "Logout",
-    "logging_out": "Logging out..."
+    "logging_out": "Logging out...",
+    "upgrade_to_seller": "Upgrade to Seller",
+    "switch_to_seller": "Switch to Seller"
   },
 
   "footer": {

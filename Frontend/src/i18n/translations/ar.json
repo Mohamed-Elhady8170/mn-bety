@@ -235,7 +235,9 @@
     "profile": "ملفي الشخصي",
     "my_orders": "طلباتي",
     "logout": "تسجيل الخروج",
-    "logging_out": "جاري الخروج..."
+    "logging_out": "جاري الخروج...",
+    "upgrade_to_seller": "ترقية إلى بائع",
+    "switch_to_seller": "التبديل إلى بائع"
   },
 
   "footer": {
@@ -417,27 +419,5 @@
   "show_more": "عرض المزيد",
   "show_less": "عرض أقل",
   "delete_account": "حذف الحساب نهائياً"
-},"profile": {
-  "title": "معلوماتي",
-  "member_since": "عضو منذ",
-  "premium_customer": "عميل متميز",
-  "edit_profile": "تعديل الملف الشخصي",
-  "personal_info": "معلوماتي",
-  "orders_history": "سجل الطلبات",
-  "full_name": "الاسم الكامل",
-  "email": "البريد الإلكتروني",
-  "phone": "رقم الهاتف",
-  "city": "المدينة",
-  "address": "عنوان التوصيل",
-  "save_changes": "حفظ التغييرات",
-  "my_purchases": "مشترياتي",
-  "order": "طلب",
-  "items": "قطع",
-  "status_delivered": "تم التوصيل",
-  "status_pending": "قيد المعالجة",
-  "show_more": "عرض المزيد",
-  "show_less": "عرض أقل",
-  "delete_account": "حذف الحساب نهائياً"
 }
-
 }
