@@ -19,7 +19,7 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
   return (
     <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full" dir="rtl">
       <NavLink
-        to={`/user/products/${product.slug ?? product._id}`}
+        to={`/customer/products/${product.slug ?? product._id}`}
         className="relative overflow-hidden block"
         style={{ height: 200 }}
       >
