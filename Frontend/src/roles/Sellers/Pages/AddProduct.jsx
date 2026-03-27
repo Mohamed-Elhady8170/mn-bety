@@ -63,7 +63,7 @@ export default function AddProduct() {
     if (saveSuccess) {
       const t = setTimeout(() => {
         dispatch(resetSaveState());
-        navigate("/seller/manageProducts");
+        navigate("/seller/products");
       }, 800);
       return () => clearTimeout(t);
     }
@@ -97,7 +97,7 @@ export default function AddProduct() {
     if (formData.discountPrice) fd.append("discountPrice", formData.discountPrice);
     fd.append("stock",       formData.stock);
     fd.append("category",    formData.category || formData.parentCategory);
-    images.forEach((file) => fd.append("categoryImage", file)); // field name matches upload middleware
+    images.forEach((file) => fd.append("productImages", file)); 
 
     dispatch(createProduct(fd));
   };

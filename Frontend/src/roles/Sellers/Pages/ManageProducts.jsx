@@ -16,12 +16,10 @@ import {
 // ── Get sellerId from your auth slice ─────────────────────────────────────────
 // Replace with: useSelector(state => state.auth.sellerId)
 // Your auth slice should store the seller's profile _id after login
-const useSellerId = () => useSelector((state) => state.auth.sellerId ?? null);
 
 export default function ManageProducts() {
   const dispatch   = useDispatch();
   const navigate   = useNavigate();
-  const sellerId   = useSellerId();
 
   const products   = useSelector(selectMyProducts);
   const loading    = useSelector(selectListLoading);
@@ -33,9 +31,9 @@ export default function ManageProducts() {
   const [deleteId,   setDeleteId]   = useState(null); // track which row is deleting
 
   // ── Fetch on mount ────────────────────────────────────────────────────────
-  useEffect(() => {
-    if (sellerId) dispatch(fetchMyProducts(sellerId));
-  }, [dispatch, sellerId]);
+ useEffect(() => {
+  dispatch(fetchMyProducts());
+}, [dispatch]);
 
   // ── Filtered list ─────────────────────────────────────────────────────────
   const filtered = products.filter((p) =>

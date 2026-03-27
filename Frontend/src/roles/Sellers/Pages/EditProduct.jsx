@@ -93,14 +93,14 @@ export default function EditProduct() {
         setFormData((prev) => ({ ...prev, category: "" }));
       }
     }
-  }, [formData.parentCategory]); // eslint-disable-line
+  }, [formData.parentCategory]); 
 
   // ── Navigate after success ────────────────────────────────────────────────
   useEffect(() => {
     if (saveSuccess) {
       const t = setTimeout(() => {
         dispatch(resetSaveState());
-        navigate("/seller/manageProducts");
+        navigate("/seller/products");
       }, 800);
       return () => clearTimeout(t);
     }
@@ -136,7 +136,7 @@ export default function EditProduct() {
 
     // Only append images if user selected new ones
     if (!keepOldImages) {
-      newImages.forEach((file) => fd.append("categoryImage", file));
+      newImages.forEach((file) => fd.append("productImages", file));
     }
 
     dispatch(updateProduct({ id, formData: fd }));

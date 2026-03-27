@@ -6,16 +6,23 @@ import { publicAxios }  from "../../../lib/axios";
 //                  SELLER PRODUCT THUNKS
 // ============================================================
 
+// Add this thunk BEFORE fetchMyProducts in sellerProductSlice.js
+
 /**
- * @desc  Fetch the logged-in seller's own products
- *        GET /api/products/seller/:sellerId
+ * @desc  Fetch logged-in seller's _id from /api/sellers/me
+ *        then fetch their products — no sellerId needed from auth state
  */
 export const fetchMyProducts = createAsyncThunk(
   "sellerProduct/fetchMyProducts",
-  async (sellerId, { rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      const { data } = await publicAxios.get(`/products/seller/${sellerId}`);
-      return data.data.products;
+      // Step 1: get the seller profile to obtain the seller _id
+      const profileRes = await privateAxios.get("/sellers/me");
+      const sellerId   = profileRes.data.data.seller._id;
+
+      // Step 2: fetch products using that _id
+      const productsRes = await publicAxios.get(`/products/seller/${sellerId}`);
+      return productsRes.data.data.products;
     } catch (err) {
       return rejectWithValue(
         err.response?.data?.message || "Failed to load products"
