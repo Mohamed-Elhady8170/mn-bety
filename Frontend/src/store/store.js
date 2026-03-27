@@ -7,6 +7,10 @@ import reviewReducer from "../roles/Users/Features/reviewSlice";
 import sellerProductReducer from "../roles/Sellers/Features/Sellerproductslice";
 import sellerReducer from "../roles/Users/Features/Sellerslice";
 import wishlistReducer from "../roles/Users/Features/wishlistSlice"; 
+import customerReducer  from "../roles/Users/Features/customerSlice";   
+import sellerProfileReducer from "../roles/Sellers/Features/sallerProfileSlice"; 
+
+
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +22,8 @@ export const store = configureStore({
     sellerProduct: sellerProductReducer, 
     seller:        sellerReducer,
     wishlist: wishlistReducer,
+    customer:      customerReducer, 
+    sellerProfile: sellerProfileReducer,
   },
 });
 
