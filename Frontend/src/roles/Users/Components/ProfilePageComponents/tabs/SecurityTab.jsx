@@ -1,4 +1,4 @@
-import ChangePasswordForm from '../shared/ChangePasswordForm';
+import ChangePasswordForm from "../shared/ChangePasswordForm";
 
 const SecurityTab = () => (
   <div className="animate-fadeIn">
