@@ -1,8 +1,10 @@
-import axios from "axios";
-import { store } from "../store/store.js";
-import { clearAuth, setAccessToken } from "../Auth/Features/authSlice";
+import axios from 'axios';
+import { store } from '../store/store.js';
+import { clearAuth, setAccessToken } from '../Auth/Features/authSlice';
+import {  showVerificationToast } from './toast';
+import { resendVerificationThunk } from '../Auth/Features/authThunks';
 
-const BASE_URL = "http://localhost:4000/api";
+const BASE_URL = 'http://localhost:4000/api';
 
 // ============================================================
 //         1. PUBLIC INSTANCE — login, register, refresh
@@ -24,8 +26,6 @@ export const privateAxios = axios.create({
 
 // ============================================================
 //              SHARED FUNCTIONS
-//   Defined before interceptors — used inside them
-//   Also exported so any file in the app can use them
 // ============================================================
 
 /**
@@ -33,8 +33,8 @@ export const privateAxios = axios.create({
  * @returns {string} new access token
  */
 export const refreshTokenRequest = async () => {
-  const res = await publicAxios.post("/auth/refresh-token");
-  return res.data.data; // new access token
+  const res = await publicAxios.post('/auth/refresh-token');
+  return res.data.data; // new access token string
 };
 
 /**
@@ -57,26 +57,66 @@ privateAxios.interceptors.request.use((config) => {
   return config;
 });
 
-// ─── Handle 401 — silent refresh, logout if refresh fails ────────────────────
+// ─── Handle responses ────────────────────────────────────────────────────────
 privateAxios.interceptors.response.use(
   (response) => response,
+
   async (error) => {
     const originalRequest = error.config;
+    const status = error.response?.status;
+    const message = error.response?.data?.message || '';
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // prevent infinite retry loop
+    // ─── 401: silent token refresh ─────────────────────────────────────────
+    if (status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
 
       try {
         const newToken = await refreshTokenRequest();
         store.dispatch(setAccessToken(newToken));
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        return privateAxios(originalRequest); // retry original request
+        return privateAxios(originalRequest);
       } catch {
-        logoutRequest(); // refresh failed — clear auth state
-        return Promise.reject(error); // ✅ clean reject after logout
+        logoutRequest();
+        return Promise.reject(error);
       }
     }
 
-    return Promise.reject(error); // ✅ always reject unhandled errors
+    // ─── 403: Email not verified ────────────────────────────────────────────
+    // Backend message: "Please verify your email address to access this feature."
+    if (
+      status === 403 &&
+      message === 'Please verify your email address to access this feature.'
+    ) {
+      showVerificationToast({
+        onResend: async () => {
+          const result = await store.dispatch(resendVerificationThunk());
+          if (resendVerificationThunk.fulfilled.match(result)) {
+            return {
+              success: true,
+              message: 'تم إرسال رابط التحقق! راجع صندوق الوارد.',
+            };
+          }
+
+          const errMsg = result.payload || '';
+          const isCooldown =
+            errMsg.includes('Please wait') ||
+            errMsg.includes('wait before') ||
+            errMsg.includes('recently sent');
+
+          return {
+            success: false,
+            message: isCooldown
+              ? 'يرجى الانتظار دقيقة قبل طلب رابط جديد.'
+              : errMsg || 'حدث خطأ أثناء الإرسال.',
+          };
+        },
+      });
+
+      // Don't show another error toast — verification toast handles everything
+      return Promise.reject(error);
+    }
+
+    // ─── All other errors — let the calling component handle them ──────────
+    return Promise.reject(error);
   }
 );
