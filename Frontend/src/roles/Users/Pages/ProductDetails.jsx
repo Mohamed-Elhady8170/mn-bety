@@ -15,44 +15,52 @@ import {
 } from "../Features/productSlice";
 import {
   fetchProductReviews,
-  deleteReview,
-  setReviewPage,
+  // deleteReview,
+  // setReviewPage,
   clearReviews,
   selectReviews,
-  selectReviewsTotal,
+  // selectReviewsTotal,
   selectReviewsPage,
-  selectReviewsPages,
+  // selectReviewsPages,
   selectReviewsLoading,
-  selectDeleting,
+  // selectDeleting,
 } from "../Features/reviewSlice";
 import { ReviewModal } from "../Components/ProdectsPageComponents/ReviewModal";
+import { addToWishlistThunk, removeFromWishlistThunk } from "../Features/wishlistThunks";
+import { selectWishlistIds } from "../Features/wishlistSlice";
+import useEmailVerification from "../../../hooks/useEmailVerification";
+import { showSuccess, showError } from "../../../lib/toast";
 
 export default function ProductDetails() {
   const { idOrSlug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { checkVerified } = useEmailVerification();
 
   // ── Redux State ─────────────────────────────────────────────────────────────
   const product = useSelector(selectCurrentProduct);
   const productLoading = useSelector(selectCurrentProductLoading);
   const reviews = useSelector(selectReviews);
-  const reviewsTotal = useSelector(selectReviewsTotal);
+  // const reviewsTotal = useSelector(selectReviewsTotal);
   const reviewsPage = useSelector(selectReviewsPage);
-  const reviewsPages = useSelector(selectReviewsPages);
+  // const reviewsPages = useSelector(selectReviewsPages);
   const reviewsLoading = useSelector(selectReviewsLoading);
-  const deleting = useSelector(selectDeleting);
+  // const deleting = useSelector(selectDeleting);
 
-  const currentUserId = null; // استبدله بـ ID المستخدم المسجل من الـ Auth state
+  const wishlistIds = useSelector(selectWishlistIds);
+
+  // const currentUserId = null; // استبدله بـ ID المستخدم المسجل من الـ Auth state
 
   const [activeImage, setActiveImage] = useState(0);
-  const [isFavorite, setIsFavorite] = useState(false);
+  // const [isFavorite, setIsFavorite] = useState(false);
+  const isFavorite = wishlistIds.has(product?._id?.toString());
   const [isReviewOpen, setIsReviewOpen] = useState(false);
 
   // ── Effects ─────────────────────────────────────────────────────────────────
   useEffect(() => {
     if (idOrSlug) {
       dispatch(fetchProductByIdOrSlug(idOrSlug));
-      setActiveImage(0);
+      // setActiveImage(0);
     }
     return () => { dispatch(clearReviews()); };
   }, [dispatch, idOrSlug]);
@@ -62,6 +70,27 @@ export default function ProductDetails() {
       dispatch(fetchProductReviews({ productId: product._id, page: reviewsPage, limit: 5 }));
     }
   }, [dispatch, product?._id, reviewsPage]);
+
+   const handleToggleFavorite = async () => {
+    const ok = await checkVerified();
+    if (!ok) return;
+
+    if (isFavorite) {
+      const result = await dispatch(removeFromWishlistThunk(product._id));
+      if (removeFromWishlistThunk.fulfilled.match(result)) {
+        showSuccess('تم الحذف من المفضلة');
+      } else {
+        showError(result.payload || 'حدث خطأ');
+      }
+    } else {
+      const result = await dispatch(addToWishlistThunk(product._id));
+      if (addToWishlistThunk.fulfilled.match(result)) {
+        showSuccess('تمت الإضافة للمفضلة ❤️');
+      } else {
+        showError(result.payload || 'حدث خطأ');
+      }
+    }
+  };
 
   // ── Loading Skeleton ──────────────────────────────────────────────────────
   if (productLoading || !product) {
@@ -110,7 +139,7 @@ export default function ProductDetails() {
               </button>
             ))}
           </div>
-          <div className="flex-1 bg-bg-subtle rounded-2xl overflow-hidden h-80 lg:h-[500px] shadow-sm border border-border-main/50">
+          <div className="flex-1 bg-bg-subtle rounded-2xl overflow-hidden h-80 lg:h-125 shadow-sm border border-border-main/50">
             <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
           </div>
         </div>
@@ -215,7 +244,7 @@ export default function ProductDetails() {
               <ShoppingCart size={18} />
               {product.stock === 0 ? "غير متوفر" : "إضافة للسلة"}
             </button>
-            <button onClick={() => setIsFavorite(p => !p)}
+            <button onClick={handleToggleFavorite}
               className={`w-12 h-12 flex items-center justify-center bg-bg-main border rounded-xl transition-colors ${isFavorite ? "border-red-200 text-red-500" : "border-border-main text-text-subtle hover:text-red-400"}`}>
               <Heart size={20} fill={isFavorite ? "currentColor" : "none"} />
             </button>

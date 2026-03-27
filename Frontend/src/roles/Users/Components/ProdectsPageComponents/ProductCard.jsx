@@ -1,25 +1,67 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { FiShoppingCart, FiMessageSquare, FiMapPin, FiUser } from "react-icons/fi";
+import {
+  FiShoppingCart,
+  FiMessageSquare,
+  FiMapPin,
+  FiUser,
+} from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import FavoriteButton from "./FavoriteButton";
 import StarRating from "./StarRating";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToWishlistThunk,
+  removeFromWishlistThunk,
+} from "../../Features/wishlistThunks";
+import { selectWishlistIds } from "../../Features/wishlistSlice";
+import useEmailVerification from "../../../../hooks/useEmailVerification";
+import { showSuccess, showError } from "../../../../lib/toast";
 
-export default function ProductCard({ product, onToggleFavorite, onOpenReview }) {
+export default function ProductCard({ product, onOpenReview }) {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { checkVerified } = useEmailVerification();
+  const wishlistIds = useSelector(selectWishlistIds);
 
-  const mainImage = product.images?.[0]?.url ?? "https://via.placeholder.com/400";
+  const mainImage =
+    product.images?.[0]?.url ?? "https://via.placeholder.com/400";
   const categoryName = product.category?.name ?? "";
   const sellerName = product.seller?.user?.fullName ?? "بائع";
   const sellerCity = product.seller?.location?.city ?? "";
   const hasDiscount = product.discountPrice > 0;
   const currentPrice = hasDiscount
-    ? (product.price - product.discountPrice)
+    ? product.price - product.discountPrice
     : product.price;
 
-  return (
-    <div className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full" dir="rtl">
+  const isFavorite = wishlistIds.has(product._id?.toString());
 
+  const handleToggleFavorite = async () => {
+    const ok = await checkVerified();
+    if (!ok) return;
+
+    if (isFavorite) {
+      const result = await dispatch(removeFromWishlistThunk(product._id));
+      if (removeFromWishlistThunk.fulfilled.match(result)) {
+        showSuccess("تم الحذف من المفضلة");
+      } else {
+        showError(result.payload || "حدث خطأ");
+      }
+    } else {
+      const result = await dispatch(addToWishlistThunk(product._id));
+      if (addToWishlistThunk.fulfilled.match(result)) {
+        showSuccess("تمت الإضافة للمفضلة ❤️");
+      } else {
+        showError(result.payload || "حدث خطأ");
+      }
+    }
+  };
+
+  return (
+    <div
+      className="bg-bg-main rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 flex flex-col h-full"
+      dir="rtl"
+    >
       <NavLink
         to={`/customer/products/${product.slug ?? product._id}`}
         className="relative overflow-hidden block"
@@ -37,10 +79,7 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
           </span>
         )}
 
-        <FavoriteButton
-          active={product.isFavorite ?? false}
-          onToggle={() => onToggleFavorite?.(product._id)}
-        />
+        <FavoriteButton active={isFavorite} onToggle={handleToggleFavorite} />
       </NavLink>
 
       <div className="p-4 flex flex-col flex-1 gap-2">
@@ -75,8 +114,6 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
               <span>{sellerCity}</span>
             </p>
           )}
-
-
         </div>
 
         <div className="mt-1">
@@ -84,7 +121,6 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
         </div>
 
         <div className="mt-auto flex justify-between items-center pt-2 border-t border-border-main/50">
-
           <div className="flex flex-col text-right">
             {hasDiscount && (
               <span className="text-[10px] text-text-subtle line-through leading-none mb-1 opacity-70">
@@ -94,16 +130,16 @@ export default function ProductCard({ product, onToggleFavorite, onOpenReview })
 
             <span className="text-sm font-black text-primary leading-none">
               {currentPrice.toLocaleString()}
-              <small className="text-[10px] font-bold mr-1 text-text-subtle">ج.م</small>
+              <small className="text-[10px] font-bold mr-1 text-text-subtle">
+                ج.م
+              </small>
             </span>
           </div>
 
           <button className="w-8 h-8 rounded-full bg-primary hover:bg-primary/80 flex items-center justify-center text-white transition-all shadow-sm active:scale-90">
             <FiShoppingCart size={14} />
           </button>
-
         </div>
-
       </div>
     </div>
   );
