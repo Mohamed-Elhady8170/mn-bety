@@ -1,9 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginThunk, registerThunk, logoutThunk } from './authThunks';
+import {
+  saveAuthToStorage,
+  saveTokenToStorage,
+  clearAuthFromStorage,
+  loadAuthFromStorage,
+  updateUserInStorage,
+} from './authStorage';
+import {
+  loginThunk,
+  registerThunk,
+  logoutThunk,
+  upgradeToSellerThunk,
+  deleteSellerAccountThunk,
+} from './authThunks';
+
+// ─── Load persisted state on app start ───────────────────────────────────────
+const persisted = loadAuthFromStorage();
 
 const initialState = {
-  user: null,        // { userId, fullName, roles: ['user'] or ['seller'] }
-  accessToken: null,
+  user: persisted.user,           // { userId, fullName, email, phone, roles }
+  accessToken: persisted.accessToken,
   isLoading: false,
   error: null,
 };
@@ -12,17 +28,44 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    // Called by axios interceptor after silent refresh
     setAccessToken: (state, action) => {
       state.accessToken = action.payload;
+      saveTokenToStorage(action.payload);
     },
+
+    // Called on logout or when refresh fails
     clearAuth: (state) => {
       state.user = null;
       state.accessToken = null;
       state.error = null;
+      clearAuthFromStorage();
     },
+
+    // Clear error manually (e.g. when user closes error toast)
+    clearError: (state) => {
+      state.error = null;
+    },
+
+    // Update user roles after any role change (upgrade/downgrade)
+    updateUserRoles: (state, action) => {
+      if (state.user) {
+        state.user = { ...state.user, roles: action.payload };
+        updateUserInStorage(state.user);
+      }
+    },
+
+    updateEmailVerified: (state, action) => {
+  if (state.user) {
+    state.user = { ...state.user, emailVerified: action.payload };
+    updateUserInStorage(state.user);
+  }
+},
   },
+
   extraReducers: (builder) => {
-    // Register
+
+    // ─── Register ─────────────────────────────────────────────────────────────
     builder
       .addCase(registerThunk.pending, (state) => {
         state.isLoading = true;
@@ -32,13 +75,14 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
+        saveAuthToStorage(action.payload.user, action.payload.accessToken);
       })
       .addCase(registerThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
 
-    // Login
+    // ─── Login ────────────────────────────────────────────────────────────────
     builder
       .addCase(loginThunk.pending, (state) => {
         state.isLoading = true;
@@ -48,13 +92,14 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.accessToken = action.payload.accessToken;
+        saveAuthToStorage(action.payload.user, action.payload.accessToken);
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
 
-    // Logout
+    // ─── Logout ───────────────────────────────────────────────────────────────
     builder
       .addCase(logoutThunk.pending, (state) => {
         state.isLoading = true;
@@ -64,13 +109,63 @@ const authSlice = createSlice({
         state.user = null;
         state.accessToken = null;
         state.error = null;
+        clearAuthFromStorage();
       })
-      .addCase(logoutThunk.rejected, (state, action) => {
+      .addCase(logoutThunk.rejected, (state) => {
+        // Even if server logout fails, clear local state
+        state.isLoading = false;
+        state.user = null;
+        state.accessToken = null;
+        state.error = null;
+        clearAuthFromStorage();
+      });
+
+    // ─── Upgrade to Seller ────────────────────────────────────────────────────
+    builder
+      .addCase(upgradeToSellerThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(upgradeToSellerThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Backend returns new accessToken with updated roles
+        state.accessToken = action.payload.accessToken;
+        // Add seller role to user locally
+        const updatedUser = {
+          ...state.user,
+          roles: [...(state.user?.roles || []), 'seller'],
+        };
+        state.user = updatedUser;
+        saveAuthToStorage(updatedUser, action.payload.accessToken);
+      })
+      .addCase(upgradeToSellerThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      });
+
+    // ─── Delete Seller Account ────────────────────────────────────────────────
+    builder
+      .addCase(deleteSellerAccountThunk.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(deleteSellerAccountThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        // Backend returns new accessToken without seller role
+        state.accessToken = action.payload.accessToken;
+        const updatedUser = {
+          ...state.user,
+          roles: state.user?.roles?.filter((r) => r !== 'seller') || ['customer'],
+        };
+        state.user = updatedUser;
+        saveAuthToStorage(updatedUser, action.payload.accessToken);
+      })
+      .addCase(deleteSellerAccountThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { setAccessToken, clearAuth } = authSlice.actions;
+export const { setAccessToken, clearAuth, clearError, updateUserRoles ,updateEmailVerified } = authSlice.actions;
 export default authSlice.reducer;
