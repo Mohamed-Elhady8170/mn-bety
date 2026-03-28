@@ -7,7 +7,6 @@ export const registerThunk = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const res = await publicAxios.post('/auth/register', userData);
-      // res.data.data = { user, accessToken }
       return res.data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ، حاول مجدداً');
@@ -21,7 +20,6 @@ export const loginThunk = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const res = await publicAxios.post('/auth/login', { email, password });
-      // res.data.data = { user, accessToken }
       return res.data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ، حاول مجدداً');
@@ -34,22 +32,19 @@ export const logoutThunk = createAsyncThunk(
   'auth/logout',
   async (_, { rejectWithValue }) => {
     try {
-      // publicAxios has withCredentials: true so refresh cookie gets sent
       await publicAxios.post('/auth/logout');
     } catch (err) {
-      // Even if server fails, we still clear local state in the slice
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ');
     }
   }
 );
 
-// ─── Verify Email (called from /verify-email page with token from URL) ────────
+// ─── Verify Email ─────────────────────────────────────────────────────────────
 export const verifyEmailThunk = createAsyncThunk(
   'auth/verifyEmail',
   async (token, { rejectWithValue, dispatch }) => {
     try {
       const res = await publicAxios.post('/auth/verify-email', { token });
-      // update emailVerified in store if user is logged in
       dispatch({ type: 'auth/updateEmailVerified', payload: true });
       return res.data.message;
     } catch (err) {
@@ -65,7 +60,6 @@ export const resendVerificationThunk = createAsyncThunk(
   'auth/resendVerification',
   async (_, { rejectWithValue }) => {
     try {
-      // Private route — user must be logged in
       const res = await privateAxios.post('/auth/resend-verification');
       return res.data.message;
     } catch (err) {
@@ -89,7 +83,7 @@ export const forgotPasswordThunk = createAsyncThunk(
   }
 );
 
-// ─── Reset Password (token comes from URL query param) ───────────────────────
+// ─── Reset Password ───────────────────────────────────────────────────────────
 export const resetPasswordThunk = createAsyncThunk(
   'auth/resetPassword',
   async ({ token, newPassword }, { rejectWithValue }) => {
@@ -104,7 +98,7 @@ export const resetPasswordThunk = createAsyncThunk(
   }
 );
 
-// ─── Change Password (authenticated user) ────────────────────────────────────
+// ─── Change Password ──────────────────────────────────────────────────────────
 export const changePasswordThunk = createAsyncThunk(
   'auth/changePassword',
   async ({ currentPassword, newPassword }, { rejectWithValue }) => {
@@ -120,7 +114,7 @@ export const changePasswordThunk = createAsyncThunk(
   }
 );
 
-// ─── Get Me (fetch current user data) ────────────────────────────────────────
+// ─── Get Me ───────────────────────────────────────────────────────────────────
 export const getMeThunk = createAsyncThunk(
   'auth/getMe',
   async (_, { rejectWithValue }) => {
@@ -133,13 +127,26 @@ export const getMeThunk = createAsyncThunk(
   }
 );
 
+// ─── Update Me (fullName, phone) ──────────────────────────────────────────────
+export const updateMe = createAsyncThunk(
+  'auth/updateMe',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const res = await privateAxios.patch('/auth/me', userData);
+      // res.data.data = { user }
+      return res.data.data.user;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || 'حدث خطأ، حاول مجدداً');
+    }
+  }
+);
+
 // ─── Upgrade to Seller ────────────────────────────────────────────────────────
 export const upgradeToSellerThunk = createAsyncThunk(
   'auth/upgradeToSeller',
   async (sellerData, { rejectWithValue }) => {
     try {
       const res = await privateAxios.post('/sellers/upgrade', sellerData);
-      // res.data.data = { seller, accessToken }
       return res.data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ، حاول مجدداً');
@@ -153,7 +160,6 @@ export const deleteSellerAccountThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await privateAxios.delete('/sellers/me');
-      // res.data.data = { accessToken } (new token without seller role)
       return res.data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ، حاول مجدداً');
