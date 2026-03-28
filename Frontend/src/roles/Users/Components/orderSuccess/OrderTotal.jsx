@@ -1,29 +1,24 @@
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux";
-import { selectTotalCartPrice } from "../../Features/cartSlice";
 
-function OrderTotal() {
+function OrderTotal({ order }) {
   const { t } = useTranslation();
   
-  // get cart total price & shipping cost
-  const totalCartPrice = useSelector(selectTotalCartPrice);
-  const shippingCost = 0;
-  // sum all cost
-  const totalCost = totalCartPrice + shippingCost;
+  // Get real order total price
+  const totalCost = order?.totalPrice || 0;
 
   return (
-    <div className="bg-bg-main/25 p-6 border-t border-primary/10 space-y-3">
-      <div className="flex-between text-text-muted">
+    <div className="bg-bg-subtle p-6 border-t border-border-main space-y-3 rounded-b-xl">
+      <div className="flex justify-between text-text-subtle">
         <span>{t('order_success.subtotal')}</span>
-        <span>{totalCartPrice + " $"}</span>
+        <span>{totalCost.toLocaleString()} ج.م</span>
       </div>
-      <div className="flex-between text-text-muted">
+      <div className="flex justify-between text-text-subtle">
         <span>{t('order_success.shipping_fee')}</span>
-        <span>{shippingCost + " $"}</span>
+        <span>{t('order_success.free', 'مجاني')}</span>
       </div>
-      <div className="flex-between text-xl font-bold text-text-main pt-3 border-t border-primary/10">
-        <h4>{t('order_success.total')}</h4>
-        <span className="text-primary">{totalCost + " $"}</span>
+      <div className="flex justify-between items-center pt-4 border-t border-border-main mt-4">
+        <h4 className="text-xl font-bold text-text-main">{t('order_success.total')}</h4>
+        <span className="text-2xl font-black text-primary">{totalCost.toLocaleString()} ج.م</span>
       </div>
     </div>
   );
