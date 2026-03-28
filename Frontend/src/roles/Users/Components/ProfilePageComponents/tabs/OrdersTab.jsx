@@ -1,45 +1,79 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MdShoppingBag } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchMyOrders } from '../../../Features/orderSlice';
 import OrderItem from '../shared/OrderItem';
-
-const ALL_ORDERS = [
-  { id: '77421', date: '24 أكتوبر 2023', items: '3', price: '450.00', status: 'delivered' },
-  { id: '88210', date: '02 نوفمبر 2023', items: '1', price: '125.50', status: 'pending' },
-  { id: '65129', date: '15 سبتمبر 2023', items: '5', price: '890.00', status: 'delivered' },
-  { id: '99201', date: '10 أغسطس 2023', items: '2', price: '210.00', status: 'delivered' },
-  { id: '11204', date: '05 أغسطس 2023', items: '1', price: '55.00', status: 'pending' },
-  { id: '44302', date: '01 يوليو 2023', items: '4', price: '600.00', status: 'delivered' },
-  { id: '55603', date: '20 يونيو 2023', items: '2', price: '320.00', status: 'delivered' },
-  { id: '22109', date: '10 مايو 2023', items: '1', price: '150.00', status: 'pending' },
-  { id: '33405', date: '05 أبريل 2023', items: '3', price: '420.00', status: 'delivered' },
-];
 
 const OrdersTab = () => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  
+  // 1. Pull real orders from Redux
+  const { userOrders, isLoading } = useSelector((state) => state.order);
   const [visibleOrders, setVisibleOrders] = useState(3);
+
+  // 2. Fetch orders if they haven't been loaded yet
+  useEffect(() => {
+    dispatch(fetchMyOrders());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <div className="text-primary font-bold animate-pulse">جاري تحميل طلباتك...</div>;
+  }
+
+  // 3. Fallback if no orders exist
+  if (!userOrders || userOrders.length === 0) {
+    return (
+      <div className="space-y-6 animate-fadeIn">
+        <h3 className="text-xl font-bold flex items-center gap-2 text-primary">
+          <MdShoppingBag /> {t('profile.my_purchases')}
+        </h3>
+        <p className="text-text-subtle text-sm">لا توجد طلبات سابقة حتى الآن.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 animate-fadeIn">
       <h3 className="text-xl font-bold flex items-center gap-2 text-primary">
         <MdShoppingBag /> {t('profile.my_purchases')}
       </h3>
+      
       <div className="grid gap-4">
-        {ALL_ORDERS.slice(0, visibleOrders).map((order) => (
-          <OrderItem key={order.id} {...order} />
-        ))}
+        {userOrders.slice(0, visibleOrders).map((order) => {
+          // Calculate item count safely
+          const itemsCount = order.cartItems?.length || order.items?.length || 0;
+          
+          return (
+            <OrderItem 
+              key={order._id} 
+              id={order._id.slice(-6).toUpperCase()} // Shorten the MongoDB ID
+              date={new Date(order.createdAt).toLocaleDateString("ar-EG")}
+              items={itemsCount}
+              price={order.totalPrice}
+              status={order.status}
+            />
+          );
+        })}
       </div>
+
+      {/* Pagination / Show More Buttons */}
       <div className="mt-8 flex flex-col items-center gap-4">
-        {visibleOrders < ALL_ORDERS.length && (
-          <button onClick={() => setVisibleOrders((v) => v + 3)}
-            className="text-primary font-bold hover:underline">
-            {t('profile.show_more')}
+        {visibleOrders < userOrders.length && (
+          <button 
+            onClick={() => setVisibleOrders((v) => v + 3)}
+            className="text-primary font-bold hover:underline"
+          >
+            {t('profile.show_more', 'عرض المزيد')}
           </button>
         )}
         {visibleOrders > 3 && (
-          <button onClick={() => setVisibleOrders((v) => v - 3)}
-            className="text-text-subtle text-sm hover:underline">
-            {t('profile.show_less')}
+          <button 
+            onClick={() => setVisibleOrders((v) => v - 3)}
+            className="text-text-subtle text-sm hover:underline"
+          >
+            {t('profile.show_less', 'عرض أقل')}
           </button>
         )}
       </div>
