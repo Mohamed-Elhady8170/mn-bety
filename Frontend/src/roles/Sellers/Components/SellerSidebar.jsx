@@ -21,7 +21,9 @@ export default function SellerSidebar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.auth);
-
+  const { sellerOrders } = useSelector((state) => state.order);
+  // Calculate how many orders are specifically "pending" (قيد المراجعة)
+  const pendingOrdersCount = sellerOrders?.filter(o => o.orderStatus === 'pending')?.length || 0;
   const handleLogout = async () => {
     await dispatch(logoutThunk());
     navigate('/auth/login', { replace: true });
@@ -30,7 +32,7 @@ export default function SellerSidebar() {
   const navLinks = [
     { name: "الرئيسية", path: "/seller", icon: LayoutDashboard },
     { name: "منتجاتي", path: "/seller/products", icon: Package },
-    { name: "الطلبات", path: "/seller/orders", icon: ShoppingBag, badge: 3 },
+    { name: "الطلبات", path: "/seller/orders", icon: ShoppingBag, badge: pendingOrdersCount > 0 ? pendingOrdersCount : null },
     { name: "ملف المتجر", path: "/seller/profile", icon: Store },
   ];
 

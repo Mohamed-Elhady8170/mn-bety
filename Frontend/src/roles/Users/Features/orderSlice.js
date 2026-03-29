@@ -64,7 +64,7 @@ export const updateOrderStatusThunk = createAsyncThunk(
   "order/updateOrderStatus",
   async ({ orderId, status }, { rejectWithValue }) => {
     try {
-      const { data } = await privateAxios.patch(`/orders/${orderId}/status`, { status });
+      const { data } = await privateAxios.patch(`/orders/${orderId}/status`, { orderStatus: status });
       return data.data.order || data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "فشل تحديث حالة الطلب");

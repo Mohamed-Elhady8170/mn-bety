@@ -1,4 +1,3 @@
-// InfoCardsGrid.jsx
 import React from 'react';
 import {
     User,
@@ -6,29 +5,26 @@ import {
     CreditCard,
 } from 'lucide-react';
 
-const orderData = {
-    id: "ORD-8829#",
-    date: "24 أكتوبر 2023 | 10:30 صباحاً",
-    status: "قيد المعالجة",
-    customer: {
-        name: " نهى مصطفى محمد ",
-        phone: "+20 108653324",
-        email: "noha@example.com"
-    },
-    shipping: {
-        address: " الباجور ",
-        city: "المنوفية",
-        zip: "12345",
-        country: "مصر "
-    },
-    payment: {
-        method: "بطاقة مدى",
-        cardNumber: "**** 1234",
-        total: "450.00"
-    }
-};
+export default function InfoCardsGrid({ order }) {
+    // 1. Customer Data
+    const customerName = order?.user?.fullName || "عميل غير معروف";
+    const phone = order?.user?.phone || "---"; 
 
-export default function InfoCardsGrid() {
+    // 2. Shipping Data (Matching your MongoDB schema)
+    const street = order?.shippingAddress?.street || "العنوان غير متوفر";
+    const city = order?.shippingAddress?.city || "";
+    const postalCode = order?.shippingAddress?.postalCode || "";
+    const country = order?.shippingAddress?.country || "";
+
+    // 3. Payment Data (Matching your MongoDB schema)
+    const paymentMethod = order?.paymentMethod === 'COD' ? 'الدفع عند الاستلام' : 'بطاقة ائتمان (Stripe)';
+    
+    // 4. Status Translator
+    const translateStatus = (status) => {
+        const map = { pending: 'قيد المراجعة', processing: 'قيد التجهيز', shipped: 'تم الشحن', delivered: 'تم التوصيل', cancelled: 'تم الإلغاء' };
+        return map[status] || "غير معروف";
+    };
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
 
@@ -43,11 +39,11 @@ export default function InfoCardsGrid() {
                 <div className="space-y-4">
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
                         <p className="text-xs md:text-sm text-text-soft">اسم العميل</p>
-                        <p className="font-semibold text-text-main text-sm md:text-base truncate">{orderData.customer.name}</p>
+                        <p className="font-semibold text-text-main text-sm md:text-base truncate">{customerName}</p>
                     </div>
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 border-t border-border-warm pt-3 sm:border-none sm:pt-0">
                         <p className="text-xs md:text-sm text-text-soft">رقم الجوال</p>
-                        <p className="font-semibold text-text-main text-sm md:text-base dir-ltr inline-block">{orderData.customer.phone}</p>
+                        <p className="font-semibold text-text-main text-sm md:text-base dir-ltr inline-block">{phone}</p>
                     </div>
                 </div>
             </div>
@@ -61,9 +57,9 @@ export default function InfoCardsGrid() {
                     <h3 className="font-bold text-text-main text-base md:text-lg truncate">عنوان الشحن</h3>
                 </div>
                 <div className="space-y-2">
-                    <p className="font-semibold text-text-main text-sm md:text-base leading-relaxed">{orderData.shipping.address}</p>
-                    <p className="text-sm text-text-soft">{orderData.shipping.city}، {orderData.shipping.zip}</p>
-                    <p className="text-sm text-text-soft">{orderData.shipping.country}</p>
+                    <p className="font-semibold text-text-main text-sm md:text-base leading-relaxed">{street}</p>
+                    <p className="text-sm text-text-soft">{city} {postalCode && `، ${postalCode}`}</p>
+                    <p className="text-sm text-text-soft">{country}</p>
                 </div>
             </div>
 
@@ -78,12 +74,13 @@ export default function InfoCardsGrid() {
                 <div className="space-y-4">
                     <div className="flex justify-between items-center gap-2">
                         <span className="text-xs md:text-sm text-text-soft">طريقة الدفع</span>
-                        <span className="font-medium text-text-main text-xs md:text-sm text-left">{orderData.payment.method} - {orderData.payment.cardNumber}</span>
+                        <span className="font-medium text-text-main text-xs md:text-sm text-left">{paymentMethod}</span>
                     </div>
                     <div className="flex justify-between items-center gap-2 border-t border-border-warm pt-3">
                         <span className="text-xs md:text-sm text-text-soft">حالة الطلب</span>
                         <span className="px-3 py-1 bg-badge-bg text-badge-text rounded-full text-[10px] md:text-xs font-bold whitespace-nowrap">
-                            {orderData.status}
+                            {/* We use translateStatus and orderStatus here! */}
+                            {translateStatus(order?.orderStatus)}
                         </span>
                     </div>
                 </div>
