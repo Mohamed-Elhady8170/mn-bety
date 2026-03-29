@@ -57,11 +57,28 @@ const authSlice = createSlice({
     },
 
     updateEmailVerified: (state, action) => {
-  if (state.user) {
-    state.user = { ...state.user, emailVerified: action.payload };
-    updateUserInStorage(state.user);
-  }
-},
+      if (state.user) {
+        state.user = { ...state.user, emailVerified: action.payload };
+        updateUserInStorage(state.user);
+      }
+    },
+
+    // Keep auth user in sync with customer profile updates (name/avatar/etc.).
+    syncAuthUserProfile: (state, action) => {
+      if (!state.user || !action.payload) return;
+
+      const profile = action.payload;
+      state.user = {
+        ...state.user,
+        ...(profile.fullName !== undefined ? { fullName: profile.fullName } : {}),
+        ...(profile.phone !== undefined ? { phone: profile.phone } : {}),
+        ...(profile.avatar !== undefined ? { avatar: profile.avatar } : {}),
+        ...(profile.emailVerified !== undefined ? { emailVerified: profile.emailVerified } : {}),
+        ...(profile.createdAt !== undefined ? { createdAt: profile.createdAt } : {}),
+      };
+
+      updateUserInStorage(state.user);
+    },
   },
 
   extraReducers: (builder) => {
@@ -185,5 +202,12 @@ builder
 });
 
 
-export const { setAccessToken, clearAuth, clearError, updateUserRoles ,updateEmailVerified } = authSlice.actions;
+export const {
+  setAccessToken,
+  clearAuth,
+  clearError,
+  updateUserRoles,
+  updateEmailVerified,
+  syncAuthUserProfile,
+} = authSlice.actions;
 export default authSlice.reducer;
