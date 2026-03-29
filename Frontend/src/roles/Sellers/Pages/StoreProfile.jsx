@@ -16,7 +16,9 @@ export default function StoreProfile() {
   const dispatch  = useDispatch();
   const navigate  = useNavigate();
   const { checkVerified } = useEmailVerification();
+  const { user } = useSelector((s) => s.auth);
   const { profile, loading, updating, error } = useSelector((s) => s.sellerProfile);
+  const hasRequestedProfileRef = useRef(false);
 
   const [isEditing, setIsEditing]               = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -35,8 +37,18 @@ export default function StoreProfile() {
 
   // ─── fetch seller profile on mount ───────────────────────────────────────
   useEffect(() => {
+    const isSeller = user?.roles?.includes("seller");
+
+    if (!isSeller) {
+      navigate("/customer/upgrade-to-seller", { replace: true });
+      return;
+    }
+
+    // Prevent duplicate requests in React StrictMode during development.
+    if (hasRequestedProfileRef.current) return;
+    hasRequestedProfileRef.current = true;
     dispatch(fetchMySellerProfile());
-  }, [dispatch]);
+  }, [dispatch, navigate, user?.roles]);
 
   // ─── sync form with profile ───────────────────────────────────────────────
   useEffect(() => {
@@ -142,11 +154,17 @@ export default function StoreProfile() {
                 className="w-32 h-32 rounded-full border-4 border-bg-main shadow-md relative cursor-pointer bg-bg-main"
                 onClick={() => isEditing && logoInputRef.current?.click()}
               >
-                <img
-                  src={profile?.logo?.url || "https://via.placeholder.com/128"}
-                  className="w-full h-full rounded-full object-cover"
-                  alt="Logo"
-                />
+                {profile?.logo?.url ? (
+                  <img
+                    src={profile.logo.url}
+                    className="w-full h-full rounded-full object-cover"
+                    alt="Logo"
+                  />
+                ) : (
+                  <div className="w-full h-full rounded-full bg-bg-subtle flex items-center justify-center text-primary">
+                    <Building2 size={36} />
+                  </div>
+                )}
                 {isEditing && (
                   <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-full">
                     <Camera className="text-white" size={24} />
