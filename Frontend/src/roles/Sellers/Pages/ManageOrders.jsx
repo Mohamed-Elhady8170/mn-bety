@@ -91,16 +91,16 @@ export default function ManageOrders() {
                       </td>
                       <td className="px-4 py-4">
                         <select
-                          value={order.status}
+                          value={order.orderStatus}
                           onChange={(e) => handleUpdateStatus(order._id, e.target.value)}
-                          disabled={order.status === 'cancelled' || order.status === 'delivered'}
-                          className={`text-xs font-bold px-2 py-1.5 rounded-xl border-0 outline-none cursor-pointer w-32 disabled:opacity-50 disabled:cursor-not-allowed ${statusStyles[order.status] || statusStyles.pending}`}
+                          disabled={order.orderStatus === 'cancelled' || order.orderStatus === 'delivered'}
+                          className={`text-xs font-bold px-2 py-1.5 rounded-xl border-0 outline-none cursor-pointer w-32 disabled:opacity-50 disabled:cursor-not-allowed ${statusStyles[order.orderStatus] || statusStyles.pending}`}
                         >
                           <option value="pending">قيد المراجعة</option>
                           <option value="processing">قيد التجهيز</option>
                           <option value="shipped">تم الشحن</option>
                           <option value="delivered">تم التوصيل</option>
-                          {order.status === 'cancelled' && <option value="cancelled">تم الإلغاء</option>}
+                          {order.orderStatus === 'cancelled' && <option value="cancelled">تم الإلغاء</option>}
                         </select>
                       </td>
                       <td className="px-4 py-4 text-center">

@@ -12,7 +12,7 @@ function OrderActionsBtns() {
         <MdTrackChanges />
         {t('order_success.track_order_btn')}
       </button>
-      <Link to="/user/products" className="btn btn-outline flex-center gap-2 flex-1">
+      <Link to="/customer/products" className="btn btn-outline flex-center gap-2 flex-1">
         <CiShoppingBasket />
         {t('order_success.continue_shopping_btn')}
       </Link>

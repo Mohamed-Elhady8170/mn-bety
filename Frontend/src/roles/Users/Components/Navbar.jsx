@@ -18,13 +18,15 @@ import useDarkMode from "../../../hooks/useDarkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
 import { useTranslation } from "react-i18next";
+import { selectAllCartItems } from "../Features/cartSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activePath, setActivePath] = useState("/");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-
+  const cartItems = useSelector(selectAllCartItems);
+  const cartCount = cartItems?.length || 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isDark, toggleDarkMode] = useDarkMode();
@@ -192,7 +194,7 @@ const Navbar = () => {
             >
               <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 hover:rotate-6" />
               <span className="absolute -top-1 -right-1 text-white text-[10px] font-bold px-1.5 py-0.5 bg-primary rounded-full animate-bounce">
-                3
+                {cartCount}
               </span>
             </button>
 

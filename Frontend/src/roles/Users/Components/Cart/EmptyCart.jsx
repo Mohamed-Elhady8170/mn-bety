@@ -16,7 +16,7 @@ function EmptyCart() {
       <p className="text-clay mb-8">
         {t('cart.empty.message')}
       </p>
-      <Link to="/products">
+      <Link to="/customer/products">
         <button className="btn btn-primary">{t('cart.empty.start_shopping_btn')}</button>
       </Link>
     </section>

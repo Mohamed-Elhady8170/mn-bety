@@ -97,7 +97,7 @@ export const router = createBrowserRouter([
       { path: 'addProduct', element: <AddProduct /> },
       { path: 'orders', element: <ManageOrders /> },
       { path: 'profile', element: <StoreProfile /> },
-      { path: 'seeorderdetails', element: <OrderDetails /> },
+      { path: "seeorderdetails/:id", element: <OrderDetails /> },
       { path: "editProduct/:id", element: <EditProduct /> },
     ],
   },

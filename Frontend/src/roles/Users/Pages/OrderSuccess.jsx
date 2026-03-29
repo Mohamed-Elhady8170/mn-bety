@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { fetchMyOrders } from "../Features/orderSlice";
 
 import TrusMsg from "../Components/orderSuccess/TrusMsg";
 import OrderActionsBtns from "../Components/orderSuccess/OrderActionsBtns";
@@ -10,30 +11,38 @@ import OrderItem from "../Components/orderSuccess/OrderItem";
 import OrderTotal from "../Components/orderSuccess/OrderTotal";
 
 function OrderSuccess() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   
-  // 1. Get orders from the brain
-  const { userOrders } = useSelector((state) => state.order);
+  const { userOrders, isLoading } = useSelector((state) => state.order);
 
-  // 2. The most recent order is usually the first one in the array
+  // Ask the backend for the fresh list of orders the second this page opens
+  useEffect(() => {
+    dispatch(fetchMyOrders());
+  }, [dispatch]);
+
   const latestOrder = userOrders?.[0];
 
-  // 3. If someone types "/order-success" in the URL without buying anything, kick them out
-  useEffect(() => {
-    if (!latestOrder) {
-      navigate("/user/products", { replace: true });
-    }
-  }, [latestOrder, navigate]);
+  // While waiting for the database, show a loading message instead of kicking them out!
+  if (isLoading || !userOrders) {
+    return <div className="min-h-[50vh] flex items-center justify-center text-2xl font-bold text-primary animate-pulse">جاري تجهيز الفاتورة...</div>;
+  }
 
-  if (!latestOrder) return null; // Prevent crashes while redirecting
+  // Only kick them out if it finished loading and they TRULY have 0 orders
+  if (!latestOrder) {
+    return (
+      <div className="min-h-[50vh] flex flex-col items-center justify-center gap-4">
+        <h2 className="text-2xl font-bold">لا يوجد طلبات حالية</h2>
+        <button onClick={() => navigate("/customer/products")} className="btn btn-primary">العودة للتسوق</button>
+      </div>
+    );
+  }
 
-  // 4. Safely get items array depending on backend naming
   const items = latestOrder.cartItems || latestOrder.items || [];
 
   return (
     <div className="order-success-page min-h-screen bg-bg-main py-12" dir="rtl">
       <section className="max-w-3xl mx-auto px-4">
-        
         <SuccessMsg />
         <OrderInfo order={latestOrder} />
         
@@ -53,7 +62,6 @@ function OrderSuccess() {
 
         <OrderActionsBtns />
         <TrusMsg />
-        
       </section>
     </div>
   );

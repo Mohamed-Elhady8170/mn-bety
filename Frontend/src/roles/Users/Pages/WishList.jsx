@@ -87,7 +87,7 @@ export default function WishList() {
               يبدو أنك لم تقم بإضافة أي منتجات إلى قائمة المفضلة بعد. تصفح منتجاتنا المميزة واكتشف ما يعجبك!
             </p>
             <Link 
-              to="/user/products" 
+              to="/customer/products" 
               className="bg-primary hover:bg-primary/80 text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-primary/20 flex items-center gap-2 hover:-translate-x-1"
             >
               تسوق الآن

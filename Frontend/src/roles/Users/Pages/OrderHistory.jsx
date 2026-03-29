@@ -56,7 +56,7 @@ const OrderHistory = () => {
             <h1 className="text-3xl font-bold text-text-main">طلباتي</h1>
             <p className="mt-2 text-text-subtle font-medium">تابع حالة طلباتك الأخيرة وإدارة مشترياتك.</p>
           </div>
-          <Link to="/products" className="btn btn-primary w-fit px-6 py-2 rounded-xl text-white">
+          <Link to="/customer/products" className="btn btn-primary w-fit px-6 py-2 rounded-xl text-white">
             العودة للتسوق
           </Link>
         </div>
@@ -66,7 +66,7 @@ const OrderHistory = () => {
           {!userOrders || userOrders.length === 0 ? (
             <div className="text-center py-20 bg-bg-subtle rounded-2xl border border-border-main">
               <p className="text-xl text-text-subtle mb-4">لا توجد لديك طلبات سابقة حتى الآن.</p>
-              <Link to="/products" className="text-primary font-bold hover:underline">ابدأ التسوق الآن</Link>
+              <Link to="/customer/products" className="text-primary font-bold hover:underline">ابدأ التسوق الآن</Link>
             </div>
           ) : (
             userOrders.map((order, index) => {

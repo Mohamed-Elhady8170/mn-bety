@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { selectTotalCartPrice } from "../../Features/cartSlice"; 
+import { selectTotalCartPrice } from "../../Features/cartSlice";
 import { checkoutThunk } from "../../Features/orderSlice"; 
 import useEmailVerification from "../../../../hooks/useEmailVerification"; 
 import toast from "react-hot-toast";
@@ -21,21 +21,19 @@ function OrderSummary() {
   const [shippingAddress, setShippingAddress] = useState({
     city: "",
     street: "",
-    phone: "",
+    country: "مصر", // Defaulted to Egypt
+    postalCode: "",
   });
 
   const handleCheckout = async () => {
-    // 2. ADDED VALIDATION: Prevent checkout if fields are empty
-    if (!shippingAddress.city || !shippingAddress.street || !shippingAddress.phone) {
+    if (!shippingAddress.city || !shippingAddress.street || !shippingAddress.country || !shippingAddress.postalCode) {
       toast.error("يرجى إدخال جميع بيانات الشحن الخاصة بك");
       return;
     }
 
-    // Trigger the Email Verification check (Lazy Verification)
     const isVerified = await checkVerified();
     if (!isVerified) return;
 
-    // Start Checkout Process
     setIsLoading(true);
 
     dispatch(checkoutThunk({ paymentMethod, shippingAddress }))
@@ -45,7 +43,7 @@ function OrderSummary() {
            window.location.href = res.data.url; 
         } else {
            toast.success("تم تأكيد طلبك بنجاح!");
-           navigate("/user/cart/order-success");
+           navigate("/customer/cart/order-success");
         }
       })
       .catch((err) => {
@@ -78,7 +76,6 @@ function OrderSummary() {
           <span className="text-primary">{totalPrice.toLocaleString()} ج.م</span>
         </div>
 
-        {/* ── 3. NEW SHIPPING FORM UI ── */}
         <div className="flex flex-col gap-3 my-6">
           <h4 className="font-bold text-sm text-text-main mb-1">بيانات التوصيل</h4>
           
@@ -87,27 +84,35 @@ function OrderSummary() {
             placeholder="المدينة (مثال: القاهرة)" 
             value={shippingAddress.city}
             onChange={(e) => setShippingAddress({...shippingAddress, city: e.target.value})}
-            className="w-full p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-subtle/50"
+            className="w-full p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary"
           />
           
           <input 
             type="text" 
-            placeholder="العنوان بالتفصيل (الشارع، رقم العمارة، الشقة)" 
+            placeholder="العنوان (الشارع، رقم العمارة)" 
             value={shippingAddress.street}
             onChange={(e) => setShippingAddress({...shippingAddress, street: e.target.value})}
-            className="w-full p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-subtle/50"
+            className="w-full p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary"
           />
-          
-          <input 
-            type="tel" 
-            placeholder="رقم الهاتف (للتواصل عند الاستلام)" 
-            value={shippingAddress.phone}
-            onChange={(e) => setShippingAddress({...shippingAddress, phone: e.target.value})}
-            className="w-full p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder:text-text-subtle/50"
-          />
+
+          <div className="flex gap-2">
+            <input 
+              type="text" 
+              placeholder="الرمز البريدي (مثال: 11728)" 
+              value={shippingAddress.postalCode}
+              onChange={(e) => setShippingAddress({...shippingAddress, postalCode: e.target.value})}
+              className="w-1/2 p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary"
+            />
+            <input 
+              type="text" 
+              placeholder="الدولة" 
+              value={shippingAddress.country}
+              onChange={(e) => setShippingAddress({...shippingAddress, country: e.target.value})}
+              className="w-1/2 p-3 rounded-xl border border-border-main bg-bg-main text-sm text-text-main focus:outline-none focus:border-primary"
+            />
+          </div>
         </div>
 
-        {/* ── Payment Method Selection ── */}
         <div className="flex flex-col gap-3 my-6">
           <h4 className="font-bold text-sm text-text-main mb-1">طريقة الدفع</h4>
           
@@ -134,11 +139,10 @@ function OrderSummary() {
           </label>
         </div>
 
-        {/* Checkout Button */}
         <button 
           onClick={handleCheckout} 
           disabled={isLoading || totalPrice === 0}
-          className="btn btn-primary w-full h-12 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all"
+          className="btn btn-primary w-full h-12 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg"
         >
           {isLoading ? "جاري المعالجة..." : t('cart.summary.checkout_btn')}
         </button>
