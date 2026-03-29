@@ -27,6 +27,7 @@ const Navbar = () => {
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const cartItems = useSelector(selectAllCartItems);
   const cartCount = cartItems?.length || 0;
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isDark, toggleDarkMode] = useDarkMode();
@@ -43,6 +44,11 @@ const Navbar = () => {
   };
 
   const { user, isLoading } = useSelector((state) => state.auth);
+  const { profile } = useSelector((state) => state.customer);
+
+  const displayName = profile?.fullName || user?.fullName || "مستخدم";
+  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || "";
+  const avatarInitial = displayName?.trim()?.charAt(0)?.toUpperCase() || "U";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -201,22 +207,21 @@ const Navbar = () => {
             {/* Profile */}
             <div className="relative profile-menu-container  group h-full flex items-center">
               <div
-                className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-cover bg-center border-2 border-primary/30 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary"
-                style={{
-                  backgroundImage:
-                    "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAI-YHQqJvazrcBvQB3QCcBiJnaU4gAkErk5nBSJ3S1j8pGv_Jej0WpJdoOzY3hbewvNWrYJHQiSHKypQup4DO6A9mBVKjScf0Tqvd09eHL8Z77BzRVN855np1BuVKNV3tgF2XIAPwBuGTIILg81vchAXMT3XZFGMznqkOMAmCa8K7xNdrYMgUvb_KkoPrd6y1Z8cPtScb2KZfWRGxGlMCGGy-aSSpPf0vuWFDOkdDgu5qbltW3t7gGSuNUTK22bf3L0mSghO9p-rgi')",
-                }}
+                className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-cover bg-center border-2 border-primary/30 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary overflow-hidden bg-bg-subtle flex items-center justify-center"
+                style={avatarUrl ? { backgroundImage: `url('${avatarUrl}')` } : undefined}
                 onClick={toggleProfileMenu}
-              />
+              >
+                {!avatarUrl && <span className="text-xs sm:text-sm font-bold text-text-main">{avatarInitial}</span>}
+              </div>
 
               {/* Dropdown Menu */}
               <div className={`absolute end-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
                 }`}>
                 <div className="p-2">
                   {/* اسم اليوزر */}
-                  {user && (
+                  {(user || profile) && (
                     <div className="px-4 py-2 text-sm font-bold text-text-main border-b border-border-warm mb-1">
-                      👋 {user.fullName}
+                      👋 {displayName}
                     </div>
                   )}
                   <Link
