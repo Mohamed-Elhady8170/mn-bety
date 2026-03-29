@@ -26,9 +26,17 @@ const upgradeToSellerAPI     = async (data) => (await privateAxios.post("/seller
 
 export const fetchMySellerProfile = createAsyncThunk(
   "sellerProfile/fetchMyProfile",
-  async (_, { rejectWithValue }) => {
-    try { return await getMySellerProfileAPI(); }
-    catch (err) { return rejectWithValue(err.response?.data?.message || "حدث خطأ"); }
+  async (_, { rejectWithValue, getState }) => {
+    const roles = getState()?.auth?.user?.roles || [];
+    if (!roles.includes("seller")) {
+      return rejectWithValue("غير مصرح لك بعرض ملف البائع");
+    }
+
+    try {
+      return await getMySellerProfileAPI();
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "حدث خطأ");
+    }
   }
 );
 
