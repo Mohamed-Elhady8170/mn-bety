@@ -7,11 +7,11 @@ import Footer from '../roles/Users/Components/Footer';
 const Layout = () => {
   return (
     <>
-      <Navbar />
+      <Navbar className="print:hidden"/>
       <main>
         <Outlet /> 
       </main>
-      <Footer />
+      <Footer className="print:hidden" />
     </>
   );
 };

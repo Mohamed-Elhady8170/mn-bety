@@ -98,7 +98,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
+      className={`print:hidden sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
         ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
         : "bg-bg-main"
         } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
