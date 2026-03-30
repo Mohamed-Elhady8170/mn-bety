@@ -1,132 +1,139 @@
+// src/roles/Users/Components/HomePageComponents/Categories.jsx
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-// eslint-disable-next-line no-unused-vars
-import { motion, AnimatePresence } from 'framer-motion';
+// import { useTranslation }              from 'react-i18next';
+import { useDispatch, useSelector }    from 'react-redux';
+import { useNavigate }                 from 'react-router-dom';
+import {
+  fetchRootCategories,
+  setSelectedCategory,
+  setSelectedSub,
+  selectRootCategories,
+  selectRootLoading,
+} from '../../Features/Categoryslice';
+
+const getImageUrl = (item) => {
+  if (!item) return '';
+  if (typeof item.image === 'string') return item.image;
+  return (
+    item.image?.url ||
+    item.image?.secure_url ||
+    item.imageUrl ||
+    item.thumbnail?.url ||
+    ''
+  );
+};
 
 const CategorySection = () => {
-    const { t } = useTranslation();
-    const categoriesNames = t('home.category_section.categories', { returnObjects: true });
-    
-    const images = [
-        "https://i.pinimg.com/736x/36/7d/a4/367da47f984feee716615334a080a638.jpg",
-        "https://i.pinimg.com/1200x/db/f1/12/dbf112bfd131f50fb64e1058183350d7.jpg",
-        "https://i.pinimg.com/736x/ec/06/26/ec06265519d7f3c9e577772f9d60df9a.jpg",
-        "https://i.pinimg.com/736x/3a/87/9f/3a879fcadb6113c46887b09b81ecf078.jpg",
-        "https://i.pinimg.com/1200x/72/34/0a/72340ae3fb936643f8a8d9b60bca17af.jpg"
-    ];
-    
-    const categories = categoriesNames.map((name, index) => ({
-        name: name,
-        img: images[index]
-    }));
+  const dispatch    = useDispatch();
+  const navigate    = useNavigate();
+//   const { t }       = useTranslation();
 
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [direction, setDirection] = useState(1);
-    const [slidesPerView, setSlidesPerView] = useState(5);
+  const categories  = useSelector(selectRootCategories);
+  const loading     = useSelector(selectRootLoading);
 
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            if (width < 640) {
-                setSlidesPerView(2);
-            } else if (width < 768) {
-                setSlidesPerView(3);
-            } else if (width < 1024) {
-                setSlidesPerView(4);
-            } else {
-                setSlidesPerView(5);
-            }
-        };
+  const [currentIndex,  setCurrentIndex]  = useState(0);
+  const [slidesPerView, setSlidesPerView] = useState(5);
 
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
+  // Fetch on mount
+  useEffect(() => {
+    dispatch(fetchRootCategories());
+  }, [dispatch]);
 
-    const handleNext = () => {
-        setDirection(1);
-        setCurrentIndex((prev) => (prev + 1) % categories.length);
+  useEffect(() => {
+    const handleResize = () => {
+      const w = window.innerWidth;
+      if      (w < 640)  setSlidesPerView(2);
+      else if (w < 768)  setSlidesPerView(3);
+      else if (w < 1024) setSlidesPerView(4);
+      else               setSlidesPerView(5);
     };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    useEffect(() => {
-        if (slidesPerView === 5) return;
+  useEffect(() => {
+    if (slidesPerView === 5 || categories.length === 0) return;
+    const timer = setInterval(() => {
+      setCurrentIndex((p) => (p + 1) % categories.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [currentIndex, slidesPerView, categories.length]);
 
-        const timer = setInterval(() => {
-            handleNext();
-        }, 3000);
+  const getVisibleItems = () => {
+    if (categories.length === 0) return [];
+    const items = [];
+    for (let i = 0; i < slidesPerView; i++) {
+      items.push(categories[(currentIndex + i) % categories.length]);
+    }
+    return items;
+  };
 
-        return () => clearInterval(timer);
-    }, [currentIndex, slidesPerView]);
+  const handleCategoryClick = (cat) => {
+    dispatch(setSelectedCategory(cat));
+    dispatch(setSelectedSub(null));
+    navigate(`/customer/products?category=${cat._id}`);
+  };
 
-    const getVisibleItems = () => {
-        const items = [];
-        for (let i = 0; i < slidesPerView; i++) {
-            const index = (currentIndex + i) % categories.length;
-            items.push(categories[index]);
-        }
-        return items;
-    };
-
-    const slideVariants = {
-        enter: (direction) => ({
-            x: direction > 0 ? 1000 : -1000,
-            opacity: 0
-        }),
-        center: {
-            x: 0,
-            opacity: 1
-        },
-        exit: (direction) => ({
-            x: direction < 0 ? 1000 : -1000,
-            opacity: 0
-        })
-    };
-
+  // Loading skeleton
+  if (loading) {
     return (
-        <section className="bg-bg-light py-20" >
-            <div className="container mx-auto px-4">
-                <div className="relative overflow-hidden">
-                    <AnimatePresence mode="popLayout" custom={direction}>
-                        <motion.div
-                            key={currentIndex}
-                            custom={direction}
-                            variants={slideVariants}
-                            initial="enter"
-                            animate="center"
-                            exit="exit"
-                            transition={{
-                                x: { type: "spring", stiffness: 300, damping: 30 },
-                                opacity: { duration: 0.4 }
-                            }}
-                            className="flex justify-center gap-4 md:gap-6.25"
-                        >
-                            {getVisibleItems().map((cat, idx) => (
-                                <a
-                                    key={`${currentIndex}-${idx}`}
-                                    href="#"
-                                    className="group relative overflow-hidden
-                                        w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-48 lg:h-48
-                                        border-2 border-border-main
-                                        flex flex-col items-center justify-center transition-all duration-500 ease-in-out
-                                        rounded-[100%_60%_60%_100%/_100%_100%_60%_60%]
-                                        hover:rounded-full hover:shadow-xl"
-                                >
-                                    <div
-                                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
-                                        style={{ backgroundImage: `url(${cat.img})` }}
-                                    ></div>
-                                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
-                                    <h6 className="relative z-10 text-white text-sm sm:text-base md:text-lg font-bold px-2 text-center leading-[1.3] w-full truncate drop-shadow-md">
-                                        {cat.name}
-                                    </h6>
-                                </a>
-                            ))}
-                        </motion.div>
-                    </AnimatePresence>
-                </div>
-            </div>
-        </section>
+      <section className="bg-bg-light py-20">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center gap-4 md:gap-6">
+            {[...Array(5)].map((_, i) => (
+              <div
+                key={i}
+                className="w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 rounded-full bg-bg-subtle animate-pulse"
+              />
+            ))}
+          </div>
+        </div>
+      </section>
     );
+  }
+
+  if (categories.length === 0) return null;
+
+  return (
+    <section className="bg-bg-light py-20">
+      <div className="container mx-auto px-4">
+        <div className="relative overflow-hidden">
+          <div className="flex justify-center gap-4 md:gap-6" key={currentIndex}>
+              {getVisibleItems().map((cat, idx) => {
+                const imgUrl = getImageUrl(cat);
+
+                return (
+                  <button
+                    key={`${currentIndex}-${idx}`}
+                    onClick={() => handleCategoryClick(cat)}
+                    className="group relative overflow-hidden
+                      w-36 h-36 sm:w-40 sm:h-40 md:w-44 md:h-44 lg:w-48 lg:h-48
+                      border-2 border-border-main
+                      flex flex-col items-center justify-center transition-all duration-500 ease-in-out
+                      rounded-[100%_60%_60%_100%/_100%_100%_60%_60%]
+                      hover:rounded-full hover:shadow-xl"
+                  >
+                    {imgUrl ? (
+                      <div
+                        className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style={{ backgroundImage: `url(${imgUrl})` }}
+                      />
+                    ) : (
+                      <div className="absolute inset-0 bg-bg-subtle" />
+                    )}
+                    <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500" />
+                    <h6 className="relative z-10 text-white text-sm sm:text-base md:text-lg font-bold px-2 text-center leading-[1.3] w-full truncate drop-shadow-md capitalize">
+                      {cat.name}
+                    </h6>
+                  </button>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default CategorySection;
