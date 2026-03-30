@@ -31,7 +31,12 @@ export const removeFromWishlistThunk = createAsyncThunk(
   async (productId, { rejectWithValue }) => {
     try {
       const res = await privateAxios.delete(`/wishlist/${productId}`);
-      return res.data.data.wishlist;
+      const wishlistData = res.data?.data?.wishlist;
+      // Backend may return { products: [...] } or direct array
+      const products = Array.isArray(wishlistData)
+        ? wishlistData
+        : wishlistData?.products ?? null;
+      return { products, removedId: productId };
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || 'حدث خطأ');
     }
