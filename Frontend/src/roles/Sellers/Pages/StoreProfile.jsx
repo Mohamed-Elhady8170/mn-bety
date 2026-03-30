@@ -5,9 +5,10 @@ import {
   fetchMySellerProfile,
   updateSellerProfile,
   updateSellerLogo,
-  deleteSellerAccount,
   clearSellerError,
+  clearSellerProfile,
 } from "../Features/sallerProfileSlice";
+import { deleteSellerAccountThunk } from "../../../Auth/Features/authThunks";
 import { showSuccess, showError } from "../../../lib/toast";
 import useEmailVerification from "../../../hooks/useEmailVerification";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ export default function StoreProfile() {
   const { user } = useSelector((s) => s.auth);
   const { profile, loading, updating, error } = useSelector((s) => s.sellerProfile);
   const hasRequestedProfileRef = useRef(false);
+  const deletingSellerRef = useRef(false);
 
   const [isEditing, setIsEditing]               = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
@@ -40,7 +42,7 @@ export default function StoreProfile() {
     const isSeller = user?.roles?.includes("seller");
 
     if (!isSeller) {
-      navigate("/customer/upgrade-to-seller", { replace: true });
+      navigate(deletingSellerRef.current ? "/customer" : "/customer/upgrade-to-seller", { replace: true });
       return;
     }
 
@@ -115,11 +117,14 @@ export default function StoreProfile() {
   const handleDeleteSeller = async () => {
     const ok = await checkVerified();
     if (!ok) return;
-    const result = await dispatch(deleteSellerAccount());
-    if (deleteSellerAccount.fulfilled.match(result)) {
+    deletingSellerRef.current = true;
+    const result = await dispatch(deleteSellerAccountThunk());
+    if (deleteSellerAccountThunk.fulfilled.match(result)) {
+      dispatch(clearSellerProfile());
       showSuccess("تم حذف حساب البائع بنجاح. أنت الآن عميل فقط.");
-      navigate("/customer");
+      navigate("/customer", { replace: true });
     } else {
+      deletingSellerRef.current = false;
       showError(result.payload || "حدث خطأ أثناء الحذف");
     }
   };
