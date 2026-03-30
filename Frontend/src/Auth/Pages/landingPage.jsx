@@ -1,14 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
 import aboutImage from "../../assets/aboutlanding.jpg";
 import confetti from 'canvas-confetti';
 import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
 import { useTranslation } from "react-i18next";
-import { useDispatch, useSelector } from "react-redux"; 
-import { fetchLandingCategories } from "../Features/landingSlice";  
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLandingCategories } from "../Features/landingSlice";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 export default function LandingPage() {
   const dispatch = useDispatch();
   const typedRef = useRef(null);
@@ -71,14 +75,12 @@ export default function LandingPage() {
         id="home"
         className="relative w-full min-h-150 flex items-center bg-bg-light overflow-hidden px-6 md:px-20 text-start"
       >
-        <div
-          className="absolute inset-0 pointer-events-none opacity-10"
+        <div className="absolute inset-0 pointer-events-none opacity-10"
           style={{
             backgroundImage: `radial-gradient(circle, var(--color-dot) 2px, transparent 2px)`,
             backgroundSize: "30px 30px"
           }}
         />
-
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10">
           {/* Text Section */}
           <div className="space-y-6 order-2 md:order-1">
@@ -87,7 +89,7 @@ export default function LandingPage() {
               <span>{t('home.hero.tagline')}</span>
             </h5>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-text-main">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-text-main min-h-[1.2em] md:min-h-[2.4em] flex items-center">
               <span ref={typedRef} className="text-primary"></span>
             </h1>
 
@@ -124,7 +126,7 @@ export default function LandingPage() {
       </section>
 
       {/* Services (Categories) Section =============== */}
-      <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start">
+      <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <h5 className="text-primary font-medium tracking-widest uppercase text-1xs flex items-center gap-2">
@@ -134,32 +136,56 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-extrabold text-text-main mb-6">
               {t('home.categories_section.title')}
             </h2>
+            <p className="text-text-subtle max-w-2xl leading-relaxed">
+              {t('home.categories_section.description')}
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {loading ? (
-              // هيكل تحميلي بسيط (Skeleton Loader)
-              [...Array(4)].map((_, i) => (
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => (
                 <div key={i} className="h-95 rounded-3xl bg-gray-200 animate-pulse"></div>
-              ))
-            ) : (
-              categories.slice(0, 4).map((cat) => (
-                <div key={cat._id} className="relative h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
-                  <img 
-                    src={cat.image?.url || "https://via.placeholder.com/400"} 
-                    alt={cat.name} 
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
-                  />
-                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
-                  <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
-                    <h3 className="text-2xl font-bold mb-2">{cat.name}</h3>
-                    {/* إذا لم يكن هناك وصف في الـ DB، يمكن استخدام نص افتراضي أو تركه فارغاً */}
-                    <p className="text-sm opacity-90 leading-snug">{cat.slug}</p>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full">
+              <Swiper
+                modules={[Autoplay]} // شيلنا الـ Pagination من هنا
+                spaceBetween={20}
+                slidesPerView={1}
+                slidesPerGroup={1}
+                grabCursor={true} // بيخلي شكل الماوس "إيد" عشان السحب
+                loop={categories.length > 3}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                // شيلنا سطر الـ pagination: { clickable: true }
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                }}
+                className="mySwiper" // شيلنا الـ pb-14 لأننا مش محتاجين مساحة للنقط
+              >
+                {categories.map((cat) => (
+                  <SwiperSlide key={cat._id} className="flex justify-center">
+                    <div className="relative w-full h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
+                      <img
+                        src={cat.image?.url || "https://via.placeholder.com/400"}
+                        alt={cat.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
+                      <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
+                        <h3 className="text-2xl font-bold mb-2">{cat.name}</h3>
+                        <p className="text-sm opacity-90 leading-snug">{cat.slug}</p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
         </div>
       </section>
 
@@ -219,7 +245,7 @@ export default function LandingPage() {
       </section>
 
       {/* Sell Now Section */}
-      <section  id="sell" className="py-16 px-6 md:px-20">
+      <section id="sell" className="py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto relative h-72 rounded-3xl overflow-hidden flex items-center justify-center text-center">
           <img
             src="https://i.pinimg.com/736x/02/33/ba/0233ba523edd056c8fb8b3340d71de39.jpg"
