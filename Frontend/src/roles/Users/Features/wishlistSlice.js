@@ -27,8 +27,12 @@ const wishlistSlice = createSlice({
       })
       .addCase(fetchWishlistThunk.fulfilled, (state, action) => {
         state.isLoading = false;
-        // backend returns wishlist object with products array
-        state.products = action.payload?.products ?? [];
+        // backend may return an object with products array or direct array
+        if (Array.isArray(action.payload)) {
+          state.products = action.payload;
+        } else {
+          state.products = action.payload?.products ?? [];
+        }
       })
       .addCase(fetchWishlistThunk.rejected, (state, action) => {
         state.isLoading = false;
@@ -41,7 +45,11 @@ const wishlistSlice = createSlice({
         state.error = null;
       })
       .addCase(addToWishlistThunk.fulfilled, (state, action) => {
-        state.products = action.payload?.products ?? [];
+        if (Array.isArray(action.payload)) {
+          state.products = action.payload;
+        } else {
+          state.products = action.payload?.products ?? state.products;
+        }
       })
       .addCase(addToWishlistThunk.rejected, (state, action) => {
         state.error = action.payload;
@@ -50,7 +58,15 @@ const wishlistSlice = createSlice({
     // ─── Remove ───────────────────────────────────────────────────────────────
     builder
       .addCase(removeFromWishlistThunk.fulfilled, (state, action) => {
-        state.products = action.payload?.products ?? [];
+        if (Array.isArray(action.payload?.products)) {
+          state.products = action.payload.products;
+        } else {
+          const removedId = action.payload?.removedId || action.meta.arg;
+          state.products = state.products.filter((p) => {
+            const pId = p?._id?.toString?.() || p?.toString?.();
+            return pId !== removedId?.toString?.();
+          });
+        }
       })
       .addCase(removeFromWishlistThunk.rejected, (state, action) => {
         state.error = action.payload;
