@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
 import { useTranslation } from "react-i18next";
 import { selectAllCartItems } from "../Features/cartSlice";
+import { MdPerson } from "react-icons/md";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,8 +48,8 @@ const Navbar = () => {
   const { profile } = useSelector((state) => state.customer);
 
   const displayName = profile?.fullName || user?.fullName || "مستخدم";
-  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || "";
-  const avatarInitial = displayName?.trim()?.charAt(0)?.toUpperCase() || "U";
+  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || null;
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -211,7 +212,7 @@ const Navbar = () => {
                 style={avatarUrl ? { backgroundImage: `url('${avatarUrl}')` } : undefined}
                 onClick={toggleProfileMenu}
               >
-                {!avatarUrl && <span className="text-xs sm:text-sm font-bold text-text-main">{avatarInitial}</span>}
+                  {!avatarUrl && <MdPerson className="w-5 h-5 sm:w-6 sm:h-6 text-primary " />}
               </div>
 
               {/* Dropdown Menu */}
