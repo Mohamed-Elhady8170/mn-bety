@@ -6,33 +6,18 @@ import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux"; 
+import { fetchLandingCategories } from "../Features/landingSlice";  
 
 export default function LandingPage() {
+  const dispatch = useDispatch();
   const typedRef = useRef(null);
   const { t } = useTranslation();
+  const { categories, loading } = useSelector((state) => state.landing);
 
-  const categories = [
-    {
-      title: t('home.categories.home_food.title'),
-      description: t('home.categories.home_food.description'),
-      image: "https://i.pinimg.com/736x/82/e0/36/82e036e6857e01a627594c85b60fcb61.jpg",
-    },
-    {
-      title: t('home.categories.handmade.title'),
-      description: t('home.categories.handmade.description'),
-      image: "https://i.pinimg.com/736x/b2/3e/fd/b23efd46bfdcebf0a435dfbc81b0a7bf.jpg",
-    },
-    {
-      title: t('home.categories.accessories.title'),
-      description: t('home.categories.accessories.description'),
-      image: "https://i.pinimg.com/1200x/0a/b0/ab/0ab0ab56129f7912e0e387557bdc5964.jpg",
-    },
-    {
-      title: t('home.categories.design.title'),
-      description: t('home.categories.design.description'),
-      image: "https://i.pinimg.com/736x/1a/56/91/1a5691a3461d95bcd8e5ffb6a65cc137.jpg",
-    }
-  ];
+  useEffect(() => {
+    dispatch(fetchLandingCategories());
+  }, [dispatch]);
 
   const runSchoolPride = () => {
     const end = Date.now() + (1 * 1000);
@@ -138,7 +123,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Services Section=============== */}
+      {/* Services (Categories) Section =============== */}
       <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
@@ -149,22 +134,31 @@ export default function LandingPage() {
             <h2 className="text-4xl md:text-5xl font-extrabold text-text-main mb-6">
               {t('home.categories_section.title')}
             </h2>
-            <p className="text-text-subtle max-w-2xl leading-relaxed">
-              {t('home.categories_section.description')}
-            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat, index) => (
-              <div key={index} className="relative h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
-                <img src={cat.image} alt={cat.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
-                <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold mb-2">{cat.title}</h3>
-                  <p className="text-sm opacity-90 leading-snug">{cat.description}</p>
+            {loading ? (
+              // هيكل تحميلي بسيط (Skeleton Loader)
+              [...Array(4)].map((_, i) => (
+                <div key={i} className="h-95 rounded-3xl bg-gray-200 animate-pulse"></div>
+              ))
+            ) : (
+              categories.slice(0, 4).map((cat) => (
+                <div key={cat._id} className="relative h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
+                  <img 
+                    src={cat.image?.url || "https://via.placeholder.com/400"} 
+                    alt={cat.name} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" 
+                  />
+                  <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
+                  <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
+                    <h3 className="text-2xl font-bold mb-2">{cat.name}</h3>
+                    {/* إذا لم يكن هناك وصف في الـ DB، يمكن استخدام نص افتراضي أو تركه فارغاً */}
+                    <p className="text-sm opacity-90 leading-snug">{cat.slug}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </section>
