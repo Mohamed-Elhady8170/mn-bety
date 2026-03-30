@@ -9,7 +9,7 @@ import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLandingCategories } from "../Features/landingSlice";
+import { fetchLandingCategories, fetchPlatformStats } from "../Features/landingSlice";
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
@@ -17,10 +17,11 @@ export default function LandingPage() {
   const dispatch = useDispatch();
   const typedRef = useRef(null);
   const { t } = useTranslation();
-  const { categories, loading } = useSelector((state) => state.landing);
+  const { categories, loading, stats } = useSelector((state) => state.landing);
 
   useEffect(() => {
     dispatch(fetchLandingCategories());
+    dispatch(fetchPlatformStats());
   }, [dispatch]);
 
   const runSchoolPride = () => {
@@ -207,22 +208,31 @@ export default function LandingPage() {
             </div>
 
             <div className="space-y-6">
+              {/* رضا البائعين */}
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
                   <span>{t('home.about_section.sellers_satisfaction')}</span>
-                  <span>80%</span>
+                  <span>{stats.sellerSatisfaction}%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full w-[80%] rounded-full"></div>
+                  <div
+                    className="bg-primary h-full transition-all duration-1000 ease-out"
+                    style={{ width: `${stats.sellerSatisfaction}%` }}
+                  ></div>
                 </div>
               </div>
+
+              {/* رضا المشترين */}
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
                   <span>{t('home.about_section.buyers_satisfaction')}</span>
-                  <span>90%</span>
+                  <span>{stats.buyerSatisfaction}%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full w-[90%] rounded-full"></div>
+                  <div
+                    className="bg-primary h-full transition-all duration-1000 ease-out"
+                    style={{ width: `${stats.buyerSatisfaction}%` }}
+                  ></div>
                 </div>
               </div>
             </div>
