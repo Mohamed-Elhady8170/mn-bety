@@ -17,12 +17,28 @@ export const fetchLandingCategories = createAsyncThunk(
         }
     }
 );
+export const fetchPlatformStats = createAsyncThunk(
+    "landing/fetchPlatformStats",
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axios.get(`${BASE}/api/products/stats/platform`);
+            return response.data.data; 
+        } catch (error) {
+            return rejectWithValue(error.response?.data?.message || "Error fetching stats");
+        }
+    }
+);
 
 const landingSlice = createSlice({
     name: "landing",
     initialState: {
         categories: [],
+        stats: {
+            buyerSatisfaction: 0,
+            sellerSatisfaction: 0,
+        },
         loading: false,
+        statsLoading: false, 
         error: null,
     },
     reducers: {},
@@ -38,6 +54,18 @@ const landingSlice = createSlice({
             })
             .addCase(fetchLandingCategories.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.payload;
+            })
+            // Handling Platform Stats
+            .addCase(fetchPlatformStats.pending, (state) => {
+                state.statsLoading = true;
+            })
+            .addCase(fetchPlatformStats.fulfilled, (state, action) => {
+                state.statsLoading = false;
+                state.stats = action.payload;
+            })
+            .addCase(fetchPlatformStats.rejected, (state, action) => {
+                state.statsLoading = false;
                 state.error = action.payload;
             });
     },
