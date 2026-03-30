@@ -111,9 +111,10 @@ privateAxios.interceptors.response.use(
           };
         },
       });
-
+      
+      return Promise.resolve({ data: null, _handled: true });
       // Don't show another error toast — verification toast handles everything
-      return Promise.reject(error);
+      // return Promise.reject(error);
     }
 
     // ─── All other errors — let the calling component handle them ──────────
