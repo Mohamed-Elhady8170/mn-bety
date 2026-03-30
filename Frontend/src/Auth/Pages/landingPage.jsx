@@ -1,38 +1,30 @@
 import React, { useEffect, useRef } from "react";
 import Typed from "typed.js";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
 import aboutImage from "../../assets/aboutlanding.jpg";
 import confetti from 'canvas-confetti';
+import { useNavigate } from "react-router-dom";
 import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
 import { useTranslation } from "react-i18next";
-
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLandingCategories, fetchPlatformStats } from "../Features/landingSlice";
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/autoplay';
 export default function LandingPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const typedRef = useRef(null);
   const { t } = useTranslation();
+  const { categories, loading, stats } = useSelector((state) => state.landing);
 
-  const categories = [
-    {
-      title: t('home.categories.home_food.title'),
-      description: t('home.categories.home_food.description'),
-      image: "https://i.pinimg.com/736x/82/e0/36/82e036e6857e01a627594c85b60fcb61.jpg",
-    },
-    {
-      title: t('home.categories.handmade.title'),
-      description: t('home.categories.handmade.description'),
-      image: "https://i.pinimg.com/736x/b2/3e/fd/b23efd46bfdcebf0a435dfbc81b0a7bf.jpg",
-    },
-    {
-      title: t('home.categories.accessories.title'),
-      description: t('home.categories.accessories.description'),
-      image: "https://i.pinimg.com/1200x/0a/b0/ab/0ab0ab56129f7912e0e387557bdc5964.jpg",
-    },
-    {
-      title: t('home.categories.design.title'),
-      description: t('home.categories.design.description'),
-      image: "https://i.pinimg.com/736x/1a/56/91/1a5691a3461d95bcd8e5ffb6a65cc137.jpg",
-    }
-  ];
+  useEffect(() => {
+    dispatch(fetchLandingCategories());
+    dispatch(fetchPlatformStats());
+  }, [dispatch]);
 
   const runSchoolPride = () => {
     const end = Date.now() + (1 * 1000);
@@ -86,14 +78,12 @@ export default function LandingPage() {
         id="home"
         className="relative w-full min-h-150 flex items-center bg-bg-light overflow-hidden px-6 md:px-20 text-start"
       >
-        <div
-          className="absolute inset-0 pointer-events-none opacity-10"
+        <div className="absolute inset-0 pointer-events-none opacity-10"
           style={{
             backgroundImage: `radial-gradient(circle, var(--color-dot) 2px, transparent 2px)`,
             backgroundSize: "30px 30px"
           }}
         />
-
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center relative z-10">
           {/* Text Section */}
           <div className="space-y-6 order-2 md:order-1">
@@ -102,7 +92,7 @@ export default function LandingPage() {
               <span>{t('home.hero.tagline')}</span>
             </h5>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-text-main">
+            <h1 className="text-4xl md:text-6xl font-extrabold leading-tight text-text-main min-h-[1.2em] md:min-h-[2.4em] flex items-center">
               <span ref={typedRef} className="text-primary"></span>
             </h1>
 
@@ -110,7 +100,10 @@ export default function LandingPage() {
               {t('home.hero.description')}
             </p>
 
-            <button className="bg-primary hover:bg-[#d35400] text-white px-8 py-3 rounded-full transition shadow-lg shadow-primary/20">
+            <button
+              onClick={() => navigate("/auth/login")} 
+              className="bg-primary hover:bg-[#d35400] text-white px-8 py-3 rounded-full transition shadow-lg shadow-primary/20"
+            >
               {t('home.hero.browse_btn')}
             </button>
           </div>
@@ -138,8 +131,8 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Services Section=============== */}
-      <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start">
+      {/* Services (Categories) Section =============== */}
+      <section id="categories" className="py-20 px-6 md:px-20 bg-bg-main text-start overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12">
             <h5 className="text-primary font-medium tracking-widest uppercase text-1xs flex items-center gap-2">
@@ -154,18 +147,50 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat, index) => (
-              <div key={index} className="relative h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
-                <img src={cat.image} alt={cat.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
-                <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
-                  <h3 className="text-2xl font-bold mb-2">{cat.title}</h3>
-                  <p className="text-sm opacity-90 leading-snug">{cat.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[...Array(3)].map((_, i) => (
+                <div key={i} className="h-95 rounded-3xl bg-gray-200 animate-pulse"></div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-full">
+              <Swiper
+                modules={[Autoplay]}
+                spaceBetween={20}
+                slidesPerView={1}
+                slidesPerGroup={1}
+                grabCursor={true} 
+                loop={categories.length > 3}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: false,
+                }}
+                breakpoints={{
+                  640: { slidesPerView: 2 },
+                  1024: { slidesPerView: 3 },
+                }}
+                className="mySwiper" 
+                >
+                {categories.map((cat) => (
+                  <SwiperSlide key={cat._id} className="flex justify-center">
+                    <div className="relative w-full h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
+                      <img
+                        src={cat.image?.url || "https://via.placeholder.com/400"}
+                        alt={cat.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/50 group-hover:bg-black/30 transition duration-300"></div>
+                      <div className="absolute bottom-0 right-0 left-0 p-6 text-white text-center">
+                        <h3 className="text-2xl font-bold mb-2">{cat.name}</h3>
+                        <p className="text-sm opacity-90 leading-snug">{cat.slug}</p>
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          )}
         </div>
       </section>
 
@@ -187,28 +212,37 @@ export default function LandingPage() {
             </div>
 
             <div className="space-y-6">
+              {/* رضا البائعين */}
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
                   <span>{t('home.about_section.sellers_satisfaction')}</span>
-                  <span>80%</span>
+                  <span>{stats.sellerSatisfaction}%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full w-[80%] rounded-full"></div>
+                  <div
+                    className="bg-primary h-full transition-all duration-1000 ease-out"
+                    style={{ width: `${stats.sellerSatisfaction}%` }}
+                  ></div>
                 </div>
               </div>
+
+              {/* رضا المشترين */}
               <div className="space-y-2">
                 <div className="flex justify-between text-sm font-bold text-text-main">
                   <span>{t('home.about_section.buyers_satisfaction')}</span>
-                  <span>90%</span>
+                  <span>{stats.buyerSatisfaction}%</span>
                 </div>
                 <div className="w-full bg-gray-200 h-3 rounded-full overflow-hidden">
-                  <div className="bg-primary h-full w-[90%] rounded-full"></div>
+                  <div
+                    className="bg-primary h-full transition-all duration-1000 ease-out"
+                    style={{ width: `${stats.buyerSatisfaction}%` }}
+                  ></div>
                 </div>
               </div>
             </div>
 
             <button
-              onClick={runSchoolPride}
+              onClick={() => navigate("/auth/login")} 
               className="bg-primary text-white px-10 py-4 rounded-lg font-bold hover:bg-[#d35400] transition-all shadow-lg shadow-primary/20"
             >
               {t('home.about_section.discover_btn')}
@@ -225,7 +259,7 @@ export default function LandingPage() {
       </section>
 
       {/* Sell Now Section */}
-      <section  id="sell" className="py-16 px-6 md:px-20">
+      <section id="sell" className="py-16 px-6 md:px-20">
         <div className="max-w-7xl mx-auto relative h-72 rounded-3xl overflow-hidden flex items-center justify-center text-center">
           <img
             src="https://i.pinimg.com/736x/02/33/ba/0233ba523edd056c8fb8b3340d71de39.jpg"
@@ -236,7 +270,8 @@ export default function LandingPage() {
           <div className="relative z-10 space-y-5 px-4 text-white">
             <span className="text-sm font-medium tracking-wide">{t('home.sell_section.tagline')}</span>
             <h2 className="text-3xl md:text-5xl font-bold">{t('home.sell_section.title')}</h2>
-            <button className="bg-white text-primary px-10 py-3 rounded-lg font-bold transition transform hover:scale-105 hover:bg-gray-100 shadow-lg">
+            <button onClick={() => navigate("/auth/login")} 
+             className="bg-white text-primary px-10 py-3 rounded-lg font-bold transition transform hover:scale-105 hover:bg-gray-100 shadow-lg">
               {t('common.start_selling')}
             </button>
           </div>

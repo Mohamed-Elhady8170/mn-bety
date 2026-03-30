@@ -3,6 +3,7 @@ import { MdShoppingBag } from 'react-icons/md';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMyOrders } from '../../../Features/orderSlice';
+import { Link } from 'react-router-dom';
 import OrderItem from '../shared/OrderItem';
 
 const OrdersTab = () => {
@@ -46,14 +47,20 @@ const OrdersTab = () => {
           const itemsCount = order.cartItems?.length || order.items?.length || 0;
           
           return (
-            <OrderItem 
-              key={order._id} 
-              id={order._id.slice(-6).toUpperCase()} // Shorten the MongoDB ID
-              date={new Date(order.createdAt).toLocaleDateString("ar-EG")}
-              items={itemsCount}
-              price={order.totalPrice}
-              status={order.status}
-            />
+            /* Wrapped the item in a Link to navigate to the order details */
+            <Link 
+              to={`/customer/seeorderdetails/${order._id}`} 
+              key={order._id}
+              className="block hover:scale-[1.01] transition-transform duration-200"
+            >
+              <OrderItem 
+                id={order._id.slice(-6).toUpperCase()} // Shorten the MongoDB ID
+                date={new Date(order.createdAt).toLocaleDateString("ar-EG")}
+                items={itemsCount}
+                price={order.totalPrice}
+                status={order.orderStatus} // THE FIX: Changed to orderStatus
+              />
+            </Link>
           );
         })}
       </div>

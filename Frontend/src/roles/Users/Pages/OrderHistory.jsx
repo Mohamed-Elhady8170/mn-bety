@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMyOrders } from '../Features/orderSlice'; 
+import { fetchMyOrders, cancelOrderThunk } from '../Features/orderSlice'; // Added cancelOrderThunk
+import toast from 'react-hot-toast'; // Optional: for sleek notifications
 
 const OrderHistory = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,16 @@ const OrderHistory = () => {
       case 'delivered': return 'تم التوصيل';
       case 'cancelled': return 'تم الإلغاء';
       default: return 'تحت المعالجة';
+    }
+  };
+
+  // 5. Handle Cancel Order
+  const handleCancelOrder = (orderId) => {
+    if (window.confirm('هل أنت متأكد من إلغاء هذا الطلب؟ لا يمكن التراجع عن هذا الإجراء.')) {
+      dispatch(cancelOrderThunk(orderId))
+        .unwrap()
+        .then(() => toast.success("تم إلغاء الطلب بنجاح"))
+        .catch((err) => toast.error(err || "حدث خطأ أثناء الإلغاء"));
     }
   };
 
@@ -73,7 +84,7 @@ const OrderHistory = () => {
               // Try to get the image of the first item in the order, or use a placeholder
               const orderImage = order.cartItems?.[0]?.product?.images?.[0]?.url 
                                 || order.items?.[0]?.product?.images?.[0]?.url 
-                                || "https://via.placeholder.com/150";
+                                || "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=200&auto=format&fit=crop";
               
               // Count total items
               const itemsCount = order.cartItems?.length || order.items?.length || 0;
@@ -100,8 +111,9 @@ const OrderHistory = () => {
                         <h3 className="text-lg font-bold text-text-main">
                           طلب #{order._id.slice(-6).toUpperCase()}
                         </h3>
-                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusBadge(order.status)}`}>
-                          {translateStatus(order.status)}
+                        {/* THE FIX: Changed to order.orderStatus */}
+                        <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusBadge(order.orderStatus)}`}>
+                          {translateStatus(order.orderStatus)}
                         </span>
                       </div>
                       
@@ -122,9 +134,22 @@ const OrderHistory = () => {
                             {order.totalPrice?.toLocaleString() || 0} ج.م
                           </p>
                         </div>
-                        <Link to={`/user/orders/${order._id}`} className="text-primary font-bold hover:text-primary/80 transition-colors">
-                          عرض التفاصيل &larr;
-                        </Link>
+                        
+                        <div className="flex items-center gap-4">
+                          {/* THE CANCEL BUTTON: Shows only if pending or processing */}
+                          {(order.orderStatus === 'pending' || order.orderStatus === 'processing') && (
+                            <button 
+                              onClick={() => handleCancelOrder(order._id)}
+                              className="text-red-500 font-bold hover:text-red-700 transition-colors text-sm bg-red-50 px-3 py-1.5 rounded-lg"
+                            >
+                              إلغاء الطلب &times;
+                            </button>
+                          )}
+                          <Link to={`/customer/seeorderdetails/${order._id}`} className="text-primary font-bold hover:text-primary/80 transition-colors">
+                            عرض التفاصيل &larr;
+                          </Link>
+                        </div>
+
                       </div>
                     </div>
 

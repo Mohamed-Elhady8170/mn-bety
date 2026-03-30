@@ -10,7 +10,8 @@ import wishlistReducer from "../roles/Users/Features/wishlistSlice";
 import orderReducer from "../roles/Users/Features/orderSlice";
 import customerReducer  from "../roles/Users/Features/customerSlice";   
 import sellerProfileReducer from "../roles/Sellers/Features/sallerProfileSlice"; 
-
+import statsReducer from "../roles/Sellers/Features/statSlice";
+import landingReducer from "../Auth/Features/landingSlice";
 
 
 export const store = configureStore({
@@ -26,6 +27,8 @@ export const store = configureStore({
     order: orderReducer,
     customer:      customerReducer, 
     sellerProfile: sellerProfileReducer,
+    stat: statsReducer, 
+    landing: landingReducer,
   },
 });
 

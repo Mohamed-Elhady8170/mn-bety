@@ -30,6 +30,7 @@ import OrderDetails from '../roles/Sellers/Pages/OrderDetails';
 import UpgradeToSeller from '../roles/Users/Pages/UpgradeToSeller';
 import ProtectedRoute from '../routes/ProtectedRoute';
 import EditProduct from "../roles/Sellers/Pages/EditProduct";
+import CustomerOrderDetails from '../roles/Users/Pages/CustomerOrderDetails';
 
 export const router = createBrowserRouter([
   // ─── Public ─────────────────────────────────────────────────────────────────
@@ -78,6 +79,7 @@ export const router = createBrowserRouter([
       { path: 'cart', element: <Cart /> },
       { path: 'cart/order-success', element: <OrderSuccess /> },
       { path: 'my-orders', element: <OrderHistory /> },
+      { path: "seeorderdetails/:id", element: <CustomerOrderDetails /> },
       { path: 'seller-products/:id', element: <SellerProductsPage /> },
       { path: 'upgrade-to-seller', element: <UpgradeToSeller /> },
     ],
