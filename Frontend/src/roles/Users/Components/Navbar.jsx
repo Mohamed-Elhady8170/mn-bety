@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import {
   Menu,
   X,
@@ -19,13 +19,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
 import { useTranslation } from "react-i18next";
 import { selectAllCartItems } from "../Features/cartSlice";
-import { MdPerson } from "react-icons/md";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activePath, setActivePath] = useState("/");
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchRef = useRef(null);
   const cartItems = useSelector(selectAllCartItems);
   const cartCount = cartItems?.length || 0;
 
@@ -46,10 +48,11 @@ const Navbar = () => {
 
   const { user, isLoading } = useSelector((state) => state.auth);
   const { profile } = useSelector((state) => state.customer);
+  const isSeller = user?.roles?.includes('seller');
 
   const displayName = profile?.fullName || user?.fullName || "مستخدم";
-  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || null;
-
+  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || "";
+  const avatarInitial = displayName?.trim()?.charAt(0)?.toUpperCase() || "U";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,6 +78,10 @@ const Navbar = () => {
       if (!event.target.closest('.profile-menu-container')) {
         setIsProfileMenuOpen(false);
       }
+
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setIsSearchOpen(false);
+      }
     };
 
     document.addEventListener('click', handleClickOutside);
@@ -96,6 +103,48 @@ const Navbar = () => {
     { name: t('users_navbar.sellers'), href: "/customer/contact" },
     { name: t('common.about'), href: "/customer/about" },
   ];
+
+  const searchableRoutes = useMemo(() => {
+    const baseRoutes = [
+      { label: t('common.home'), path: '/customer/' },
+      { label: t('common.categories'), path: '/customer/products' },
+      { label: t('users_navbar.sellers'), path: '/customer/contact' },
+      { label: t('common.about'), path: '/customer/about' },
+      { label: t('users_navbar.profile'), path: '/customer/profile' },
+      { label: t('users_navbar.my_orders'), path: '/customer/my-orders' },
+      { label: t('common.wishlist'), path: '/customer/wishlist' },
+      { label: t('common.cart'), path: '/customer/cart' },
+    ];
+
+    if (isSeller) {
+      baseRoutes.push({ label: t('users_navbar.switch_to_seller'), path: '/seller' });
+    } else {
+      baseRoutes.push({ label: t('users_navbar.upgrade_to_seller'), path: '/customer/upgrade-to-seller' });
+    }
+
+    return baseRoutes;
+  }, [t, isSeller]);
+
+  const filteredRoutes = useMemo(() => {
+    const term = searchTerm.trim().toLowerCase();
+    if (!term) return searchableRoutes;
+
+    return searchableRoutes.filter((route) =>
+      route.label.toLowerCase().includes(term) || route.path.toLowerCase().includes(term)
+    );
+  }, [searchTerm, searchableRoutes]);
+
+  const handleRouteSelect = (path) => {
+    setSearchTerm('');
+    setIsSearchOpen(false);
+    navigate(path);
+  };
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === 'Enter' && filteredRoutes.length > 0) {
+      handleRouteSelect(filteredRoutes[0].path);
+    }
+  };
 
   return (
     <header
@@ -143,14 +192,21 @@ const Navbar = () => {
           </div>
 
           {/* Search Bar */}
-          <div className="hidden lg:flex flex-1 max-w-md mx-4">
+          <div className="hidden lg:flex flex-1 max-w-md mx-4" ref={searchRef}>
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder={t('users_navbar.search_placeholder')}
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setIsSearchOpen(true);
+                }}
+                onKeyDown={handleSearchKeyDown}
                 className="w-full pr-10 pl-4 py-2.5 bg-bg-subtle border-2 border-transparent rounded-2xl focus:ring-2 focus:ring-primary/20 text-sm transition-all duration-300 text-text-main placeholder:text-text-subtle"
                 onFocus={(e) => {
                   e.target.style.borderColor = "#ec5e0c";
+                  setIsSearchOpen(true);
                 }}
                 onBlur={(e) => {
                   e.target.style.borderColor = "transparent";
@@ -158,6 +214,26 @@ const Navbar = () => {
                 dir="rtl"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-subtle" />
+
+              {isSearchOpen && (
+                <div className="absolute top-[110%] w-full bg-bg-main border border-border-warm rounded-xl shadow-lg z-50 max-h-72 overflow-y-auto">
+                  {filteredRoutes.length > 0 ? (
+                    filteredRoutes.map((route) => (
+                      <button
+                        key={route.path}
+                        type="button"
+                        onClick={() => handleRouteSelect(route.path)}
+                        className="w-full text-right px-4 py-2.5 hover:bg-bg-subtle transition-colors"
+                      >
+                        <p className="text-sm font-bold text-text-main">{route.label}</p>
+                        <p className="text-xs text-text-subtle" dir="ltr">{route.path}</p>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-4 py-3 text-sm text-text-subtle">لا توجد نتائج</div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
 
@@ -212,7 +288,7 @@ const Navbar = () => {
                 style={avatarUrl ? { backgroundImage: `url('${avatarUrl}')` } : undefined}
                 onClick={toggleProfileMenu}
               >
-                  {!avatarUrl && <MdPerson className="w-5 h-5 sm:w-6 sm:h-6 text-primary " />}
+                {!avatarUrl && <span className="text-xs sm:text-sm font-bold text-text-main">{avatarInitial}</span>}
               </div>
 
               {/* Dropdown Menu */}
@@ -240,7 +316,7 @@ const Navbar = () => {
                     {t('users_navbar.my_orders')}
                   </Link>
                   {user?.roles?.includes('seller') ? (
-                    // already a seller → show switch button
+                    // already a seller -> show switch button
                     <button
                       onClick={() => {
                         navigate('/seller');
@@ -252,7 +328,7 @@ const Navbar = () => {
                       <span>{t('users_navbar.switch_to_seller')}</span>
                     </button>
                   ) : (
-                    // not a seller → show upgrade button
+                    // not a seller -> show upgrade button
                     <button
                       onClick={() => {
                         navigate('/customer/upgrade-to-seller');
@@ -303,6 +379,9 @@ const Navbar = () => {
                 <input
                   type="text"
                   placeholder={t('users_navbar.search_placeholder')}
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  onKeyDown={handleSearchKeyDown}
                   className="w-full pr-10 pl-4 py-2.5 bg-bg-mobile-actions border-2 border-transparent rounded-xl focus:ring-2 focus:ring-primary/20 text-sm text-text-main placeholder:text-text-subtle"
                   dir="rtl"
                 />
