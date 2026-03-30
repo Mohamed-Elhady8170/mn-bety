@@ -12,7 +12,7 @@ import customerReducer  from "../roles/Users/Features/customerSlice";
 import sellerProfileReducer from "../roles/Sellers/Features/sallerProfileSlice"; 
 import statsReducer from "../roles/Sellers/Features/statSlice";
 import landingReducer from "../Auth/Features/landingSlice";
-
+import notificationReducer from "../roles/Users/Features/notificationSlice";
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +29,7 @@ export const store = configureStore({
     sellerProfile: sellerProfileReducer,
     stat: statsReducer, 
     landing: landingReducer,
+    notifications: notificationReducer,
   },
 });
 

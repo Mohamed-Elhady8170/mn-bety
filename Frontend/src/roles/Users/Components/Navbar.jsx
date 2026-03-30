@@ -10,7 +10,8 @@ import {
   LogOut,
   Globe,
   Store,
-  RefreshCw
+  RefreshCw,
+  Bell,
 } from "lucide-react";
 import logo from "../../../assets/Logos/logo02.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
 import { useTranslation } from "react-i18next";
 import { selectAllCartItems } from "../Features/cartSlice";
+import { markNotificationRead } from "../Features/notificationSlice";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,20 +41,26 @@ const Navbar = () => {
   const currentLang = i18n.language;
 
   const toggleLanguage = () => {
-    const newLang = currentLang.startsWith('ar') ? 'en' : 'ar';
+    const newLang = currentLang.startsWith("ar") ? "en" : "ar";
     i18n.changeLanguage(newLang);
-    document.documentElement.dir = newLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = newLang;
-    localStorage.setItem('preferred-language', newLang);
+    localStorage.setItem("preferred-language", newLang);
   };
 
   const { user, isLoading } = useSelector((state) => state.auth);
   const { profile } = useSelector((state) => state.customer);
-  const isSeller = user?.roles?.includes('seller');
+  const isSeller = user?.roles?.includes("seller");
 
   const displayName = profile?.fullName || user?.fullName || "مستخدم";
-  const avatarUrl = profile?.avatar?.url || user?.avatar?.url || user?.avatar || "";
+  const avatarUrl =
+    profile?.avatar?.url || user?.avatar?.url || user?.avatar || "";
   const avatarInitial = displayName?.trim()?.charAt(0)?.toUpperCase() || "U";
+  const { items: notifications, unreadCount } = useSelector(
+    (state) => state.notifications,
+  );
+  const notifRef = useRef(null);
+  const [isNotifOpen, setIsNotifOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +68,15 @@ const Navbar = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setIsNotifOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
@@ -75,7 +92,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.profile-menu-container')) {
+      if (!event.target.closest(".profile-menu-container")) {
         setIsProfileMenuOpen(false);
       }
 
@@ -84,13 +101,13 @@ const Navbar = () => {
       }
     };
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
   const handleLogout = async () => {
     await dispatch(logoutThunk());
-    navigate('/auth/login', { replace: true });
+    navigate("/auth/login", { replace: true });
   };
 
   const toggleProfileMenu = () => {
@@ -98,28 +115,34 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: t('common.home'), href: "/customer/" },
-    { name: t('common.categories'), href: "/customer/products" },
-    { name: t('users_navbar.sellers'), href: "/customer/contact" },
-    { name: t('common.about'), href: "/customer/about" },
+    { name: t("common.home"), href: "/customer/" },
+    { name: t("common.categories"), href: "/customer/products" },
+    { name: t("users_navbar.sellers"), href: "/customer/contact" },
+    { name: t("common.about"), href: "/customer/about" },
   ];
 
   const searchableRoutes = useMemo(() => {
     const baseRoutes = [
-      { label: t('common.home'), path: '/customer/' },
-      { label: t('common.categories'), path: '/customer/products' },
-      { label: t('users_navbar.sellers'), path: '/customer/contact' },
-      { label: t('common.about'), path: '/customer/about' },
-      { label: t('users_navbar.profile'), path: '/customer/profile' },
-      { label: t('users_navbar.my_orders'), path: '/customer/my-orders' },
-      { label: t('common.wishlist'), path: '/customer/wishlist' },
-      { label: t('common.cart'), path: '/customer/cart' },
+      { label: t("common.home"), path: "/customer/" },
+      { label: t("common.categories"), path: "/customer/products" },
+      { label: t("users_navbar.sellers"), path: "/customer/contact" },
+      { label: t("common.about"), path: "/customer/about" },
+      { label: t("users_navbar.profile"), path: "/customer/profile" },
+      { label: t("users_navbar.my_orders"), path: "/customer/my-orders" },
+      { label: t("common.wishlist"), path: "/customer/wishlist" },
+      { label: t("common.cart"), path: "/customer/cart" },
     ];
 
     if (isSeller) {
-      baseRoutes.push({ label: t('users_navbar.switch_to_seller'), path: '/seller' });
+      baseRoutes.push({
+        label: t("users_navbar.switch_to_seller"),
+        path: "/seller",
+      });
     } else {
-      baseRoutes.push({ label: t('users_navbar.upgrade_to_seller'), path: '/customer/upgrade-to-seller' });
+      baseRoutes.push({
+        label: t("users_navbar.upgrade_to_seller"),
+        path: "/customer/upgrade-to-seller",
+      });
     }
 
     return baseRoutes;
@@ -129,30 +152,30 @@ const Navbar = () => {
     const term = searchTerm.trim().toLowerCase();
     if (!term) return searchableRoutes;
 
-    return searchableRoutes.filter((route) =>
-      route.label.toLowerCase().includes(term) || route.path.toLowerCase().includes(term)
+    return searchableRoutes.filter(
+      (route) =>
+        route.label.toLowerCase().includes(term) ||
+        route.path.toLowerCase().includes(term),
     );
   }, [searchTerm, searchableRoutes]);
 
   const handleRouteSelect = (path) => {
-    setSearchTerm('');
+    setSearchTerm("");
     setIsSearchOpen(false);
     navigate(path);
   };
 
   const handleSearchKeyDown = (event) => {
-    if (event.key === 'Enter' && filteredRoutes.length > 0) {
+    if (event.key === "Enter" && filteredRoutes.length > 0) {
       handleRouteSelect(filteredRoutes[0].path);
     }
   };
 
   return (
     <header
-      className={`print:hidden sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${isScrolled
-        ? "bg-bg-main/95 backdrop-blur-md shadow-lg"
-        : "bg-bg-main"
-        } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
-
+      className={`print:hidden sticky top-0 z-50 w-full transition-all duration-500 font-cairo ${
+        isScrolled ? "bg-bg-main/95 backdrop-blur-md shadow-lg" : "bg-bg-main"
+      } border-b border-border-warm px-4 sm:px-6 lg:px-20 h-16 md:h-20 py-4`}
     >
       <div className="max-w-7xl mx-auto h-full">
         <div className="flex items-center justify-between gap-4 lg:gap-8 h-full">
@@ -174,16 +197,20 @@ const Navbar = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className={`text-sm whitespace-nowrap font-bold transition-all duration-300 relative group ${isActive
-                      ? "text-primary"
-                      : "text-text-navbar hover:text-primary"
-                      }`}
+                    className={`text-sm whitespace-nowrap font-bold transition-all duration-300 relative group ${
+                      isActive
+                        ? "text-primary"
+                        : "text-text-navbar hover:text-primary"
+                    }`}
                     onClick={() => setActivePath(link.href)}
                   >
                     {link.name}
                     <span
-                      className={`absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300 ${isActive ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
-                        }`}
+                      className={`absolute -bottom-2 left-0 w-full h-0.5 bg-primary rounded-full transition-all duration-300 ${
+                        isActive
+                          ? "scale-x-100"
+                          : "scale-x-0 group-hover:scale-x-100"
+                      }`}
                     />
                   </Link>
                 );
@@ -196,7 +223,7 @@ const Navbar = () => {
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder={t('users_navbar.search_placeholder')}
+                placeholder={t("users_navbar.search_placeholder")}
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -225,12 +252,18 @@ const Navbar = () => {
                         onClick={() => handleRouteSelect(route.path)}
                         className="w-full text-right px-4 py-2.5 hover:bg-bg-subtle transition-colors"
                       >
-                        <p className="text-sm font-bold text-text-main">{route.label}</p>
-                        <p className="text-xs text-text-subtle" dir="ltr">{route.path}</p>
+                        <p className="text-sm font-bold text-text-main">
+                          {route.label}
+                        </p>
+                        <p className="text-xs text-text-subtle" dir="ltr">
+                          {route.path}
+                        </p>
                       </button>
                     ))
                   ) : (
-                    <div className="px-4 py-3 text-sm text-text-subtle">لا توجد نتائج</div>
+                    <div className="px-4 py-3 text-sm text-text-subtle">
+                      لا توجد نتائج
+                    </div>
                   )}
                 </div>
               )}
@@ -246,14 +279,93 @@ const Navbar = () => {
             >
               <Heart className="w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 hover:scale-110" />
             </button>
+            {/* Notifications */}
+            <div className="relative" ref={notifRef}>
+              <button
+                onClick={() => setIsNotifOpen(!isNotifOpen)}
+                className="relative flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main"
+              >
+                <Bell size={16} className="sm:w-4.5 sm:h-4.5" />
 
+                {/* The Dynamic Red Badge! */}
+                {unreadCount > 0 && (
+                  <span className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 flex items-center justify-center min-w-4 h-4 sm:min-w-5 sm:h-5 text-[10px] sm:text-xs font-bold text-white bg-red-500 border-2 border-bg-main rounded-full animate-bounce px-1">
+                    {unreadCount > 99 ? "99+" : unreadCount}
+                  </span>
+                )}
+              </button>
+
+              {/* The Dropdown Menu */}
+              <div
+                className={`absolute left-0 sm:right-0 sm:left-auto top-full mt-2 w-72 sm:w-80 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 overflow-hidden ${isNotifOpen ? "opacity-100 visible" : "opacity-0 invisible"}`}
+              >
+                {/* Header */}
+                <div className="p-3 border-b border-border-warm flex justify-between items-center bg-bg-subtle">
+                  <h3 className="font-bold text-text-main text-sm">
+                    الإشعارات
+                  </h3>
+                  {unreadCount > 0 && (
+                    <span className="text-xs text-primary font-bold">
+                      {unreadCount} غير مقروء
+                    </span>
+                  )}
+                </div>
+
+                {/* Notification List */}
+                <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-border-warm">
+                  {!notifications || notifications.length === 0 ? (
+                    <div className="p-6 text-center text-text-subtle text-sm font-medium">
+                      لا توجد إشعارات حتى الآن
+                    </div>
+                  ) : (
+                    notifications.slice(0, 10).map((notif) => (
+                      <div
+                        key={notif._id}
+                        onClick={() => {
+                          if (!notif.isRead)
+                            dispatch(markNotificationRead(notif._id));
+                          setIsNotifOpen(false);
+                          // You can also add navigation here later! e.g., navigate(`/seller/orders/${notif.relatedId}`)
+                        }}
+                        className={`p-3 border-b border-border-warm hover:bg-bg-subtle cursor-pointer transition-colors flex gap-3 ${!notif.isRead ? "bg-primary/5" : ""}`}
+                      >
+                        <div
+                          className={`w-2 h-2 mt-1.5 rounded-full shrink-0 ${!notif.isRead ? "bg-primary" : "bg-transparent"}`}
+                        ></div>
+                        <div>
+                          <p
+                            className={`text-sm ${!notif.isRead ? "font-bold text-text-main" : "font-medium text-text-soft"}`}
+                          >
+                            {notif.title}
+                          </p>
+                          <p className="text-xs text-text-subtle mt-1 leading-relaxed">
+                            {notif.message}
+                          </p>
+                          <span className="text-[10px] text-text-subtle mt-2 block dir-ltr w-fit font-medium">
+                            {new Date(notif.createdAt).toLocaleDateString(
+                              "ar-EG",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              },
+                            )}
+                          </span>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
             {/* Language Button */}
             <button
               onClick={toggleLanguage}
               className="hidden sm:flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl bg-bg-subtle transition-all duration-300 hover:scale-105 hover:shadow-lg text-text-main text-sm font-bold"
             >
               <Globe className="w-4 h-4" />
-              <span>{currentLang.startsWith('ar') ? 'EN' : 'AR'}</span>
+              <span>{currentLang.startsWith("ar") ? "EN" : "AR"}</span>
             </button>
 
             {/* Dark Mode Toggle */}
@@ -285,15 +397,28 @@ const Navbar = () => {
             <div className="relative profile-menu-container  group h-full flex items-center">
               <div
                 className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-cover bg-center border-2 border-primary/30 cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg hover:border-primary overflow-hidden bg-bg-subtle flex items-center justify-center"
-                style={avatarUrl ? { backgroundImage: `url('${avatarUrl}')` } : undefined}
+                style={
+                  avatarUrl
+                    ? { backgroundImage: `url('${avatarUrl}')` }
+                    : undefined
+                }
                 onClick={toggleProfileMenu}
               >
-                {!avatarUrl && <span className="text-xs sm:text-sm font-bold text-text-main">{avatarInitial}</span>}
+                {!avatarUrl && (
+                  <span className="text-xs sm:text-sm font-bold text-text-main">
+                    {avatarInitial}
+                  </span>
+                )}
               </div>
 
               {/* Dropdown Menu */}
-              <div className={`absolute end-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${isProfileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-                }`}>
+              <div
+                className={`absolute end-0 top-full mt-2 w-48 bg-bg-main rounded-xl shadow-lg border border-border-warm transition-all duration-300 z-50 ${
+                  isProfileMenuOpen
+                    ? "opacity-100 visible"
+                    : "opacity-0 invisible"
+                }`}
+              >
                 <div className="p-2">
                   {/* اسم اليوزر */}
                   {(user || profile) && (
@@ -306,38 +431,38 @@ const Navbar = () => {
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
-                    {t('users_navbar.profile')}
+                    {t("users_navbar.profile")}
                   </Link>
                   <Link
                     to="/customer/my-orders"
                     className="block px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors"
                     onClick={() => setIsProfileMenuOpen(false)}
                   >
-                    {t('users_navbar.my_orders')}
+                    {t("users_navbar.my_orders")}
                   </Link>
-                  {user?.roles?.includes('seller') ? (
+                  {user?.roles?.includes("seller") ? (
                     // already a seller -> show switch button
                     <button
                       onClick={() => {
-                        navigate('/seller');
+                        navigate("/seller");
                         setIsProfileMenuOpen(false);
                       }}
                       className="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors "
                     >
                       <RefreshCw className="w-4 h-4" />
-                      <span>{t('users_navbar.switch_to_seller')}</span>
+                      <span>{t("users_navbar.switch_to_seller")}</span>
                     </button>
                   ) : (
                     // not a seller -> show upgrade button
                     <button
                       onClick={() => {
-                        navigate('/customer/upgrade-to-seller');
+                        navigate("/customer/upgrade-to-seller");
                         setIsProfileMenuOpen(false);
                       }}
                       className="w-full flex items-center gap-2 px-4 py-2 text-sm text-text-main hover:bg-bg-subtle rounded-lg transition-colors "
                     >
                       <Store className="w-4 h-4" />
-                      <span>{t('users_navbar.upgrade_to_seller')}</span>
+                      <span>{t("users_navbar.upgrade_to_seller")}</span>
                     </button>
                   )}
                   <div className="border-t border-border-warm my-1"></div>
@@ -350,7 +475,11 @@ const Navbar = () => {
                     className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-text hover:bg-red-soft rounded-lg transition-colors disabled:opacity-50"
                   >
                     <LogOut className="w-4 h-4" />
-                    <span>{isLoading ? t('users_navbar.logging_out') : t('users_navbar.logout')}</span>
+                    <span>
+                      {isLoading
+                        ? t("users_navbar.logging_out")
+                        : t("users_navbar.logout")}
+                    </span>
                   </button>
                 </div>
               </div>
@@ -378,7 +507,7 @@ const Navbar = () => {
               <div className="relative w-full">
                 <input
                   type="text"
-                  placeholder={t('users_navbar.search_placeholder')}
+                  placeholder={t("users_navbar.search_placeholder")}
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   onKeyDown={handleSearchKeyDown}
@@ -396,10 +525,11 @@ const Navbar = () => {
                     <Link
                       key={link.name}
                       to={link.href}
-                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${isActive
-                        ? "bg-primary text-white shadow-lg"
-                        : "text-text-main hover:bg-primary/10"
-                        }`}
+                      className={`px-4 py-2.5 rounded-xl text-sm font-bold transition-all duration-300 ${
+                        isActive
+                          ? "bg-primary text-white shadow-lg"
+                          : "text-text-main hover:bg-primary/10"
+                      }`}
                       onClick={() => {
                         setActivePath(link.href);
                         setIsOpen(false);
@@ -413,11 +543,13 @@ const Navbar = () => {
 
               {/* Mobile Actions */}
               <div className="grid grid-cols-4 gap-2 pt-2 border-t border-border-warm">
-                <button className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
+                <button
+                  className="flex items-center justify-center p-2 rounded-xl bg-bg-mobile-actions border border-border-warm transition-all duration-300 hover:scale-110 hover:shadow-lg text-text-main group"
                   onClick={() => {
                     navigate("/customer/wishlist");
                     setIsOpen(false);
-                  }}>
+                  }}
+                >
                   <Heart className="w-5 h-5 transition-transform duration-300 group-hover:scale-110 group-hover:text-primary" />
                 </button>
 
