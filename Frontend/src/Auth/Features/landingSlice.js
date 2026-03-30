@@ -21,8 +21,9 @@ export const fetchPlatformStats = createAsyncThunk(
     "landing/fetchPlatformStats",
     async (_, { rejectWithValue }) => {
         try {
-            const response = await axios.get(`${BASE}/api/products/stats/platform`);
-            return response.data.data; 
+            const response = await axios.get(`${BASE}/api/reviews/stats/platform`);
+            console.log("Response Data:", response.data);
+            return response.data.data;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || "Error fetching stats");
         }
@@ -38,7 +39,7 @@ const landingSlice = createSlice({
             sellerSatisfaction: 0,
         },
         loading: false,
-        statsLoading: false, 
+        statsLoading: false,
         error: null,
     },
     reducers: {},

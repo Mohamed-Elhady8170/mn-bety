@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import aboutImage from "../../assets/aboutlanding.jpg";
 import confetti from 'canvas-confetti';
+import { useNavigate } from "react-router-dom";
 import { FaAsterisk } from "react-icons/fa";
 import Navbar from "../Components/LandingNavbar";
 import Footer from "../../roles/Users/Components/Footer";
@@ -15,6 +16,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 export default function LandingPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const typedRef = useRef(null);
   const { t } = useTranslation();
   const { categories, loading, stats } = useSelector((state) => state.landing);
@@ -98,7 +100,10 @@ export default function LandingPage() {
               {t('home.hero.description')}
             </p>
 
-            <button className="bg-primary hover:bg-[#d35400] text-white px-8 py-3 rounded-full transition shadow-lg shadow-primary/20">
+            <button
+              onClick={() => navigate("/auth/login")} 
+              className="bg-primary hover:bg-[#d35400] text-white px-8 py-3 rounded-full transition shadow-lg shadow-primary/20"
+            >
               {t('home.hero.browse_btn')}
             </button>
           </div>
@@ -151,23 +156,22 @@ export default function LandingPage() {
           ) : (
             <div className="w-full">
               <Swiper
-                modules={[Autoplay]} // شيلنا الـ Pagination من هنا
+                modules={[Autoplay]}
                 spaceBetween={20}
                 slidesPerView={1}
                 slidesPerGroup={1}
-                grabCursor={true} // بيخلي شكل الماوس "إيد" عشان السحب
+                grabCursor={true} 
                 loop={categories.length > 3}
                 autoplay={{
                   delay: 3000,
                   disableOnInteraction: false,
                 }}
-                // شيلنا سطر الـ pagination: { clickable: true }
                 breakpoints={{
                   640: { slidesPerView: 2 },
                   1024: { slidesPerView: 3 },
                 }}
-                className="mySwiper" // شيلنا الـ pb-14 لأننا مش محتاجين مساحة للنقط
-              >
+                className="mySwiper" 
+                >
                 {categories.map((cat) => (
                   <SwiperSlide key={cat._id} className="flex justify-center">
                     <div className="relative w-full h-95 rounded-3xl overflow-hidden group cursor-pointer shadow-lg">
@@ -238,7 +242,7 @@ export default function LandingPage() {
             </div>
 
             <button
-              onClick={runSchoolPride}
+              onClick={() => navigate("/auth/login")} 
               className="bg-primary text-white px-10 py-4 rounded-lg font-bold hover:bg-[#d35400] transition-all shadow-lg shadow-primary/20"
             >
               {t('home.about_section.discover_btn')}
@@ -266,7 +270,8 @@ export default function LandingPage() {
           <div className="relative z-10 space-y-5 px-4 text-white">
             <span className="text-sm font-medium tracking-wide">{t('home.sell_section.tagline')}</span>
             <h2 className="text-3xl md:text-5xl font-bold">{t('home.sell_section.title')}</h2>
-            <button className="bg-white text-primary px-10 py-3 rounded-lg font-bold transition transform hover:scale-105 hover:bg-gray-100 shadow-lg">
+            <button onClick={() => navigate("/auth/login")} 
+             className="bg-white text-primary px-10 py-3 rounded-lg font-bold transition transform hover:scale-105 hover:bg-gray-100 shadow-lg">
               {t('common.start_selling')}
             </button>
           </div>
