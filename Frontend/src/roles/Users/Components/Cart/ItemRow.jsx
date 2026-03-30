@@ -18,7 +18,7 @@ function ItemRow({ item }) {
   if (!product) return null;
 
   // 2. Map data to the UI
-  const displayPrice = product.discountPrice > 0 ? product.discountPrice : product.price;
+  const displayPrice = product.discountPrice > 0 ? product.price - product.discountPrice : product.price;
   const mainImage = product.images?.[0]?.url || "https://via.placeholder.com/150";
 
   // 3. Handlers that talk to Redis
