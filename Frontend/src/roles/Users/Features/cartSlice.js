@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, createSelector } from "@reduxjs/toolkit";
-import { privateAxios } from "../../../lib/axios"; // ⚠️ Adjust this path to your axios.js file!
+import { privateAxios } from "../../../lib/axios";
 
 // ============================================================
 //                     CART THUNKS (Backend Calls)
@@ -10,7 +10,7 @@ export const fetchCart = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await privateAxios.get("/cart");
-      return data.data.cart.items; // Array of items from Redis
+      return data.data.cart.items;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "فشل جلب السلة");
     }
@@ -84,21 +84,15 @@ const cartSlice = createSlice({
     };
 
     builder
-      // Fetch Cart
-      .addCase(fetchCart.pending, (state) => { state.isLoading = true; })
+      .addCase(fetchCart.pending,   (state) => { state.isLoading = true; })
       .addCase(fetchCart.fulfilled, handleSuccess)
-      .addCase(fetchCart.rejected, (state, action) => { state.isLoading = false; state.error = action.payload; })
-      
-      // Add to Cart
-      .addCase(addToCartThunk.fulfilled, handleSuccess)
-      
-      // Update Quantity
+      .addCase(fetchCart.rejected,  (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(addToCartThunk.fulfilled,     handleSuccess)
       .addCase(updateQuantityThunk.fulfilled, handleSuccess)
-      
-      // Remove Item
       .addCase(removeFromCartThunk.fulfilled, handleSuccess)
-      
-      // Clear Cart
       .addCase(clearCartThunk.fulfilled, (state) => {
         state.isLoading = false;
         state.items = [];
@@ -109,25 +103,36 @@ const cartSlice = createSlice({
 export default cartSlice.reducer;
 
 // ============================================================
+//                     HELPERS
+// ============================================================
+
+export const getEffectivePrice = (product) => {
+  if (!product) return 0;
+  const price = product.price || 0;
+  const discountPrice = product.discountPrice || 0;
+  return discountPrice > 0 ? price - discountPrice : price;
+};
+
+// ============================================================
 //                     SELECTORS
 // ============================================================
 
 export const selectAllCartItems = (state) => state.cart.items;
-export const selectCartLoading = (state) => state.cart.isLoading;
+export const selectCartLoading  = (state) => state.cart.isLoading;
 
-// Calculate total items count 
+// Total items count
 export const selectCartItemsCount = createSelector(
   [selectAllCartItems],
   (items) => items?.reduce((total, item) => total + (item.quantity || 0), 0) || 0
 );
 
-// Calculate total price (checks for discountPrice first)
+// Total price — price - discountPrice لكل منتج × الكمية
 export const selectTotalCartPrice = createSelector(
   [selectAllCartItems],
   (items) =>
     items?.reduce((total, item) => {
-      if (!item.product) return total; // Safety check
-      const price = item.product.discountPrice > 0 ? item.product.discountPrice : item.product.price;
-      return total + (price || 0) * (item.quantity || 1);
+      if (!item.product) return total;
+      const price = getEffectivePrice(item.product);
+      return total + price * (item.quantity || 1);
     }, 0) || 0
 );
