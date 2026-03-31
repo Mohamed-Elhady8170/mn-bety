@@ -7,6 +7,8 @@ import { fetchWishlistThunk, removeFromWishlistThunk } from '../Features/wishlis
 import { selectWishlistProducts, selectWishlistLoading } from '../Features/wishlistSlice';
 import { showSuccess, showError } from '../../../lib/toast';
 import useEmailVerification from '../../../hooks/useEmailVerification';
+import { addToCartThunk } from "../Features/cartSlice";
+import toast from "react-hot-toast";
 
 export default function WishList() {
   const dispatch = useDispatch();
@@ -27,11 +29,15 @@ export default function WishList() {
     }
   };
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (productId) => {
     const ok = await checkVerified();
     if (!ok) return;
-    // TODO: Implement add to cart logic
-    showSuccess('تمت الإضافة للسلة');
+    if (!productId) return;
+        dispatch(addToCartThunk({ productId, quantity: 1 }))
+          .unwrap()
+          .then(() => toast.success("تمت الإضافة للسلة بنجاح"))
+          .catch((err) => toast.error(err || "حدث خطأ أثناء الإضافة للسلة"));
+    // showSuccess('تمت الإضافة للسلة');
   };
 
   // ─── السعر النهائي = السعر الأصلي - الخصم (لو الخصم > 0) ─────────────────
