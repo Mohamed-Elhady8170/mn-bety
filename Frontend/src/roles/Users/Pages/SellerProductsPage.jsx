@@ -17,6 +17,9 @@ import {
   selectSellerProducts,
   selectSellerProductsLoading,
 } from "../Features/productSlice";
+import { addToCartThunk } from "../Features/cartSlice";
+import toast from "react-hot-toast";
+
 
 const ProductImage = ({ src, alt }) => {
   const [error, setError] = useState(false);
@@ -66,6 +69,15 @@ export default function SellerProductsPage() {
     }
     return () => { dispatch(clearCurrentSeller()); };
   }, [dispatch, sellerId]);
+
+  const handleAddToCart = async (productId) => {
+    if (!productId) return;
+        dispatch(addToCartThunk({ productId, quantity: 1 }))
+          .unwrap()
+          .then(() => toast.success("تمت الإضافة للسلة بنجاح"))
+          .catch((err) => toast.error(err || "حدث خطأ أثناء الإضافة للسلة"));
+    // showSuccess('تمت الإضافة للسلة');
+  };
 
   if (sellerLoading && !seller) {
     return <div className="min-h-screen bg-bg-main flex items-center justify-center text-sm font-medium">جاري التحميل...</div>;
@@ -253,7 +265,7 @@ export default function SellerProductsPage() {
                     </div>
 
                     <button
-                      onClick={(e) => { e.stopPropagation(); /* أضف هنا فنكشن السلة */ }}
+                      onClick={(e) => { e.stopPropagation(); handleAddToCart(product._id); }}
                       disabled={product.stock <= 0}
                       className={`p-2 rounded-lg transition-all shadow-sm ${product.stock <= 0
                           ? "bg-bg-subtle text-text-muted cursor-not-allowed"
