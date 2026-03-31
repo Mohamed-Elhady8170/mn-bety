@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Navbar from "../roles/Users/Components/Navbar";
 import Footer from "../roles/Users/Components/Footer";
 import React, { useEffect } from "react";
@@ -10,6 +10,10 @@ import { fetchNotifications, addLiveNotification } from "../roles/Users/Features
 const Layout = () => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+   const location = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     // Only connect if we have a logged-in user
