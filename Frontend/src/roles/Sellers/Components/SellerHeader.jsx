@@ -248,6 +248,7 @@ export default function SellerHeader({ onMenuClick }) {
                           if (!notif.isRead)
                             dispatch(markNotificationRead(notif._id));
                           setIsNotifOpen(false);
+                          navigate(`/seller/orders`)
                           // You can also add navigation here later! e.g., navigate(`/seller/orders/${notif.relatedId}`)
                         }}
                         className={`p-3 border-b border-border-warm hover:bg-bg-subtle cursor-pointer transition-colors flex gap-3 ${!notif.isRead ? "bg-primary/5" : ""}`}
