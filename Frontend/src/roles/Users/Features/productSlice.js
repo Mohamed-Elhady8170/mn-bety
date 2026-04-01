@@ -13,7 +13,10 @@ export const fetchProducts = createAsyncThunk(
   "product/fetchProducts",
   async (params = {}, { rejectWithValue }) => {
     try {
-      const { data } = await publicAxios.get("/products", { params });
+      const requestParams = { ...params, isApproved: true };
+      const { data } = await publicAxios.get("/products", {
+        params: requestParams,
+      });
       return data.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed");
@@ -45,7 +48,9 @@ export const fetchSellerProducts = createAsyncThunk(
   "product/fetchSellerProducts",
   async (sellerId, { rejectWithValue }) => {
     try {
-      const { data } = await publicAxios.get(`/products/seller/${sellerId}`);
+      const { data } = await publicAxios.get(`/products/seller/${sellerId}`, {
+        params: { isApproved: true },
+      });
       return data.data.products;
     } catch (err) {
       return rejectWithValue(
@@ -117,7 +122,9 @@ const productSlice = createSlice({
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.loading = false;
         const payload = action.payload || {};
-        state.products = payload.products || [];
+        state.products = (payload.products || []).filter(
+          (product) => product?.isApproved === true
+        );
         state.total = payload.total || 0;
         state.pages = payload.pages || 1;
         state.page = payload.page || 1;
@@ -150,7 +157,9 @@ const productSlice = createSlice({
       })
       .addCase(fetchSellerProducts.fulfilled, (state, action) => {
         state.sellerProductsLoading = false;
-        state.sellerProducts = action.payload;
+        state.sellerProducts = (action.payload || []).filter(
+          (product) => product?.isApproved === true
+        );
       })
       .addCase(fetchSellerProducts.rejected, (state, action) => {
         state.sellerProductsLoading = false;
