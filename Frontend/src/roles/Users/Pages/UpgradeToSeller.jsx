@@ -11,14 +11,14 @@ import { Store, MapPin, CreditCard, ArrowRight } from 'lucide-react';
 
 const COUNTRY_CITIES = {
   Egypt: ['المنوفيه', 'أسوان', 'ألاقصر', 'البحر الأحمر','الاسماعيلية', 'بنها', 'العريش', 'بورسعيد', 'الفيوم', 'القاهرة',  'المنيا', 'الجيزة', 'الإسكندرية', 'المنصورة', 'طنطا', 'أسيوط'],
-  SaudiArabia: ['الرياض', 'جدة', 'مكة', 'الدمام', 'المدينة المنورة'],
-  UAE: ['دبي', 'أبو ظبي', 'الشارقة', 'العين', 'عجمان'],
+  // SaudiArabia: ['الرياض', 'جدة', 'مكة', 'الدمام', 'المدينة المنورة'],
+  // UAE: ['دبي', 'أبو ظبي', 'الشارقة', 'العين', 'عجمان'],
 };
 
 const BANK_OPTIONS = {
   Egypt: ['البنك الأهلي المصري', 'بنك مصر', 'CIB', 'QNB الأهلي', 'بنك الإسكندرية'],
-  SaudiArabia: ['الراجحي', 'الأهلي السعودي', 'بنك الرياض', 'بنك البلاد', 'الإنماء'],
-  UAE: ['Emirates NBD', 'ADCB', 'FAB', 'Mashreq', 'RAKBANK'],
+  // SaudiArabia: ['الراجحي', 'الأهلي السعودي', 'بنك الرياض', 'بنك البلاد', 'الإنماء'],
+  // UAE: ['Emirates NBD', 'ADCB', 'FAB', 'Mashreq', 'RAKBANK'],
 };
 
 const countryKeys = Object.keys(COUNTRY_CITIES);
@@ -185,8 +185,8 @@ const UpgradeToSeller = () => {
                 >
                   <option value="">اختاري الدولة</option>
                   <option value="Egypt">مصر</option>
-                  <option value="SaudiArabia">السعودية</option>
-                  <option value="UAE">الإمارات</option>
+                  {/* <option value="SaudiArabia">السعودية</option>
+                  <option value="UAE">الإمارات</option> */}
                 </select>
                 {errors.location?.country && (
                   <p className="text-red-text text-xs bg-red-soft p-2 rounded-lg border border-red-200">

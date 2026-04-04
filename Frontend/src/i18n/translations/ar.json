@@ -5,6 +5,7 @@
     "about": "من نحن",
     "cart": "السلة",
     "wishlist": "المفضلة",
+    "egp": "ج.م",
     "start_selling": "ابدأ البيع",
     "login": "تسجيل الدخول",
     "signup": "إنشاء حساب",
@@ -18,6 +19,7 @@
     "privacy": "بيان الخصوصية",
     "cookies": "ملفات تعريف الارتباط"
   },
+
   "auth": {
     "back_to_login": "العودة إلى تسجيل الدخول",
     "having_trouble": "تواجه مشكلة؟",
@@ -79,8 +81,8 @@
     },
     "forgot_password": {
       "title": "نسيت كلمة المرور؟",
-      "subtitle": "لا تقلق، أدخل بريدك الإلكتروني وسنرسل لك رمزاً لإعادة تعيين كلمة المرور الخاصة بك فوراً.",
-      "send_code_btn": "إرسال رمز التحقق"
+      "subtitle": "لا تقلق، أدخل بريدك الإلكتروني وسنرسل لك ايميل لإعادة تعيين كلمة المرور الخاصة بك فوراً.",
+      "send_code_btn": "إرسال ايميل التحقق"
     },
     "reset_password": {
       "title": "تعيين كلمة مرور جديدة",
@@ -231,7 +233,7 @@
     }
   },
 
-    "users_navbar": {
+   "users_navbar": {
     "sellers": "البائعون",
     "search_placeholder": "ابحث عن قطعة فريدة...",
     "profile": "ملفي الشخصي",
@@ -338,6 +340,7 @@
       }
     ]
   },
+
   "cart": {
      "title": "السلة",
   "item_count": "منتجات",
@@ -360,6 +363,7 @@
       "checkout_btn": "إتمام الشراء"
     }
   },
+
   "order_success": {
   "track_order_btn": "تتبع الطلب",
   "continue_shopping_btn": "متابعة التسوق",
@@ -375,6 +379,7 @@
   "have_question": "هل لديك استفسار؟",
   "contact_support": "تواصل مع خدمة العملاء"
 },
+
 "product": {
   "add_review": "أضف تقييم"
 },
@@ -392,6 +397,7 @@
   "seller_location": "موقع البائع",
   "no_subcategories": "لا توجد أقسام فرعية"
 },
+
 "products_page": {
   "title": "المنتجات اليدوية المميزة",
   "subtitle": "اشتري فقط المنتجات الصناعية يدوياً من قبل أمهر الحرفيين في العالم العربي",
@@ -400,6 +406,39 @@
   "products": "منتج",
   "no_subcategories": "لا توجد أقسام فرعية"
 },
+
+"order_history": {
+  "title": "طلباتي",
+  "subtitle": "تابع حالة طلباتك الأخيرة وإدارة مشترياتك.",
+  "back_to_shopping": "العودة للتسوق",
+  "order_number": "طلب",
+  "date": "التاريخ:",
+  "products": "المنتجات:",
+  "total_amount": "إجمالي المبلغ:",
+  "view_details": "عرض التفاصيل",
+  "status_delivered": "تم التوصيل",
+  "status_processing": "تحت المعالجة",
+  "status_shipped": "تم الشحن"
+},
+
+"product_details": {
+  "breadcrumb_home": "الرئيسية",
+  "breadcrumb_bags": "حقائب يدوية",
+  "handmade_badge": "صناعة يدوية فاخرة",
+  "reviews": "تقييم",
+  "cash_on_delivery_title": "الدفع عند الاستلام متاح",
+  "cash_on_delivery_desc": "اشترِ الآن وادفع عند باب منزلك في جميع أنحاء المملكة",
+  "seller_by": "بواسطة:",
+  "verified_artisan": "حرفي معتمد",
+  "visit_store": "زيارة المتجر",
+  "add_to_cart": "إضافة للسلة",
+  "shipping": "شحن خلال 3-5 أيام",
+  "unique_piece": "قطعة فنية فريدة",
+  "secure_shopping": "تسوق آمن 100%",
+  "related_products_title": "منتجات قد تعجبك",
+  "view_all": "عرض الكل"
+},
+
 "profile": {
   "title": "معلوماتي",
   "member_since": "عضو منذ",
@@ -421,5 +460,202 @@
   "show_more": "عرض المزيد",
   "show_less": "عرض أقل",
   "delete_account": "حذف الحساب نهائياً"
+},
+
+"sellers_page": {
+  "title": "اكتشف الحرفيين",
+  "subtitle": "قائمة المبدعين",
+  "search_placeholder": "ابحث عن بائع أو تخصص...",
+  "know_more": "معرفة المزيد",
+  "reviews": "تقييم"
+},
+"seller_products": {
+  "back_to_sellers": "العودة لجميع الحرفيين",
+  "product_gallery": "معرض المنتجات",
+  "no_products": "هذا الحرفي لم يضف منتجات بعد.",
+  "discover_others": "اكتشف مبدعين آخرين",
+  "image_unavailable": "الصورة غير متوفرة"
+},
+"wishlist": {
+  "title": "قائمة المفضلة",
+  "empty_title": "قائمتك فارغة حالياً",
+  "empty_message": "يبدو أنك لم تقم بإضافة أي منتجات إلى قائمة المفضلة بعد. تصفح منتجاتنا المميزة واكتشف ما يعجبك!",
+  "shop_now": "تسوق الآن",
+  "remove": "حذف من المفضلة",
+  "out_of_stock": "نفذت الكمية",
+  "add_to_cart": "إضافة للسلة",
+  "out_of_stock_btn": "غير متوفر"
+},
+"seller": {
+  "orders": {
+    "status_processing": "قيد التجهيز",
+    "status_shipped": "تم الشحن",
+    "status_delivered": "تم التوصيل"
+  },
+   "recent_orders": {
+    "title": "أحدث الطلبات",
+    "view_all": "عرض الكل",
+    "order_id": "رقم الطلب",
+    "customer": "العميل",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "amount": "المبلغ"
+  },
+   "welcome": {
+    "title": "نظرة عامة على المتجر",
+    "subtitle": "إليك ملخص سريع لأداء متجرك هذا الأسبوع."
+  },
+    "order_details": {
+    "title": "تفاصيل الطلب",
+    "order_received": "تم استلام الطلب في",
+    "download_pdf": "تحميل PDF",
+      "customer_info": "معلومات العميل",
+    "customer_name": "اسم العميل",
+    "phone": "رقم الجوال",
+    "shipping_address": "عنوان الشحن",
+    "payment_status": "حالة الدفع",
+    "payment_method": "طريقة الدفع",
+    "order_status": "حالة الطلب",
+     "order_products": "منتجات الطلب",
+    "items_count": "عدد العناصر:",
+    "product": "المنتج",
+    "subtotal": "السعر الفرعي",
+    "quantity": "الكمية",
+    "total": "الإجمالي",
+    "size": "مقاس:",
+    "subtotal_label": ":المجموع الفرعي",
+    "shipping_fee_label": ":رسوم الشحن",
+    "vat_label": ":(%15) ضريبة القيمة المضافة",
+    "final_total": ":الإجمالي النهائي"
+  },
+   "header": {
+    "search_placeholder": "ابحث في لوحة التحكم...",
+    "no_results": "لا توجد نتائج",
+    "notifications": "الإشعارات",
+    "unread_count": "{{count}} غير مقروء",
+    "no_notifications": "لا توجد إشعارات حتى الآن",
+    "default_name": "البائع",
+    "verified_artisan": "حرفي معتمد",
+    "logout_title": "تسجيل الخروج"
+  },
+   "sidebar": {
+    "dashboard": "الرئيسية",
+    "products": "منتجاتي",
+    "orders": "الطلبات",
+    "store_profile": "ملف المتجر",
+    "switch_to_customer": "العودة لحساب المشتري",
+    "logout": "تسجيل الخروج",
+    "logging_out": "جاري الخروج..."
+  },
+   "add_product": {
+    "title": "إضافة منتج جديد",
+    "subtitle": "قم بتعبئة تفاصيل منتجك الجديد لعرضه للعملاء",
+    "product_name": "اسم المنتج",
+    "product_name_placeholder": "مثال: حقيبة يدوية مطرزة",
+    "price": "السعر (ج.م)",
+    "price_placeholder": "0.00",
+    "stock": "الكمية المتاحة (المخزون)",
+    "stock_placeholder": "مثال: 10",
+    "category": "التصنيف",
+    "category_placeholder": "اختر التصنيف...",
+    "categories": [
+      "أكلات بيتية",
+      "حقائب وإكسسوارات",
+      "ديكور منزلي",
+      "فخاريات"
+    ],
+    "description": "وصف المنتج",
+    "description_placeholder": "اكتب وصفاً جذاباً ومفصلاً لمنتجك...",
+    "product_image": "صورة المنتج",
+    "upload_text": "اضغط أو اسحب الصورة هنا",
+    "upload_hint": "PNG, JPG, WEBP حتى 5MB",
+    "discount_price_optional": "سعر الخصم (اختياري)",
+    "subcategory": "التصنيف الفرعي",
+    "subcategory_placeholder": "اختر التصنيف الفرعي...",
+    "product_images_limit": "صور المنتج (حتى 5 صور)",
+    "save_success": "✅ تم حفظ المنتج بنجاح!",
+    "saving": "جاري الحفظ...",
+    "cancel_btn": "إلغاء",
+    "save_btn": "حفظ المنتج"
+  },
+   "dashboard": {
+    "stats": {
+      "total_sales": "إجمالي المبيعات",
+      "new_orders": "الطلبات الجديدة",
+      "active_products": "المنتجات النشطة",
+      "growth_rate": "معدل النمو"
+    },
+    "filters": {
+      "all": "الكل",
+      "pending": "قيد الانتظار",
+      "shipped": "تم الشحن",
+      "delivered": "تم التوصيل",
+      "cancelled": "ملغي"
+    },
+    "loading": "جاري تحميل البيانات...",
+    "empty_filtered": "لا توجد طلبات بهذه الحالة حالياً",
+    "empty_hint": "بمجرد استلام طلبات جديدة ستظهر هنا فوراً"
+  },
+   "orders_management": {
+    "title": "إدارة الطلبات",
+    "subtitle": "تابع طلبات عملائك وقم بتحديث حالتها باستمرار",
+    "order_id": "رقم الطلب",
+    "customer": "اسم العميل",
+    "items": "القطع",
+    "total": "الإجمالي",
+    "date": "التاريخ",
+    "status": "الحالة",
+    "action": "الإجراء",
+    "mobile_note": "اسحب الجدول يميناً ويساراً لعرض كافة التفاصيل",
+    "loading": "جاري تحميل الطلبات...",
+    "empty": "لا توجد طلبات لمنتجاتك حتى الآن.",
+    "unknown_customer": "عميل غير معروف",
+    "status_pending": "قيد المراجعة",
+    "status_processing": "قيد التجهيز",
+    "status_shipped": "تم الشحن",
+    "status_delivered": "تم التوصيل",
+    "status_cancelled": "تم الإلغاء",
+    "update_success": "تم تحديث حالة الطلب بنجاح",
+    "update_error": "حدث خطأ أثناء تحديث الحالة"
+  },
+   "products_management": {
+    "title": "إدارة المنتجات",
+    "subtitle": "تحكم في منتجاتك، أضف جديداً أو عدل المخزون",
+    "add_product_btn": "إضافة منتج جديد",
+    "search_placeholder": "ابحث عن منتج...",
+    "product": "المنتج",
+    "category": "التصنيف",
+    "price": "السعر",
+    "stock": "المخزون",
+    "status": "الحالة",
+    "approval": "الموافقة",
+    "actions": "الإجراءات",
+    "status_active": "نشط",
+    "status_inactive": "غير نشط",
+    "status_out_of_stock": "نفذت الكمية",
+    "approved": "معتمد",
+    "pending_review": "قيد المراجعة",
+    "discount": "خصم",
+    "toggle_status": "تبديل الحالة",
+    "loading": "جاري التحميل...",
+    "empty": "لم تضف أي منتجات بعد",
+    "empty_search": "لا توجد نتائج للبحث",
+    "delete_confirm": "هل أنت متأكد من حذف هذا المنتج؟",
+    "edit_btn": "تعديل",
+    "delete_btn": "حذف",
+    "item_unit": "قطعة"
+  },
+   "store_profile": {
+    "change_cover": "تغيير الغلاف",
+    "cancel_edit": "إلغاء التعديل",
+    "update_profile": "تحديث الملف الشخصي",
+    "contact_phone": "رقم التواصل",
+    "address_label": "العنوان",
+    "store_name": "اسم المتجر",
+    "phone_label": "رقم التواصل",
+    "about_store": "نبذة عن المتجر",
+    "headquarters": "المقر الرئيسي",
+    "save_changes": "حفظ التغييرات"
+  }
 }
 }

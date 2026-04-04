@@ -27,7 +27,7 @@ export default function LandingPage() {
   }, [dispatch]);
 
   const runSchoolPride = () => {
-    const end = Date.now() + (1 * 1000);
+    const end = Date.now() + (2 * 1000);
     const colors = ['#ec4d18', '#ffffff'];
 
     (function frame() {

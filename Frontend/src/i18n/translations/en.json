@@ -5,6 +5,7 @@
     "about": "About Us",
     "cart": "Cart",
     "wishlist": "Wishlist",
+    "egp": "EGP",
     "start_selling": "Start Selling",
     "login": "Login",
     "signup": "Sign Up",
@@ -19,7 +20,7 @@
     "cookies": "Cookie Policy"
   },
 
- "auth": {
+  "auth": {
     "back_to_login": "Back to Login",
     "having_trouble": "Having trouble?",
     "contact_support": "Contact Support",
@@ -80,8 +81,8 @@
     },
     "forgot_password": {
       "title": "Forgot Password?",
-      "subtitle": "No worries, enter your email and we'll send you a code to reset your password instantly.",
-      "send_code_btn": "Send Verification Code"
+      "subtitle": "No worries, enter your email and we'll send you a email to reset your password instantly.",
+      "send_code_btn": "Send Verification email"
     },
     "reset_password": {
       "title": "Set New Password",
@@ -232,6 +233,7 @@
   }
   },
 
+
     "users_navbar": {
     "sellers": "Sellers",
     "search_placeholder": "Search for a unique piece...",
@@ -339,6 +341,7 @@
       }
     ]
   },
+
   "cart": {
       "title": "Cart",
   "item_count": "items",
@@ -361,6 +364,7 @@
     "checkout_btn": "Checkout"
   }
 },
+
 "order_success": {
   "track_order_btn": "Track Order",
   "continue_shopping_btn": "Continue Shopping",
@@ -376,6 +380,7 @@
   "have_question": "Have a question?",
   "contact_support": "Contact Customer Service"
 },
+
 "product": {
   "add_review": "Add Review"
 },
@@ -393,6 +398,7 @@
   "seller_location": "Seller Location",
   "no_subcategories": "No subcategories"
 },
+
 "products_page": {
   "title": "Featured Handmade Products",
   "subtitle": "Shop only handcrafted products made by the most skilled artisans in the Arab world",
@@ -401,6 +407,39 @@
   "products": "products",
   "no_subcategories": "No subcategories"
 },
+
+"order_history": {
+  "title": "My Orders",
+  "subtitle": "Track your recent orders and manage your purchases.",
+  "back_to_shopping": "Back to Shopping",
+  "order_number": "Order",
+  "date": "Date:",
+  "products": "Products:",
+  "total_amount": "Total Amount:",
+  "view_details": "View Details",
+  "status_delivered": "Delivered",
+  "status_processing": "Processing",
+  "status_shipped": "Shipped"
+},
+
+"product_details": {
+  "breadcrumb_home": "Home",
+  "breadcrumb_bags": "Handbags",
+  "handmade_badge": "Luxury Handmade",
+  "reviews": "reviews",
+  "cash_on_delivery_title": "Cash on Delivery Available",
+  "cash_on_delivery_desc": "Buy now and pay at your doorstep across the Kingdom",
+  "seller_by": "By:",
+  "verified_artisan": "Verified Artisan",
+  "visit_store": "Visit Store",
+  "add_to_cart": "Add to Cart",
+  "shipping": "Shipping in 3-5 days",
+  "unique_piece": "Unique Artistic Piece",
+  "secure_shopping": "100% Secure Shopping",
+  "related_products_title": "You May Also Like",
+  "view_all": "View All"
+},
+
 "profile": {
   "title": "My Profile",
   "member_since": "Member since",
@@ -422,6 +461,203 @@
   "show_more": "Show More",
   "show_less": "Show Less",
   "delete_account": "Delete Account Permanently"
+},
+
+"sellers_page": {
+  "title": "Discover Artisans",
+  "subtitle": "Creators List",
+  "search_placeholder": "Search for seller or specialty...",
+  "know_more": "Learn More",
+  "reviews": "reviews"
+},
+"seller_products": {
+  "back_to_sellers": "Back to All Artisans",
+  "product_gallery": "Product Gallery",
+  "no_products": "This artisan hasn't added any products yet.",
+  "discover_others": "Discover Other Creators",
+  "image_unavailable": "Image Unavailable"
+},
+"wishlist": {
+  "title": "Wishlist",
+  "empty_title": "Your Wishlist is Empty",
+  "empty_message": "Looks like you haven't added any products to your wishlist yet. Browse our featured products and discover what you like!",
+  "shop_now": "Shop Now",
+  "remove": "Remove from wishlist",
+  "out_of_stock": "Out of Stock",
+  "add_to_cart": "Add to Cart",
+  "out_of_stock_btn": "Unavailable"
+},
+"seller": {
+  "orders": {
+    "status_processing": "Processing",
+    "status_shipped": "Shipped",
+    "status_delivered": "Delivered"
+  },
+   "recent_orders": {
+    "title": "Recent Orders",
+    "view_all": "View All",
+    "order_id": "Order ID",
+    "customer": "Customer",
+    "date": "Date",
+    "status": "Status",
+    "amount": "Amount"
+  },
+    "welcome": {
+    "title": "Store Overview",
+    "subtitle": "Here's a quick summary of your store's performance this week."
+  },
+   "order_details": {
+    "title": "Order Details",
+    "order_received": "Order received on",
+    "download_pdf": "Download PDF",
+      "customer_info": "Customer Information",
+    "customer_name": "Customer Name",
+    "phone": "Phone Number",
+    "shipping_address": "Shipping Address",
+    "payment_status": "Payment Status",
+    "payment_method": "Payment Method",
+    "order_status": "Order Status",
+     "order_products": "Order Products",
+    "items_count": "Items:",
+    "product": "Product",
+    "subtotal": "Subtotal",
+    "quantity": "Quantity",
+    "total": "Total",
+    "size": "Size:",
+    "subtotal_label": "Subtotal:",
+    "shipping_fee_label": "Shipping Fee:",
+    "vat_label": "VAT (15%):",
+    "final_total": "Final Total:"
+  },
+   "header": {
+    "search_placeholder": "Search dashboard...",
+    "no_results": "No results found",
+    "notifications": "Notifications",
+    "unread_count": "{{count}} unread",
+    "no_notifications": "No notifications yet",
+    "default_name": "Seller",
+    "verified_artisan": "Verified Artisan",
+    "logout_title": "Logout"
+  },
+   "sidebar": {
+    "dashboard": "Dashboard",
+    "products": "My Products",
+    "orders": "Orders",
+    "store_profile": "Store Profile",
+    "switch_to_customer": "Switch to Buyer Account",
+    "logout": "Logout",
+    "logging_out": "Logging out..."
+  },
+  "add_product": {
+    "title": "Add New Product",
+    "subtitle": "Fill in your new product details to display to customers",
+    "product_name": "Product Name",
+    "product_name_placeholder": "Example: Embroidered Handbag",
+    "price": "Price (EGP)",
+    "price_placeholder": "0.00",
+    "stock": "Available Quantity (Stock)",
+    "stock_placeholder": "Example: 10",
+    "category": "Category",
+    "category_placeholder": "Select category...",
+    "categories": [
+      "Home Food",
+      "Bags & Accessories",
+      "Home Decor",
+      "Pottery"
+    ],
+    "description": "Product Description",
+    "description_placeholder": "Write an attractive and detailed description for your product...",
+    "product_image": "Product Image",
+    "upload_text": "Click or drag image here",
+    "upload_hint": "PNG, JPG, WEBP up to 5MB",
+    "discount_price_optional": "Discount Price (Optional)",
+    "subcategory": "Subcategory",
+    "subcategory_placeholder": "Select subcategory...",
+    "product_images_limit": "Product Images (up to 5)",
+    "save_success": "✅ Product saved successfully!",
+    "saving": "Saving...",
+    "cancel_btn": "Cancel",
+    "save_btn": "Save Product"
+  },
+   "dashboard": {
+    "stats": {
+      "total_sales": "Total Sales",
+      "new_orders": "New Orders",
+      "active_products": "Active Products",
+      "growth_rate": "Growth Rate"
+    },
+    "filters": {
+      "all": "All",
+      "pending": "Pending",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "loading": "Loading data...",
+    "empty_filtered": "There are no orders with this status right now",
+    "empty_hint": "New orders will appear here as soon as they arrive"
+  },
+   "orders_management": {
+    "title": "Order Management",
+    "subtitle": "Track your customers' orders and update their status continuously",
+    "order_id": "Order ID",
+    "customer": "Customer Name",
+    "items": "Items",
+    "total": "Total",
+    "date": "Date",
+    "status": "Status",
+    "action": "Action",
+    "mobile_note": "Swipe table left or right to view all details",
+    "loading": "Loading orders...",
+    "empty": "No orders for your products yet.",
+    "unknown_customer": "Unknown customer",
+    "status_pending": "Pending Review",
+    "status_processing": "Processing",
+    "status_shipped": "Shipped",
+    "status_delivered": "Delivered",
+    "status_cancelled": "Cancelled",
+    "update_success": "Order status updated successfully",
+    "update_error": "An error occurred while updating status"
+  },
+   "products_management": {
+    "title": "Product Management",
+    "subtitle": "Manage your products, add new ones or update stock",
+    "add_product_btn": "Add New Product",
+    "search_placeholder": "Search for product...",
+    "product": "Product",
+    "category": "Category",
+    "price": "Price",
+    "stock": "Stock",
+    "status": "Status",
+    "approval": "Approval",
+    "actions": "Actions",
+    "status_active": "Active",
+    "status_inactive": "Inactive",
+    "status_out_of_stock": "Out of Stock",
+    "approved": "Approved",
+    "pending_review": "Pending Review",
+    "discount": "Discount",
+    "toggle_status": "Toggle status",
+    "loading": "Loading...",
+    "empty": "You haven't added any products yet",
+    "empty_search": "No search results",
+    "delete_confirm": "Are you sure you want to delete this product?",
+    "edit_btn": "Edit",
+    "delete_btn": "Delete",
+    "item_unit": "items"
+  },
+   "store_profile": {
+    "change_cover": "Change Cover",
+    "cancel_edit": "Cancel Edit",
+    "update_profile": "Update Profile",
+    "contact_phone": "Contact Number",
+    "address_label": "Address",
+    "store_name": "Store Name",
+    "phone_label": "Phone Number",
+    "about_store": "About Store",
+    "headquarters": "Headquarters",
+    "save_changes": "Save Changes"
+  }
 }
 
 }
