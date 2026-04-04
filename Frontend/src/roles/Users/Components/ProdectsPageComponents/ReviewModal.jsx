@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector }   from "react-redux";
-import { useTranslation }             from "react-i18next";
-import { FiX, FiStar }               from "react-icons/fi";
+import { useDispatch, useSelector }    from "react-redux";
+import { useTranslation }              from "react-i18next";
+import { FiX, FiStar }                from "react-icons/fi";
 import {
   createReview,
+  updateReview,
   resetSubmitState,
   selectSubmitting,
   selectSubmitError,
   selectSubmitSuccess,
 } from "../../Features/reviewSlice";
 
-export function ReviewModal({ isOpen, onClose, product }) {
-  const { t }    = useTranslation();
-  const dispatch = useDispatch();
+export function ReviewModal({ isOpen, onClose, product, existingReview = null }) {
+  const { t }      = useTranslation();
+  const dispatch   = useDispatch();
+  const isEditMode = !!existingReview;
 
   const submitting    = useSelector(selectSubmitting);
   const submitError   = useSelector(selectSubmitError);
@@ -22,7 +24,15 @@ export function ReviewModal({ isOpen, onClose, product }) {
   const [hover,   setHover]   = useState(0);
   const [comment, setComment] = useState("");
 
-  // ── Auto-close after success ──────────────────────────────────────────────
+  // ── Pre-fill when editing ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (isEditMode && existingReview) {
+      setRating(existingReview.rating   ?? 0);
+      setComment(existingReview.comment ?? "");
+    }
+  }, [existingReview, isEditMode]);
+
+  // ── Auto-close after success ───────────────────────────────────────────────
   useEffect(() => {
     if (submitSuccess) {
       const timer = setTimeout(() => {
@@ -35,24 +45,35 @@ export function ReviewModal({ isOpen, onClose, product }) {
     }
   }, [submitSuccess, dispatch, onClose]);
 
-  // ── Reset when modal closes ───────────────────────────────────────────────
+  // ── Reset when modal closes ────────────────────────────────────────────────
   useEffect(() => {
     if (!isOpen) {
       dispatch(resetSubmitState());
-      setRating(0);
-      setComment("");
+      if (!isEditMode) {
+        setRating(0);
+        setComment("");
+      }
     }
-  }, [isOpen, dispatch]);
+  }, [isOpen, dispatch, isEditMode]);
 
   if (!isOpen || !product) return null;
 
   const handleSubmit = () => {
     if (rating === 0) return;
-    dispatch(createReview({
-      productId: product._id,
-      rating,
-      comment: comment.trim() || undefined,
-    }));
+
+    if (isEditMode) {
+      dispatch(updateReview({
+        reviewId: existingReview._id,
+        rating,
+        comment: comment.trim() || undefined,
+      }));
+    } else {
+      dispatch(createReview({
+        productId: product._id,
+        rating,
+        comment: comment.trim() || undefined,
+      }));
+    }
   };
 
   return (
@@ -61,7 +82,8 @@ export function ReviewModal({ isOpen, onClose, product }) {
 
         {/* Header */}
         <div className="relative p-6 border-b border-gray-100 flex flex-col items-center">
-          <button onClick={onClose} className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 rounded-full transition-colors">
+          <button onClick={onClose}
+            className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 rounded-full transition-colors">
             <FiX className="w-5 h-5 text-gray-400" />
           </button>
 
@@ -75,7 +97,9 @@ export function ReviewModal({ isOpen, onClose, product }) {
           )}
 
           <h2 className="text-base font-bold text-gray-800 capitalize">
-            {t("review_modal.title_prefix")} {product.name}
+            {isEditMode
+              ? "تعديل مراجعتك"
+              : `${t("review_modal.title_prefix")} ${product.name}`}
           </h2>
           <p className="text-xs text-gray-500 mt-1">{t("review_modal.help_text")}</p>
         </div>
@@ -90,7 +114,8 @@ export function ReviewModal({ isOpen, onClose, product }) {
                 <button key={index} onClick={() => setRating(val)}
                   onMouseEnter={() => setHover(val)} onMouseLeave={() => setHover(0)}
                   className="transition-transform active:scale-90">
-                  <FiStar className={`w-9 h-9 transition-colors ${val <= (hover || rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-200"}`} />
+                  <FiStar className={`w-9 h-9 transition-colors
+                    ${val <= (hover || rating) ? "fill-yellow-400 text-yellow-400" : "text-gray-200"}`} />
                 </button>
               );
             })}
@@ -115,7 +140,7 @@ export function ReviewModal({ isOpen, onClose, product }) {
           )}
           {submitSuccess && (
             <p className="text-xs text-green-500 mt-2 font-medium">
-              ✅ {t("review_modal.success") || "تم إرسال تقييمك بنجاح!"}
+              ✅ {isEditMode ? "تم تحديث مراجعتك بنجاح!" : (t("review_modal.success") || "تم إرسال تقييمك بنجاح!")}
             </p>
           )}
 
@@ -126,7 +151,7 @@ export function ReviewModal({ isOpen, onClose, product }) {
                 <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                 {t("review_modal.submitting") || "جاري الإرسال..."}
               </>
-            ) : t("review_modal.submit_btn")}
+            ) : isEditMode ? "حفظ التعديلات" : t("review_modal.submit_btn")}
           </button>
         </div>
       </div>

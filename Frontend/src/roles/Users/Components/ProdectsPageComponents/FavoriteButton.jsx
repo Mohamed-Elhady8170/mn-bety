@@ -1,9 +1,16 @@
 import React from 'react'
 
 export default function FavoriteButton({ active, onToggle }) {
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onToggle?.(e);
+  };
+
   return (
     <button
-      onClick={onToggle}
+      type="button"
+      onClick={handleClick}
       className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-bg-main shadow-md flex items-center justify-center transition-transform hover:scale-110"
     >
       <svg
