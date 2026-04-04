@@ -11,8 +11,10 @@ import StatCard from "../Components/Dashboard/StatCard";
 // Redux
 import { fetchSellerStats, selectDashboardStats, selectStatsLoading } from "../Features/statSlice";
 import { fetchSellerOrders } from "../../Users/Features/orderSlice";
+import { useTranslation } from "react-i18next";
 
 export default function Dashboard() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
 
   const [statusFilter, setStatusFilter] = useState("all");
@@ -32,21 +34,21 @@ export default function Dashboard() {
   });
 
   const dashboardStatsUI = [
-    { title: "إجمالي المبيعات", value: `${stats.totalSales?.toLocaleString() || 0} ج.م`, icon: DollarSign, color: "bg-icon-bg-green text-icon-green" },
-    { title: "الطلبات الجديدة", value: stats.newOrders || 0, icon: ShoppingBag, color: "bg-icon-bg-blue text-icon-blue" },
-    { title: "المنتجات النشطة", value: stats.activeProducts || 0, icon: Package, color: "bg-icon-bg-orange text-primary" },
-    { title: "معدل النمو", value: `${stats.growthRate || 0}%`, icon: TrendingUp, color: "bg-icon-bg-orange text-primary" },
+    { title: t("seller.dashboard.stats.total_sales"), value: `${stats.totalSales?.toLocaleString() || 0} ${t("common.egp")}`, icon: DollarSign, color: "bg-icon-bg-green text-icon-green" },
+    { title: t("seller.dashboard.stats.new_orders"), value: stats.newOrders || 0, icon: ShoppingBag, color: "bg-icon-bg-blue text-icon-blue" },
+    { title: t("seller.dashboard.stats.active_products"), value: stats.activeProducts || 0, icon: Package, color: "bg-icon-bg-orange text-primary" },
+    { title: t("seller.dashboard.stats.growth_rate"), value: `${stats.growthRate || 0}%`, icon: TrendingUp, color: "bg-icon-bg-orange text-primary" },
   ];
 
   const filterTabs = [
-    { id: "all", label: "الكل" },
-    { id: "pending", label: "قيد الانتظار" },
-    { id: "shipped", label: "تم الشحن" },
-    { id: "delivered", label: "تم التوصيل" },
-    { id: "cancelled", label: "ملغي" },
+    { id: "all", label: t("seller.dashboard.filters.all") },
+    { id: "pending", label: t("seller.dashboard.filters.pending") },
+    { id: "shipped", label: t("seller.dashboard.filters.shipped") },
+    { id: "delivered", label: t("seller.dashboard.filters.delivered") },
+    { id: "cancelled", label: t("seller.dashboard.filters.cancelled") },
   ];
 
-  if (loading) return <div className="p-8 text-center text-primary animate-pulse">جاري تحميل البيانات...</div>;
+  if (loading) return <div className="p-8 text-center text-primary animate-pulse">{t("seller.dashboard.loading")}</div>;
 
   return (
     <div className="p-4 md:p-6 text-right bg-bg-light min-h-screen relative z-0" dir="rtl">
@@ -70,7 +72,7 @@ export default function Dashboard() {
             <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
               <ShoppingBag size={22} />
             </div>
-            <h3 className="text-xl font-bold text-text-main">أحدث الطلبات</h3>
+            <h3 className="text-xl font-bold text-text-main">{t("seller.recent_orders.title")}</h3>
           </div>
 
           <div className="flex gap-1.5 bg-bg-subtle p-1 rounded-2xl overflow-x-auto no-scrollbar">
@@ -97,10 +99,10 @@ export default function Dashboard() {
                   key={order._id || idx}
                   order={{
                     id: order._id.slice(-6).toUpperCase(),
-                    customer: order.user?.fullName || "عميل",
-                    date: new Date(order.createdAt).toLocaleDateString("ar-EG"),
+                    customer: order.user?.fullName || t("seller.orders_management.unknown_customer"),
+                    date: new Date(order.createdAt).toLocaleDateString(i18n.language.startsWith("ar") ? "ar-EG" : "en-US"),
                     status: order.orderStatus,
-                    amount: `${order.totalPrice} ج.م`
+                    amount: `${order.totalPrice} ${t("common.egp")}`
                   }}
                 />
               ))}
@@ -112,10 +114,10 @@ export default function Dashboard() {
               </div>
               <div>
                 <p className="text-lg font-bold text-text-main">
-                  لا توجد طلبات بهذه الحالة حالياً
+                  {t("seller.dashboard.empty_filtered")}
                 </p>
                 <p className="text-sm text-text-subtle mt-1">
-                  بمجرد استلام طلبات جديدة ستظهر هنا فوراً
+                  {t("seller.dashboard.empty_hint")}
                 </p>
               </div>
             </div>

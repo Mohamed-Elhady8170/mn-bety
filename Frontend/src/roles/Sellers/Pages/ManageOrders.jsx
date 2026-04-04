@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSellerOrders, updateOrderStatusThunk } from '../../Users/Features/orderSlice';
 import toast from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 export default function ManageOrders() {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   
   // 1. Pull the real seller orders from the Redux Brain
@@ -20,8 +22,8 @@ export default function ManageOrders() {
   const handleUpdateStatus = (orderId, newStatus) => {
     dispatch(updateOrderStatusThunk({ orderId, status: newStatus }))
       .unwrap()
-      .then(() => toast.success("تم تحديث حالة الطلب بنجاح"))
-      .catch((err) => toast.error(err || "حدث خطأ أثناء تحديث الحالة"));
+      .then(() => toast.success(t("seller.orders_management.update_success")))
+      .catch((err) => toast.error(err || t("seller.orders_management.update_error")));
   };
 
   const statusStyles = {
@@ -38,9 +40,9 @@ export default function ManageOrders() {
       <div className="mb-8">
         <h1 className="text-xl md:text-2xl font-black text-text-main flex items-center gap-2">
           <ShoppingBag className="text-primary shrink-0" size={28} /> 
-          إدارة الطلبات
+          {t("seller.orders_management.title")}
         </h1>
-        <p className="text-text-soft text-xs md:text-sm mt-1">تابع طلبات عملائك وقم بتحديث حالتها باستمرار</p>
+        <p className="text-text-soft text-xs md:text-sm mt-1">{t("seller.orders_management.subtitle")}</p>
       </div>
 
       {/* Main Container */}
@@ -48,24 +50,24 @@ export default function ManageOrders() {
         
         {isLoading ? (
           <div className="p-10 text-center font-bold text-primary animate-pulse">
-            جاري تحميل الطلبات...
+            {t("seller.orders_management.loading")}
           </div>
         ) : !sellerOrders || sellerOrders.length === 0 ? (
           <div className="p-10 text-center text-text-soft">
-            لا توجد طلبات لمنتجاتك حتى الآن.
+            {t("seller.orders_management.empty")}
           </div>
         ) : (
           <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-border-warm">
             <table className="w-full text-right border-collapse min-w-200 lg:min-w-full">
               <thead className="bg-bg-subtle text-text-soft text-sm border-b border-border-warm">
                 <tr>
-                  <th className="px-4 py-4 font-bold">رقم الطلب</th>
-                  <th className="px-4 py-4 font-bold">اسم العميل</th>
-                  <th className="px-4 py-4 font-bold text-center">القطع</th>
-                  <th className="px-4 py-4 font-bold">الإجمالي</th>
-                  <th className="px-4 py-4 font-bold">التاريخ</th>
-                  <th className="px-4 py-4 font-bold">الحالة</th>
-                  <th className="px-4 py-4 font-bold text-center">الإجراء</th>
+                  <th className="px-4 py-4 font-bold">{t("seller.orders_management.order_id")}</th>
+                  <th className="px-4 py-4 font-bold">{t("seller.orders_management.customer")}</th>
+                  <th className="px-4 py-4 font-bold text-center">{t("seller.orders_management.items")}</th>
+                  <th className="px-4 py-4 font-bold">{t("seller.orders_management.total")}</th>
+                  <th className="px-4 py-4 font-bold">{t("seller.orders_management.date")}</th>
+                  <th className="px-4 py-4 font-bold">{t("seller.orders_management.status")}</th>
+                  <th className="px-4 py-4 font-bold text-center">{t("seller.orders_management.action")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-warm">
@@ -78,16 +80,16 @@ export default function ManageOrders() {
                         #{order._id.slice(-6).toUpperCase()}
                       </td>
                       <td className="px-4 py-4 text-text-soft font-medium whitespace-nowrap">
-                        {order.user?.fullName || "عميل غير معروف"}
+                        {order.user?.fullName || t("seller.orders_management.unknown_customer")}
                       </td>
                       <td className="px-4 py-4 text-text-soft text-center">
                         {itemsCount}
                       </td>
                       <td className="px-4 py-4 font-bold text-primary whitespace-nowrap">
-                        {order.totalPrice?.toLocaleString() || 0} ج.م
+                        {order.totalPrice?.toLocaleString() || 0} {t("common.egp")}
                       </td>
                       <td className="px-4 py-4 text-text-soft text-xs md:text-sm whitespace-nowrap">
-                        {new Date(order.createdAt).toLocaleDateString("ar-EG")}
+                        {new Date(order.createdAt).toLocaleDateString(i18n.language.startsWith("ar") ? "ar-EG" : "en-US")}
                       </td>
                       <td className="px-4 py-4">
                         <select
@@ -96,11 +98,11 @@ export default function ManageOrders() {
                           disabled={order.orderStatus === 'cancelled' || order.orderStatus === 'delivered'}
                           className={`text-xs font-bold px-2 py-1.5 rounded-xl border-0 outline-none cursor-pointer w-32 disabled:opacity-50 disabled:cursor-not-allowed ${statusStyles[order.orderStatus] || statusStyles.pending}`}
                         >
-                          <option value="pending">قيد المراجعة</option>
-                          <option value="processing">قيد التجهيز</option>
-                          <option value="shipped">تم الشحن</option>
-                          <option value="delivered">تم التوصيل</option>
-                          {order.orderStatus === 'cancelled' && <option value="cancelled">تم الإلغاء</option>}
+                          <option value="pending">{t("seller.orders_management.status_pending")}</option>
+                          <option value="processing">{t("seller.orders_management.status_processing")}</option>
+                          <option value="shipped">{t("seller.orders_management.status_shipped")}</option>
+                          <option value="delivered">{t("seller.orders_management.status_delivered")}</option>
+                          {order.orderStatus === 'cancelled' && <option value="cancelled">{t("seller.orders_management.status_cancelled")}</option>}
                         </select>
                       </td>
                       <td className="px-4 py-4 text-center">
@@ -122,7 +124,7 @@ export default function ManageOrders() {
       
       {/* Mobile Note */}
       <div className="mt-4 md:hidden text-center">
-        <p className="text-[10px] text-text-soft italic">اسحب الجدول يميناً ويساراً لعرض كافة التفاصيل</p>
+        <p className="text-[10px] text-text-soft italic">{t("seller.orders_management.mobile_note")}</p>
       </div>
     </div>
   );

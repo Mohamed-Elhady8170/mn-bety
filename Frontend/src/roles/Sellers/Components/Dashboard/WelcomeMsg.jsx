@@ -1,13 +1,17 @@
+import { useTranslation } from "react-i18next";
+
 function WelcomeMsg() {
+  const { t } = useTranslation();
+
   return (
-    <header className="dashboard-header mb-8">
+    <div className="dashboard-header mb-8">
       <h1 className="text-2xl text-text-main">
-        نظرة عامة على المتجر
+        {t("seller.welcome.title")}
       </h1>
       <p className="text-text-subtle mt-1">
-        إليك ملخص سريع لأداء متجرك هذا الأسبوع.
+        {t("seller.welcome.subtitle")}
       </p>
-    </header>
+    </div>
   );
 }
 

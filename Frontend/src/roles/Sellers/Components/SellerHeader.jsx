@@ -15,8 +15,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../../../Auth/Features/authThunks";
 import { fetchMySellerProfile } from "../Features/sallerProfileSlice";
 import { markNotificationRead } from "../../Users/Features/notificationSlice";
+import { useTranslation } from "react-i18next";
 
 export default function SellerHeader({ onMenuClick }) {
+  const { t, i18n } = useTranslation();
   const [isDark, toggleDarkMode] = useDarkMode();
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -28,6 +30,15 @@ export default function SellerHeader({ onMenuClick }) {
   const [isNotifOpen, setIsNotifOpen] = useState(false);
   const { items: notifications, unreadCount } = useSelector((state) => state.notifications);
   const notifRef = useRef(null);
+  const currentLang = i18n.language;
+
+  const toggleLanguage = () => {
+    const newLang = currentLang.startsWith("ar") ? "en" : "ar";
+    i18n.changeLanguage(newLang);
+    document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = newLang;
+    localStorage.setItem("preferred-language", newLang);
+  };
 
   useEffect(() => {
     
@@ -58,15 +69,15 @@ export default function SellerHeader({ onMenuClick }) {
 
   const searchableRoutes = useMemo(
     () => [
-      { label: "لوحة التحكم", path: "/seller" },
-      { label: "إدارة المنتجات", path: "/seller/products" },
-      { label: "إضافة منتج", path: "/seller/addProduct" },
-      { label: "إدارة الطلبات", path: "/seller/orders" },
-      { label: "ملف المتجر", path: "/seller/profile" },
-      { label: "الرئيسية", path: "/customer/" },
-      { label: "المنتجات", path: "/customer/products" },
+      { label: t("seller.sidebar.dashboard"), path: "/seller" },
+      { label: t("seller.products_management.title"), path: "/seller/products" },
+      { label: t("seller.add_product.title"), path: "/seller/addProduct" },
+      { label: t("seller.orders_management.title"), path: "/seller/orders" },
+      { label: t("seller.sidebar.store_profile"), path: "/seller/profile" },
+      { label: t("common.home"), path: "/customer/" },
+      { label: t("common.categories"), path: "/customer/products" },
     ],
-    [],
+    [t],
   );
 
   const filteredRoutes = useMemo(() => {
@@ -128,7 +139,7 @@ export default function SellerHeader({ onMenuClick }) {
               />
               <input
                 type="text"
-                placeholder="ابحث في لوحة التحكم..."
+                placeholder={t("seller.header.search_placeholder")}
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -159,7 +170,7 @@ export default function SellerHeader({ onMenuClick }) {
                     ))
                   ) : (
                     <div className="px-4 py-3 text-sm text-text-soft">
-                      لا توجد نتائج
+                      {t("seller.header.no_results")}
                     </div>
                   )}
                 </div>
@@ -198,7 +209,11 @@ export default function SellerHeader({ onMenuClick }) {
             </button>
 
             {/* Language Button */}
-            <button className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-bg-subtle hover:bg-bg-warm transition-all text-text-main"
+              title={currentLang.startsWith("ar") ? "EN" : "AR"}
+            >
               <Globe size={16} className="sm:w-4.5 sm:h-4.5" />
             </button>
 
@@ -225,11 +240,11 @@ export default function SellerHeader({ onMenuClick }) {
                 {/* Header */}
                 <div className="p-3 border-b border-border-warm flex justify-between items-center bg-bg-subtle">
                   <h3 className="font-bold text-text-main text-sm">
-                    الإشعارات
+                    {t("seller.header.notifications")}
                   </h3>
                   {unreadCount > 0 && (
                     <span className="text-xs text-primary font-bold">
-                      {unreadCount} غير مقروء
+                      {t("seller.header.unread_count", { count: unreadCount })}
                     </span>
                   )}
                 </div>
@@ -238,7 +253,7 @@ export default function SellerHeader({ onMenuClick }) {
                 <div className="max-h-80 overflow-y-auto scrollbar-thin scrollbar-thumb-border-warm">
                   {!notifications || notifications.length === 0 ? (
                     <div className="p-6 text-center text-text-subtle text-sm font-medium">
-                      لا توجد إشعارات حتى الآن
+                      {t("seller.header.no_notifications")}
                     </div>
                   ) : (
                     notifications.slice(0, 10).map((notif) => (
@@ -267,7 +282,7 @@ export default function SellerHeader({ onMenuClick }) {
                           </p>
                           <span className="text-[10px] text-text-subtle mt-2 block dir-ltr w-fit font-medium">
                             {new Date(notif.createdAt).toLocaleDateString(
-                              "ar-EG",
+                              i18n.language.startsWith("ar") ? "ar-EG" : "en-US",
                               {
                                 month: "short",
                                 day: "numeric",
@@ -294,9 +309,9 @@ export default function SellerHeader({ onMenuClick }) {
               <div className="hidden lg:block text-right">
                 {/* اسم اليوزر من الـ store */}
                 <p className="text-sm font-bold text-text-main leading-tight">
-                  {user?.fullName || "مشغل نورة"}
+                  {user?.fullName || t("seller.header.default_name")}
                 </p>
-                <p className="text-xs text-text-soft">حرفي معتمد</p>
+                <p className="text-xs text-text-soft">{t("seller.header.verified_artisan")}</p>
               </div>
             </div>
 
@@ -304,7 +319,7 @@ export default function SellerHeader({ onMenuClick }) {
             <button
               onClick={handleLogout}
               className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-red-soft hover:bg-red-100 transition-all text-red-text"
-              title="تسجيل الخروج"
+              title={t("seller.header.logout_title")}
             >
               <LogOut size={16} />
             </button>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, Search, Package, ToggleLeft, ToggleRight } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector }  from "react-redux";
+import { useTranslation } from "react-i18next";
 import {
   fetchMyProducts,
   deleteProduct,
@@ -18,6 +19,7 @@ import {
 // Your auth slice should store the seller's profile _id after login
 
 export default function ManageProducts() {
+  const { t } = useTranslation();
   const dispatch   = useDispatch();
   const navigate   = useNavigate();
 
@@ -42,7 +44,7 @@ export default function ManageProducts() {
 
   // ── Delete with confirm ───────────────────────────────────────────────────
   const handleDelete = (id) => {
-    if (!window.confirm("هل أنت متأكد من حذف هذا المنتج؟")) return;
+    if (!window.confirm(t("seller.products_management.delete_confirm"))) return;
     setDeleteId(id);
     dispatch(deleteProduct(id)).finally(() => setDeleteId(null));
   };
@@ -54,17 +56,17 @@ export default function ManageProducts() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <div>
           <h1 className="text-2xl font-black text-text-main flex items-center gap-2">
-            <Package className="text-primary" /> إدارة المنتجات
+            <Package className="text-primary" /> {t("seller.products_management.title")}
           </h1>
           <p className="text-text-soft text-sm mt-1">
-            تحكم في منتجاتك، أضف جديداً أو عدل المخزون
+            {t("seller.products_management.subtitle")}
           </p>
         </div>
         <NavLink
           to="/seller/addProduct"
           className="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-xl font-bold transition-all duration-200 flex items-center gap-2 shadow-lg shadow-primary/20 active:scale-95"
         >
-          <Plus size={20} /> إضافة منتج جديد
+          <Plus size={20} /> {t("seller.products_management.add_product_btn")}
         </NavLink>
       </div>
 
@@ -78,7 +80,7 @@ export default function ManageProducts() {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="ابحث عن منتج..."
+              placeholder={t("seller.products_management.search_placeholder")}
               className="w-full bg-bg-body border border-border-warm rounded-xl py-2.5 pr-10 pl-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200 text-text-main placeholder-text-soft/50"
             />
           </div>
@@ -88,7 +90,7 @@ export default function ManageProducts() {
         {loading && (
           <div className="p-12 text-center">
             <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto mb-3" />
-            <p className="text-text-soft text-sm">جاري التحميل...</p>
+            <p className="text-text-soft text-sm">{t("seller.products_management.loading")}</p>
           </div>
         )}
 
@@ -104,7 +106,9 @@ export default function ManageProducts() {
           <div className="p-16 text-center">
             <Package size={48} className="mx-auto text-text-soft opacity-30 mb-3" />
             <p className="text-text-soft font-bold">
-              {search ? "لا توجد نتائج للبحث" : "لم تضف أي منتجات بعد"}
+              {search
+                ? t("seller.products_management.empty_search")
+                : t("seller.products_management.empty")}
             </p>
           </div>
         )}
@@ -115,13 +119,13 @@ export default function ManageProducts() {
             <table className="w-full text-right">
               <thead className="bg-bg-subtle text-text-soft text-sm border-b border-border-warm">
                 <tr>
-                  <th className="px-6 py-4 font-bold">المنتج</th>
-                  <th className="px-6 py-4 font-bold">التصنيف</th>
-                  <th className="px-6 py-4 font-bold">السعر</th>
-                  <th className="px-6 py-4 font-bold">المخزون</th>
-                  <th className="px-6 py-4 font-bold">الحالة</th>
-                  <th className="px-6 py-4 font-bold">الموافقة</th>
-                  <th className="px-6 py-4 font-bold text-center">الإجراءات</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.product")}</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.category")}</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.price")}</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.stock")}</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.status")}</th>
+                  <th className="px-6 py-4 font-bold">{t("seller.products_management.approval")}</th>
+                  <th className="px-6 py-4 font-bold text-center">{t("seller.products_management.actions")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border-warm">
@@ -153,16 +157,16 @@ export default function ManageProducts() {
 
                     {/* Price */}
                     <td className="px-6 py-4 font-bold text-text-main">
-                      {product.price.toLocaleString()} ج.م
+                      {product.price.toLocaleString()} {t("common.egp")}
                       {product.discountPrice > 0 && (
                         <span className="block text-xs text-green-600 font-normal">
-                          خصم: {product.discountPrice.toLocaleString()} ج.م
+                          {t("seller.products_management.discount")}: {product.discountPrice.toLocaleString()} {t("common.egp")}
                         </span>
                       )}
                     </td>
 
                     {/* Stock */}
-                    <td className="px-6 py-4 text-text-soft">{product.stock} قطعة</td>
+                    <td className="px-6 py-4 text-text-soft">{product.stock} {t("seller.products_management.item_unit")}</td>
 
                     {/* Active status */}
                     <td className="px-6 py-4">
@@ -170,18 +174,20 @@ export default function ManageProducts() {
                         onClick={() => dispatch(toggleProductStatus(product._id))}
                         disabled={toggling}
                         className="flex items-center gap-1.5 transition-colors disabled:opacity-50"
-                        title="تبديل الحالة"
+                        title={t("seller.products_management.toggle_status")}
                       >
                         {product.isActive ? (
                           <>
                             <ToggleRight size={22} className="text-green-500" />
-                            <span className="text-xs font-bold text-green-600 bg-icon-bg-green px-2 py-0.5 rounded-full">نشط</span>
+                            <span className="text-xs font-bold text-green-600 bg-icon-bg-green px-2 py-0.5 rounded-full">{t("seller.products_management.status_active")}</span>
                           </>
                         ) : (
                           <>
                             <ToggleLeft size={22} className="text-text-soft" />
                             <span className="text-xs font-bold text-red-text bg-red-soft px-2 py-0.5 rounded-full">
-                              {product.stock === 0 ? "نفذت الكمية" : "غير نشط"}
+                              {product.stock === 0
+                                ? t("seller.products_management.status_out_of_stock")
+                                : t("seller.products_management.status_inactive")}
                             </span>
                           </>
                         )}
@@ -195,7 +201,9 @@ export default function ManageProducts() {
                           ? "bg-icon-bg-green text-icon-green"
                           : "bg-amber-100 text-amber-700"
                       }`}>
-                        {product.isApproved ? "معتمد" : "قيد المراجعة"}
+                        {product.isApproved
+                          ? t("seller.products_management.approved")
+                          : t("seller.products_management.pending_review")}
                       </span>
                     </td>
 
@@ -205,7 +213,7 @@ export default function ManageProducts() {
                         <button
                           onClick={() => navigate(`/seller/editProduct/${product._id}`)}
                           className="p-2 text-icon-blue hover:bg-icon-bg-blue rounded-lg transition-colors duration-200"
-                          title="تعديل"
+                          title={t("seller.products_management.edit_btn")}
                         >
                           <Edit size={18} />
                         </button>
@@ -213,7 +221,7 @@ export default function ManageProducts() {
                           onClick={() => handleDelete(product._id)}
                           disabled={deleting && deleteId === product._id}
                           className="p-2 text-red-text hover:bg-red-soft rounded-lg transition-colors duration-200 disabled:opacity-50"
-                          title="حذف"
+                          title={t("seller.products_management.delete_btn")}
                         >
                           {deleting && deleteId === product._id ? (
                             <div className="w-4 h-4 border-2 border-red-300 border-t-red-500 rounded-full animate-spin" />

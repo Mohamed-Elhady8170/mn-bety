@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { UploadCloud, Save, X, Image as ImageIcon }  from "lucide-react";
 import { useNavigate }   from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 // ── Seller product slice ───────────────────────────────────────────────────────
 import {
@@ -21,6 +22,7 @@ import {
 } from "../../Users/Features/Categoryslice";
 
 export default function AddProduct() {
+  const { t } = useTranslation();
   const dispatch  = useDispatch();
   const navigate  = useNavigate();
   const fileRef   = useRef(null);
@@ -54,6 +56,7 @@ export default function AddProduct() {
   useEffect(() => {
     if (formData.parentCategory) {
       dispatch(fetchSubcategories(formData.parentCategory));
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setFormData((prev) => ({ ...prev, category: "" }));
     }
   }, [formData.parentCategory, dispatch]);
@@ -105,8 +108,8 @@ export default function AddProduct() {
   return (
     <div className="p-4 md:p-8 bg-bg-body min-h-screen font-cairo text-right" dir="rtl">
       <div className="mb-8">
-        <h1 className="text-2xl font-black text-text-main">إضافة منتج جديد</h1>
-        <p className="text-text-soft text-sm mt-1">قم بتعبئة تفاصيل منتجك الجديد لعرضه للعملاء</p>
+        <h1 className="text-2xl font-black text-text-main">{t("seller.add_product.title")}</h1>
+        <p className="text-text-soft text-sm mt-1">{t("seller.add_product.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-8">
@@ -115,41 +118,41 @@ export default function AddProduct() {
         <div className="flex-1 space-y-6 bg-bg-main p-6 rounded-2xl border border-border-warm shadow-sm">
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-text-main">اسم المنتج</label>
+            <label className="text-sm font-bold text-text-main">{t("seller.add_product.product_name")}</label>
             <input name="name" value={formData.name} onChange={handleChange} type="text"
               className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-text-main"
-              placeholder="مثال: حقيبة يدوية مطرزة" required />
+              placeholder={t("seller.add_product.product_name_placeholder")} required />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-text-main">السعر (ج.م)</label>
+              <label className="text-sm font-bold text-text-main">{t("seller.add_product.price")}</label>
               <input name="price" value={formData.price} onChange={handleChange} type="number" min="0"
                 className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-text-main"
-                placeholder="0.00" required />
+                placeholder={t("seller.add_product.price_placeholder")} required />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-text-main">سعر الخصم (اختياري)</label>
+              <label className="text-sm font-bold text-text-main">{t("seller.add_product.discount_price_optional")}</label>
               <input name="discountPrice" value={formData.discountPrice} onChange={handleChange} type="number" min="0"
                 className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-text-main"
-                placeholder="0.00" />
+                placeholder={t("seller.add_product.price_placeholder")} />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-bold text-text-main">الكمية (المخزون)</label>
+              <label className="text-sm font-bold text-text-main">{t("seller.add_product.stock")}</label>
               <input name="stock" value={formData.stock} onChange={handleChange} type="number" min="0"
                 className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-text-main"
-                placeholder="مثال: 10" required />
+                placeholder={t("seller.add_product.stock_placeholder")} required />
             </div>
           </div>
 
           {/* Category — 2 level dropdown */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <label className="text-sm font-bold text-text-main">التصنيف الرئيسي</label>
+              <label className="text-sm font-bold text-text-main">{t("seller.add_product.category")}</label>
               <select name="parentCategory" value={formData.parentCategory} onChange={handleChange}
                 className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-text-main appearance-none cursor-pointer"
                 required>
-                <option value="">اختر التصنيف...</option>
+                <option value="">{t("seller.add_product.category_placeholder")}</option>
                 {rootCategories.map((cat) => (
                   <option key={cat._id} value={cat._id}>{cat.name}</option>
                 ))}
@@ -158,11 +161,11 @@ export default function AddProduct() {
 
             {subcategories.length > 0 && (
               <div className="space-y-2">
-                <label className="text-sm font-bold text-text-main">التصنيف الفرعي</label>
+                <label className="text-sm font-bold text-text-main">{t("seller.add_product.subcategory")}</label>
                 <select name="category" value={formData.category} onChange={handleChange}
                   className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary text-text-main appearance-none cursor-pointer"
                   required>
-                  <option value="">اختر التصنيف الفرعي...</option>
+                  <option value="">{t("seller.add_product.subcategory_placeholder")}</option>
                   {subcategories.map((sub) => (
                     <option key={sub._id} value={sub._id}>{sub.name}</option>
                   ))}
@@ -172,18 +175,18 @@ export default function AddProduct() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-bold text-text-main">وصف المنتج</label>
+            <label className="text-sm font-bold text-text-main">{t("seller.add_product.description")}</label>
             <textarea name="description" value={formData.description} onChange={handleChange}
               rows="4"
               className="w-full bg-bg-body border border-border-warm rounded-xl py-3 px-4 focus:outline-none focus:border-primary resize-none text-text-main"
-              placeholder="اكتب وصفاً جذاباً ومفصلاً لمنتجك..." required />
+              placeholder={t("seller.add_product.description_placeholder")} required />
           </div>
         </div>
 
         {/* ── Image Upload & Actions ── */}
         <div className="w-full lg:w-1/3 space-y-6">
           <div className="bg-bg-main p-6 rounded-2xl border border-border-warm shadow-sm">
-            <h3 className="font-bold text-text-main mb-4">صور المنتج (حتى 5 صور)</h3>
+            <h3 className="font-bold text-text-main mb-4">{t("seller.add_product.product_images_limit")}</h3>
 
             {/* Previews */}
             {previews.length > 0 && (
@@ -205,8 +208,8 @@ export default function AddProduct() {
               className="border-2 border-dashed border-border-warm rounded-xl bg-bg-body h-40 flex flex-col items-center justify-center text-center p-4 hover:bg-bg-subtle/80 hover:border-primary transition-all duration-300 cursor-pointer group"
             >
               <UploadCloud className="text-primary group-hover:scale-110 transition-transform duration-300" size={32} />
-              <p className="font-bold text-text-main mt-2 text-sm">اضغط أو اسحب الصور هنا</p>
-              <p className="text-xs text-text-soft mt-1">PNG, JPG, WEBP حتى 5MB</p>
+              <p className="font-bold text-text-main mt-2 text-sm">{t("seller.add_product.upload_text")}</p>
+              <p className="text-xs text-text-soft mt-1">{t("seller.add_product.upload_hint")}</p>
             </div>
             <input ref={fileRef} type="file" accept="image/*" multiple className="hidden"
               onChange={handleImageChange} />
@@ -219,21 +222,21 @@ export default function AddProduct() {
           )}
           {saveSuccess && (
             <p className="text-xs text-green-600 bg-green-50 border border-green-200 rounded-xl p-3 text-center font-bold">
-              ✅ تم حفظ المنتج بنجاح!
+              {t("seller.add_product.save_success")}
             </p>
           )}
 
           <div className="flex gap-4">
             <button type="button" onClick={() => navigate("/seller/manageProducts")}
               className="flex-1 bg-transparent border border-border-warm text-text-main py-3.5 rounded-xl font-bold hover:bg-bg-subtle transition-colors flex justify-center items-center gap-2">
-              <X size={20} /> إلغاء
+              <X size={20} /> {t("seller.add_product.cancel_btn")}
             </button>
             <button type="submit" disabled={saving}
               className="flex-1 bg-primary text-white py-3.5 rounded-xl font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex justify-center items-center gap-2 disabled:opacity-50 active:scale-95">
               {saving ? (
-                <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> جاري الحفظ...</>
+                <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> {t("seller.add_product.saving")}</>
               ) : (
-                <><Save size={20} /> حفظ المنتج</>
+                <><Save size={20} /> {t("seller.add_product.save_btn")}</>
               )}
             </button>
           </div>

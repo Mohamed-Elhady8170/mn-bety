@@ -13,8 +13,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../../assets/Logos/logo02.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutThunk } from '../../../Auth/Features/authThunks';
+import { useTranslation } from 'react-i18next';
 
 export default function SellerSidebar() {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
@@ -30,10 +32,10 @@ export default function SellerSidebar() {
   };
 
   const navLinks = [
-    { name: "الرئيسية", path: "/seller", icon: LayoutDashboard },
-    { name: "منتجاتي", path: "/seller/products", icon: Package },
-    { name: "الطلبات", path: "/seller/orders", icon: ShoppingBag, badge: pendingOrdersCount > 0 ? pendingOrdersCount : null },
-    { name: "ملف المتجر", path: "/seller/profile", icon: Store },
+    { name: t("seller.sidebar.dashboard"), path: "/seller", icon: LayoutDashboard },
+    { name: t("seller.sidebar.products"), path: "/seller/products", icon: Package },
+    { name: t("seller.sidebar.orders"), path: "/seller/orders", icon: ShoppingBag, badge: pendingOrdersCount > 0 ? pendingOrdersCount : null },
+    { name: t("seller.sidebar.store_profile"), path: "/seller/profile", icon: Store },
   ];
 
   return (
@@ -56,10 +58,10 @@ export default function SellerSidebar() {
 
       {/* Sidebar */}
       <aside className={`
-        fixed md:sticky top-0 right-0 z-50
-        w-64 bg-bg-main border-l border-border-warm 
-        flex flex-col h-screen transition-transform duration-300
-        ${isOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'}
+        fixed md:sticky md:top-0 top-0 right-0 z-50 md:self-start
+        w-64 bg-bg-main border-l border-border-warm
+        flex-col h-screen md:h-screen overflow-hidden
+        ${isOpen ? 'flex' : 'hidden'} md:flex
       `}>
         {/* Brand */}
         <div className="h-20 flex items-center justify-center px-4 border-b border-border-warm">
@@ -79,7 +81,7 @@ export default function SellerSidebar() {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 min-h-0 p-4 space-y-1 overflow-y-auto">
           {navLinks.map((link) => {
             const isActive = pathname === link.path;
             const Icon = link.icon;
@@ -108,14 +110,14 @@ export default function SellerSidebar() {
         </nav>
 
         {/* Logout */}
-        <div className="p-4 border-t border-border-warm space-y-2">
+        <div className="mt-auto border-t border-border-warm p-4 space-y-2">
           {/* Switch to Customer */}
           <button
             onClick={() => navigate('/customer')}
             className="flex items-center gap-3 px-4 py-3 text-primary hover:bg-primary/10 w-full rounded-xl  transition-all"
           >
             <RefreshCw size={20} />
-            <span>العودة لحساب المشتري</span>
+            <span>{t("seller.sidebar.switch_to_customer")}</span>
           </button>
 
           <button
@@ -124,7 +126,11 @@ export default function SellerSidebar() {
             className="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 w-full rounded-xl font-bold transition-all disabled:opacity-50"
           >
             <LogOut size={20} />
-            <span>{isLoading ? 'جاري الخروج...' : 'تسجيل الخروج'}</span>
+            <span>
+              {isLoading
+                ? t("seller.sidebar.logging_out")
+                : t("seller.sidebar.logout")}
+            </span>
           </button>
         </div>
       </aside>
