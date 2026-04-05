@@ -5,6 +5,7 @@ import {  showVerificationToast } from './toast';
 import { resendVerificationThunk } from '../Auth/Features/authThunks';
 
 const BASE_URL = 'https://mn-bety-server-production.up.railway.app/api';
+// const BASE_URL = 'http://localhost:4000/api';
 
 // ============================================================
 //         1. PUBLIC INSTANCE — login, register, refresh

@@ -78,7 +78,7 @@ const productSlice = createSlice({
     page: 1,
     limit: 6,
     sort: "-createdAt",
-    priceRange: 1000,  // max price filter
+    priceRange: 5000,  // max price filter
 
     // ── Single product (product detail page) ───────────────
     currentProduct: null,
